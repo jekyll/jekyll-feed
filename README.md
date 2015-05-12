@@ -2,7 +2,7 @@
 
 A Jekyll plugin to generate an RSS feed for your Jekyll posts
 
-[![Build Status](https://travis-ci.org/benbalter/jekyll-rss-feed.svg)](https://travis-ci.org/benbalter/jekyll-rss-feed)
+[![Build Status](https://travis-ci.org/benbalter/jekyll-rss-feed.svg)](https://travis-ci.org/benbalter/jekyll-rss-feed) [![Gem Version](https://badge.fury.io/rb/jekyll-rss-feed.svg)](http://badge.fury.io/rb/jekyll-rss-feed)
 
 ## Installation
 
