@@ -45,6 +45,10 @@ describe(Jekyll::JekyllRssFeed) do
     expect(contents).not_to match /<link>http:\/\/example\.org\/feeds\/atom\.xml<\/link>/
   end
 
+  it "preserves linebreaks in preformatted text in posts" do
+    expect(contents).to match /Line 1\nLine 2\nLine 3/
+  end
+
   context "with a baseurl" do
     let(:config) do
       Jekyll.configuration(Jekyll::Utils.deep_merge_hashes(overrides, {"baseurl" => "/bass"}))
