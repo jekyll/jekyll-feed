@@ -2,7 +2,7 @@
 
 A Jekyll plugin to generate an RSS feed for your Jekyll posts
 
-[![Build Status](https://travis-ci.org/benbalter/jekyll-rss-feed.svg)](https://travis-ci.org/benbalter/jekyll-rss-feed) [![Gem Version](https://badge.fury.io/rb/jekyll-rss-feed.svg)](http://badge.fury.io/rb/jekyll-rss-feed)
+[![Build Status](https://travis-ci.org/jekyll/jekyll-rss-feed.svg)](https://travis-ci.org/jekyll/jekyll-rss-feed) [![Gem Version](https://badge.fury.io/rb/jekyll-rss-feed.svg)](http://badge.fury.io/rb/jekyll-rss-feed)
 
 ## Installation
 
@@ -25,7 +25,7 @@ The plugin will automatically generate a RSS feed at `/feed/`. No configuration 
 
 ## Contributing
 
-1. Fork it ( https://github.com/benbalter/jekyll-rss-feed/fork )
+1. Fork it ( https://github.com/jekyll/jekyll-rss-feed/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
