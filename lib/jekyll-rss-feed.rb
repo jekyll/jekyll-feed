@@ -46,7 +46,6 @@ module Jekyll
       site_map = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", "feed.xml")
       site_map.content = File.read(source_path)
       site_map.data["layout"] = nil
-      site_map.data["permalink"] = "/feed/index.xml"
       site_map.render(Hash.new, @site.site_payload)
       site_map.output.gsub(/\s*\n+/, "\n")
     end
