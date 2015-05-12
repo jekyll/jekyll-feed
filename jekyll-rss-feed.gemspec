@@ -5,8 +5,7 @@ Gem::Specification.new do |spec|
   spec.version       = "0.0.1"
   spec.authors       = ["Ben Balter"]
   spec.email         = ["ben.balter@github.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = "A Jekyll plugin to generate an RSS feed for your Jekyll posts"
   spec.homepage      = "https://github.com/benbalter/jekyll-rss-feed"
   spec.license       = "MIT"
 
