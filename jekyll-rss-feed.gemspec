@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ben Balter"]
   spec.email         = ["ben.balter@github.com"]
   spec.summary       = "A Jekyll plugin to generate an RSS feed for your Jekyll posts"
-  spec.homepage      = "https://github.com/benbalter/jekyll-rss-feed"
+  spec.homepage      = "https://github.com/jekyll/jekyll-rss-feed"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
