@@ -1,6 +1,3 @@
----
-permalink: /feed/index.xml
----
 <?xml version="1.0" encoding="utf-8"?>
 {% capture url_base %}{% if site.url %}{{ site.url | append: site.baseurl }}{% else %}{{ site.github.url }}{% endif %}{% endcapture %}
 <rss version="2.0"
