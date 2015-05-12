@@ -1,0 +1,4 @@
+#! /bin/bash
+
+bundle exec rspec
+gem build jekyll-rss-feed.gemspec
