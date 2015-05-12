@@ -17,6 +17,7 @@ permalink: /feed/index.xml
     <link>{{ url_base }}</link>
     <pubDate>{{ site.time | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
     <lastBuildDate>{{ site.time | date: "%a, %d %b %Y %H:%M:%S %z" }}</lastBuildDate>
+    <generator>Jekyll v{{ jekyll.version }}</generator>
    	<language>en-US</language>
     <description>{{ site.description }}</description>
     {% for post in site.posts limit:site.rss_limit %}<item>
