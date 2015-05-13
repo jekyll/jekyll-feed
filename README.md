@@ -1,4 +1,4 @@
-# Jekyll RSS Feed
+# Jekyll RSS feed plugin
 
 A Jekyll plugin to generate an RSS feed for your Jekyll posts
 
@@ -21,11 +21,15 @@ gems:
 
 ## Usage
 
-The plugin will automatically generate a RSS feed at `/feed/`. No configuration necessary.
+The plugin will automatically generate an RSS feed at `/feed.xml`.
+
+Optional configuration options:
+
+* `rss_limit`: number of posts to be included in the feed; default `nil`
 
 ## Contributing
 
-1. Fork it ( https://github.com/jekyll/jekyll-rss-feed/fork )
+1. Fork it (https://github.com/jekyll/jekyll-rss-feed/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
