@@ -6,7 +6,7 @@
 	>
 <channel>
     <title>{{ site.name }}</title>
-    <atom:link type="application/atom+xml" href="{{ url_base }}/feed/" rel="self"/>
+    <atom:link type="application/rss+xml" href="{{ url_base }}/feed/" rel="self"/>
     <link>{{ url_base }}</link>
     <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
     <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
