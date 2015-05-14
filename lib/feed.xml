@@ -21,9 +21,7 @@
 
   {% if site.author %}
     <author>
-      {% if site.author.name %}<name>{{ site.author.name }}</name>{% endif %}
-      {% if site.author.email %}<email>{{ site.author.email }}</email>{% endif %}
-      {% if site.author.url %}<uri>{{ site.author.url }}</uri>{% endif %}
+      <name>{{ site.author }}</name>
     </author>
   {% endif %}
 
@@ -39,9 +37,7 @@
 
       {% if post.author %}
         <author>
-            {% if post.author.name %}<name>{{ post.author.name }}</name>{% endif %}
-            {% if post.author.email %}<email>{{ post.author.email }}</email>{% endif %}
-            {% if post.author.url %}<uri>{{ post.author.url }}</uri>{% endif %}
+            <name>{{ post.author }}</name>
         </author>
       {% endif %}
 
