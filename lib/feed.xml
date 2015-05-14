@@ -31,7 +31,7 @@
 			<updated>{{ post.date | date_to_xmlschema }}</updated>
 
 	    <id>{{ url_base }}{{ post.id }}</id>
-			<content type="html">{{ post.content }}</content>
+			<content type="html">{{ post.content | xml_escape }}</content>
 
 	    {% if post.author %}
 	      <author>
