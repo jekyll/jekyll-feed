@@ -6,6 +6,10 @@ describe(Jekyll::JekyllRssFeed) do
       "source"      => source_dir,
       "destination" => dest_dir,
       "url"         => "http://example.org",
+      "name"       => "My awesome site",
+      "author"      => {
+        "name"        => "Dr. Jekyll"
+      },
       "collections" => {
         "my_collection" => { "output" => true },
         "other_things"  => { "output" => false }
@@ -35,14 +39,14 @@ describe(Jekyll::JekyllRssFeed) do
   end
 
   it "puts all the posts in the feed.xml file" do
-    expect(contents).to match /<link>http:\/\/example\.org\/2014\/03\/04\/march-the-fourth\.html<\/link>/
-    expect(contents).to match /<link>http:\/\/example\.org\/2014\/03\/02\/march-the-second\.html<\/link>/
-    expect(contents).to match /<link>http:\/\/example\.org\/2013\/12\/12\/dec-the-second\.html<\/link>/
+    expect(contents).to match /http:\/\/example\.org\/2014\/03\/04\/march-the-fourth\.html/
+    expect(contents).to match /http:\/\/example\.org\/2014\/03\/02\/march-the-second\.html/
+    expect(contents).to match /http:\/\/example\.org\/2013\/12\/12\/dec-the-second\.html/
   end
 
   it "does not include assets or any static files that aren't .html" do
-    expect(contents).not_to match /<link>http:\/\/example\.org\/images\/hubot\.png<\/link>/
-    expect(contents).not_to match /<link>http:\/\/example\.org\/feeds\/atom\.xml<\/link>/
+    expect(contents).not_to match /http:\/\/example\.org\/images\/hubot\.png/
+    expect(contents).not_to match /http:\/\/example\.org\/feeds\/atom\.xml/
   end
 
   it "preserves linebreaks in preformatted text in posts" do
@@ -53,17 +57,18 @@ describe(Jekyll::JekyllRssFeed) do
     let(:feed) { RSS::Parser.parse(contents) }
 
     it "outputs an RSS feed" do
-      expect(feed.feed_type).to eql("rss")
-      expect(feed.feed_version).to eql("2.0")
+      expect(feed.feed_type).to eql("atom")
+      expect(feed.feed_version).to eql("1.0")
       expect(feed.encoding).to eql("UTF-8")
     end
 
     it "outputs the link" do
-      expect(feed.channel.link).to eql("http://example.org")
+      expect(feed.link.href).to eql("http://example.org/feed.xml")
     end
 
     it "outputs the generator" do
-      expect(feed.channel.generator).to match(/Jekyll v\d+\.\d+\.\d+/)
+      expect(feed.generator.content).to eql("Jekyll")
+      expect(feed.generator.version).to eql(Jekyll::VERSION)
     end
 
     it "includes the items" do
@@ -72,9 +77,9 @@ describe(Jekyll::JekyllRssFeed) do
 
     it "includes item contents" do
       post = feed.items.last
-      expect(post.title).to eql("Dec The Second")
-      expect(post.link).to eql("http://example.org/2013/12/12/dec-the-second.html")
-      expect(post.pubDate).to eql(Time.parse("2013-12-12"))
+      expect(post.title.content).to eql("Dec The Second")
+      expect(post.link.href).to eql("http://example.org/2013/12/12/dec-the-second.html")
+      expect(post.published.content).to eql(Time.parse("2013-12-12"))
     end
   end
 
@@ -88,6 +93,8 @@ describe(Jekyll::JekyllRssFeed) do
       result.remove_namespaces!
 
       result.css("warning").each do |warning|
+        # Quiet a warning that results from us passing the feed as a string
+        next if warning.css("text").text =~ /Self reference doesn't match document location/
         warn "Validation warning: #{warning.css("text").text} on line #{warning.css("line").text} column #{warning.css("column").text}"
       end
 
@@ -105,9 +112,9 @@ describe(Jekyll::JekyllRssFeed) do
     end
 
     it "correctly adds the baseurl to the posts" do
-      expect(contents).to match /<link>http:\/\/example\.org\/bass\/2014\/03\/04\/march-the-fourth\.html<\/link>/
-      expect(contents).to match /<link>http:\/\/example\.org\/bass\/2014\/03\/02\/march-the-second\.html<\/link>/
-      expect(contents).to match /<link>http:\/\/example\.org\/bass\/2013\/12\/12\/dec-the-second\.html<\/link>/
+      expect(contents).to match /http:\/\/example\.org\/bass\/2014\/03\/04\/march-the-fourth\.html/
+      expect(contents).to match /http:\/\/example\.org\/bass\/2014\/03\/02\/march-the-second\.html/
+      expect(contents).to match /http:\/\/example\.org\/bass\/2013\/12\/12\/dec-the-second\.html/
     end
   end
 end
