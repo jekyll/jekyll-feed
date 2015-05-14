@@ -8,7 +8,6 @@ module Jekyll
   end
 
   class FeedMetaTag < Liquid::Tag
-
     def config
       @context.registers[:site].config
     end
