@@ -29,7 +29,7 @@
 	    <link href="{{ base }}{{ post.url }}" rel="self" type="text/html" title="{{ post.title | xml_escape }}" />
 	    <published>{{ post.date | date_to_xmlschema }}</published>
 	    <id>{{ base }}{{ post.id }}</id>
-			<content type="html">{{ post.content | xml_escape }}</content>
+			<content type="html">{{ post.content }}</content>
 
 	    {% if post.author %}
 	      <author>
