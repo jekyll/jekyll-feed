@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+{% capture url_base %}{% if site.url %}{{ site.url | append: site.baseurl }}{% else %}{{ site.github.url }}{% endif %}{% endcapture %}
 <feed xmlns="http://www.w3.org/2005/Atom">
-{% if site.url %}
-    {% assign base = site.url %}
-{% elsif site.github.url %}
-    {% assign base = site.github.url %}
-{% endif %}
     {% if site.name %}<title>{{ site.name }}</title>{% endif %}
     {% if site.description %}<subtitle>{{ site.description }}</subtitle>{% endif %}
     <link href="{{ base }}{{ page.url }}" rel="self"/>
