@@ -27,6 +27,10 @@ Optional configuration options:
 
 * `rss_limit`: number of posts to be included in the feed; default `nil`
 
+### Meta tags
+
+The plugin exposes a helper tag to expose the appropriate meta tags to support automated discovery of your feed. Simply place `{% feed_meta %}` someplace in your template's `<head>` section, to output the necessary metadata.
+
 ## Contributing
 
 1. Fork it (https://github.com/jekyll/jekyll-rss-feed/fork)
