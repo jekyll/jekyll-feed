@@ -43,6 +43,10 @@
 				<category term="{{ post.category }}" />
 			{% endif %}
 
+			{% for tag in post.tags %}
+				<category term="{{ tag }}" />
+			{% endfor %}
+
 			{% if post.excerpt %}
 				<summary>{{ post.excerpt | xml_escape }}</summary>
 			{% endif %}
