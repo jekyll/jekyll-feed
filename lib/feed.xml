@@ -1,42 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 {% capture url_base %}{% if site.url %}{{ site.url | append: site.baseurl }}{% else %}{{ site.github.url }}{% endif %}{% endcapture %}
 <feed xmlns="http://www.w3.org/2005/Atom">
-		<generator uri="http://jekyllrb.com" version="{{ jekyll.version}}">Jekyll</generator>
-    <link href="{{ base }}{{ page.url }}" rel="self" type="application/atom+xml" />
-    <link href="{{ base }}/" rel="alternate" type="text/html"/>
-    <updated>{{ site.time | date_to_xmlschema }}</updated>
-    <id>{{ base }}/</id>
+	<generator uri="http://jekyllrb.com" version="{{ jekyll.version}}">Jekyll</generator>
+  <link href="{{ base }}{{ page.url }}" rel="self" type="application/atom+xml" />
+  <link href="{{ base }}/" rel="alternate" type="text/html"/>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <id>{{ base }}/</id>
 
-		{% if site.name %}
-			<title>{{ site.name }}</title>
-		{% endif %}
+	{% if site.name %}
+		<title>{{ site.name }}</title>
+	{% endif %}
 
-    {% if site.description %}
-			<subtitle>{{ site.description }}</subtitle>
-		{% endif %}
+  {% if site.description %}
+		<subtitle>{{ site.description }}</subtitle>
+	{% endif %}
 
-    {% if site.author %}
-    	<author>
-        {% if site.author.name %}<name>{{ site.author.name }}</name>{% endif %}
-        {% if site.author.email %}<email>{{ site.author.email }}</email>{% endif %}
-        {% if site.author.url %}<uri>{{ site.author.url }}</uri>{% endif %}
-    	</author>
-    {% endif %}
+  {% if site.author %}
+  	<author>
+      {% if site.author.name %}<name>{{ site.author.name }}</name>{% endif %}
+      {% if site.author.email %}<email>{{ site.author.email }}</email>{% endif %}
+      {% if site.author.url %}<uri>{{ site.author.url }}</uri>{% endif %}
+  	</author>
+  {% endif %}
 
-    {% for post in site.posts %}
+  {% for post in site.posts %}
     <entry>
-      <title>{{ post.title | xml_escape }}</title>
-      <link href="{{ base }}{{ post.url }}"/>
-      <updated>{{ post.date | date_to_xmlschema }}</updated>
-      <id>{{ base }}{{ post.id }}</id>
-      {% if post.author %}
-      <author>
-          {% if post.author.name %}<name>{{ post.author.name }}</name>{% endif %}
-          {% if post.author.email %}<email>{{ post.author.email }}</email>{% endif %}
-          {% if post.author.url %}<uri>{{ post.author.url }}</uri>{% endif %}
-      </author>
-      {% endif %}
-      <content type="html">{{ post.content | xml_escape }}</content>
+	    <title>{{ post.title | xml_escape }}</title>
+	    <link href="{{ base }}{{ post.url }}" rel="self" type="text/html" title="{{ post.title | xml_escape }}" />
+	    <published>{{ post.date | date_to_xmlschema }}</published>
+	    <id>{{ base }}{{ post.id }}</id>
+			<content type="html">{{ post.content | xml_escape }}</content>
+
+	    {% if post.author %}
+	      <author>
+	          {% if post.author.name %}<name>{{ post.author.name }}</name>{% endif %}
+	          {% if post.author.email %}<email>{{ post.author.email }}</email>{% endif %}
+	          {% if post.author.url %}<uri>{{ post.author.url }}</uri>{% endif %}
+	      </author>
+	    {% endif %}
+
+			{% if post.category %}
+				<category term="{{ post.category }}" />
+			{% endif %}
+
+			{% if post.excerpt %}
+				<summary>{{ post.excerpt | xml_escape }}</summary>
+			{% endif %}
     </entry>
-    {% endfor %}
+  {% endfor %}
 </feed>
