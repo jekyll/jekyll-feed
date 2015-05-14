@@ -17,7 +17,7 @@ module Jekyll
       if config["url"]
         config["url"]
       elsif config["github"] && config["github"]["url"]
-        config.github.url
+        config["github"]["url"]
       end
     end
 
