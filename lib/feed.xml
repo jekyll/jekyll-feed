@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-{% capture url_base %}{% if site.url %}{{ site.url | append: site.baseurl }}{% else %}{{ site.github.url }}{% endif %}{% endcapture %}
+{% if site.url %}
+	{% assign url_base = site.url | append: site.baseurl %}
+{% else %}
+	{% assign url_base = site.github.url %}
+{% endif %}
 <feed xmlns="http://www.w3.org/2005/Atom">
   <generator uri="http://jekyllrb.com" version="{{ jekyll.version}}">Jekyll</generator>
   <link href="{{ url_base }}{{ page.url }}" rel="self" type="application/atom+xml" />
