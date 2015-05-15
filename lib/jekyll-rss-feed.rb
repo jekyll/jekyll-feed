@@ -7,6 +7,25 @@ module Jekyll
     end
   end
 
+  class FeedMetaTag < Liquid::Tag
+    def config
+      @context.registers[:site].config
+    end
+
+    def url
+      if config["url"]
+        config["url"]
+      elsif config["github"] && config["github"]["url"]
+        config["github"]["url"]
+      end
+    end
+
+    def render(context)
+      @context = context
+      "<link type=\"application/atom+xml\" rel=\"alternate\" href=\"#{url}/feed.xml\" />"
+    end
+  end
+
   class JekyllRssFeed < Jekyll::Generator
     safe true
     priority :lowest
@@ -60,3 +79,5 @@ module Jekyll
     end
   end
 end
+
+Liquid::Template.register_tag('feed_meta', Jekyll::FeedMetaTag)

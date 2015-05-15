@@ -110,4 +110,12 @@ describe(Jekyll::JekyllRssFeed) do
       expect(contents).to match /<link>http:\/\/example\.org\/bass\/2013\/12\/12\/dec-the-second\.html<\/link>/
     end
   end
+
+  context "feed meta" do
+    it "renders the feed meta" do
+      index = File.read(dest_dir("index.html"))
+      expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" />'
+      expect(index).to include(expected)
+    end
+  end
 end
