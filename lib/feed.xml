@@ -5,7 +5,7 @@
   {% assign url_base = site.github.url %}
 {% endif %}
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <generator uri="http://jekyllrb.com" version="{{ jekyll.version}}">Jekyll</generator>
+  <generator uri="http://jekyllrb.com" version="{{ jekyll.version }}">Jekyll</generator>
   <link href="{{ url_base }}{{ page.url }}" rel="self" type="application/atom+xml" />
   <link href="{{ url_base }}/" rel="alternate" type="text/html" />
   <updated>{{ site.time | date_to_xmlschema }}</updated>
