@@ -50,7 +50,7 @@
       {% endfor %}
 
       {% if post.excerpt %}
-        <summary>{{ post.excerpt | strip_html | strip_newlines }}</summary>
+        <summary>{{ post.excerpt | strip_html | strip_newlines | xml_escape }}</summary>
       {% endif %}
     </entry>
   {% endfor %}
