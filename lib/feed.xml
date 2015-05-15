@@ -9,7 +9,7 @@
   <link href="{{ url_base }}{{ page.url }}" rel="self" type="application/atom+xml" />
   <link href="{{ url_base }}/" rel="alternate" type="text/html"/>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
-  <id>{{ url_base }}/</id>
+  <id>{{ url_base }}</id>
 
   {% if site.name %}
     <title>{{ site.name }}</title>
