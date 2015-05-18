@@ -1,12 +1,12 @@
 # coding: utf-8
 
 Gem::Specification.new do |spec|
-  spec.name          = "jekyll-rss-feed"
+  spec.name          = "jekyll-feed"
   spec.version       = "0.0.1"
   spec.authors       = ["Ben Balter"]
   spec.email         = ["ben.balter@github.com"]
-  spec.summary       = "A Jekyll plugin to generate an RSS feed for your Jekyll posts"
-  spec.homepage      = "https://github.com/jekyll/jekyll-rss-feed"
+  spec.summary       = "A Jekyll plugin to generate an Atom feed of your Jekyll posts"
+  spec.homepage      = "https://github.com/jekyll/jekyll-feed"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

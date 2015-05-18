@@ -26,7 +26,7 @@ module Jekyll
     end
   end
 
-  class JekyllRssFeed < Jekyll::Generator
+  class JekyllFeed < Jekyll::Generator
     safe true
     priority :lowest
 
