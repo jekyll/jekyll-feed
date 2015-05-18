@@ -6,7 +6,7 @@
 {% endif %}
 <feed xmlns="http://www.w3.org/2005/Atom">
   <generator uri="http://jekyllrb.com" version="{{ jekyll.version }}">Jekyll</generator>
-  <link href="{{ url_base }}{{ page.url }}" rel="self" type="application/atom+xml" />
+  <link href="{{ page.url | prepend: url_base }}" rel="self" type="application/atom+xml" />
   <link href="{{ url_base }}/" rel="alternate" type="text/html" />
   <updated>{{ site.time | date_to_xmlschema }}</updated>
   <id>{{ url_base }}</id>
@@ -28,11 +28,11 @@
   {% for post in site.posts %}
     <entry>
       <title>{{ post.title | xml_escape }}</title>
-      <link href="{{ url_base }}{{ post.url }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
+      <link href="{{ post.url | prepend: url_base }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
       <updated>{{ post.date | date_to_xmlschema }}</updated>
 
-      <id>{{ url_base }}{{ post.id }}</id>
+      <id>{{ post.id | prepend: url_base }}</id>
       <content type="html">{{ post.content | xml_escape }}</content>
 
       {% if post.author %}
