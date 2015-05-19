@@ -55,13 +55,13 @@ module Jekyll
       end
     end
 
-    # copy sitemap template from source to destination
+    # copy feed template from source to destination
     def write
       FileUtils.mkdir_p File.dirname(destination_path)
-      File.open(destination_path, 'w') { |f| f.write(sitemap_content) }
+      File.open(destination_path, 'w') { |f| f.write(feed_content) }
     end
 
-    def sitemap_content
+    def feed_content
       site_map = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", "feed.xml")
       site_map.content = File.read(source_path).gsub(/\s*\n\s*/, "\n").gsub(/\n{%/, "{%")
       site_map.data["layout"] = nil
@@ -69,7 +69,7 @@ module Jekyll
       site_map.output
     end
 
-    # Checks if a sitemap already exists in the site source
+    # Checks if a feed already exists in the site source
     def feed_exists?
       if @site.respond_to?(:in_source_dir)
         File.exists? @site.in_source_dir("feed.xml")
