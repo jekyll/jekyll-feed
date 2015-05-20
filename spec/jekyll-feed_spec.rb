@@ -53,6 +53,10 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).to match /Line 1\nLine 2\nLine 3/
   end
 
+  it "converts markdown posts to HTML" do
+    expect(contents).to match /\<h1 id=\"decemeber-the-twelfth-actually\">/
+  end
+
   context "parsing" do
     let(:feed) { RSS::Parser.parse(contents) }
 
