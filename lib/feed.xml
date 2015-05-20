@@ -21,7 +21,19 @@
 
   {% if site.author %}
     <author>
-      <name>{{ site.author | xml_escape }}</name>
+      {% if site.author.name %}
+        <name>{{ site.author.name | xml_escape }}</name>
+      {% else %}
+        <name>{{ site.author | xml_escape }}</name>
+      {% endif %}
+      {% if site.author.email %}
+        <email>{{ site.author.email | xml_escape }}</email>
+      {% endif %}
+      {% if site.author.uri %}
+        </uri>{{ site.author.uri | xml_escape }}</uri>
+      {% elsif site.author.url %}
+        </uri>{{ site.author.url | xml_escape }}</uri>
+      {% endif %}
     </author>
   {% endif %}
 
@@ -37,7 +49,19 @@
 
       {% if post.author %}
         <author>
+          {% if post.author.name %}
+            <name>{{ post.author.name | xml_escape }}</name>
+          {% else %}
             <name>{{ post.author | xml_escape }}</name>
+          {% endif %}
+          {% if post.author.email %}
+            <email>{{ post.author.email | xml_escape }}</email>
+          {% endif %}
+          {% if post.author.url %}
+            </uri>{{ post.author.url | xml_escape }}</uri>
+          {% elsif post.author.url %}
+            </uri>{{ post.author.url | xml_escape }}</uri>
+          {% endif %}
         </author>
       {% endif %}
 

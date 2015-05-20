@@ -53,6 +53,18 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).to match /Line 1\nLine 2\nLine 3/
   end
 
+  it "supports post author name as an object" do
+    expect(contents).to match /<author>\s*<name>Ben<\/name>\s*<email>ben@example.com<\/email>\s*<\/author>/
+  end
+
+  it "supports post author name as a string" do
+    expect(contents).to match /<author>\s*<name>Pat<\/name>\s*<\/author>/
+  end
+
+  it "does not output author tag no author is provided" do
+    expect(contents).not_to match /<author>\s*<name><\/name>\s*<\/author>/
+  end
+
   it "converts markdown posts to HTML" do
     expect(contents).to match /&lt;p&gt;March the second!&lt;\/p&gt;/
   end
@@ -76,7 +88,7 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "includes the items" do
-      expect(feed.items.count).to eql(6)
+      expect(feed.items.count).to eql(7)
     end
 
     it "includes item contents" do
