@@ -25,7 +25,7 @@
     </author>
   {% endif %}
 
-  {% for post in site.posts %}
+  {% for post in site.posts | limit: 10 %}
     <entry>
       <title>{{ post.title | markdownify | strip_html | strip_newlines | xml_escape }}</title>
       <link href="{{ post.url | prepend: url_base }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
