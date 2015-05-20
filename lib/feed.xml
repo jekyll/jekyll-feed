@@ -33,7 +33,7 @@
       <updated>{{ post.date | date_to_xmlschema }}</updated>
 
       <id>{{ post.id | prepend: url_base | xml_escape }}</id>
-      <content type="html">{{ post.content | markdownify | xml_escape }}</content>
+      <content type="html">{{ post.content | markdownify | feedsafe | xml_escape }}</content>
 
       {% if post.author %}
         <author>

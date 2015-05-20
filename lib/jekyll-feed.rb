@@ -78,6 +78,16 @@ module Jekyll
       end
     end
   end
+
+  module FeedSafe
+    def feedsafe(input)
+      input.gsub(/\=([\"\'])\/\//, '=\1http://') # Make Protocol-relative URLs HTTP
+           .gsub(/\s+(class|data[-a-zA-Z]*)=['"][^'"]*['"]/, '') # Remove class and data attributes
+           .gsub(/(?<href>href=('|"))\//, '\k<href>' + @context.registers[:site].config["url"] + '/')
+           .gsub(/(?<src>src=('|"))\//, '\k<src>' + @context.registers[:site].config["url"] + '/')
+    end
+  end
 end
 
 Liquid::Template.register_tag('feed_meta', Jekyll::FeedMetaTag)
+Liquid::Template.register_filter(Jekyll::FeedSafe)
