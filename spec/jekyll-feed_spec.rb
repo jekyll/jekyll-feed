@@ -54,7 +54,7 @@ describe(Jekyll::JekyllFeed) do
   end
 
   it "converts markdown posts to HTML" do
-    expect(contents).to match /\<h1 id=\"decemeber-the-twelfth-actually\">/
+    expect(contents).to match /&lt;p&gt;March the second!&lt;\/p&gt;/
   end
 
   context "parsing" do

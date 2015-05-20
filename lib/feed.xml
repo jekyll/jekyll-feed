@@ -27,13 +27,13 @@
 
   {% for post in site.posts %}
     <entry>
-      <title>{{ post.title | xml_escape }}</title>
+      <title>{{ post.title | markdownify | strip_html | strip_newlines | xml_escape }}</title>
       <link href="{{ url_base }}{{ post.url }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
       <updated>{{ post.date | date_to_xmlschema }}</updated>
 
       <id>{{ url_base }}{{ post.id }}</id>
-      <content type="html">{{ post.content | xml_escape }}</content>
+      <content type="html">{{ post.content | markdownify | xml_escape }}</content>
 
       {% if post.author %}
         <author>
@@ -50,7 +50,7 @@
       {% endfor %}
 
       {% if post.excerpt %}
-        <summary>{{ post.excerpt | strip_html | strip_newlines | xml_escape }}</summary>
+        <summary>{{ post.excerpt | markdownify | strip_html | strip_newlines | xml_escape }}</summary>
       {% endif %}
     </entry>
   {% endfor %}
