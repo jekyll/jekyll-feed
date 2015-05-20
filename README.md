@@ -1,22 +1,22 @@
-# Jekyll RSS feed plugin
+# Jekyll Feed plugin
 
-A Jekyll plugin to generate an RSS (Atom) feed for your Jekyll posts
+A Jekyll plugin to generate an Atom (RSS-like) feed of your Jekyll posts
 
-[![Build Status](https://travis-ci.org/jekyll/jekyll-rss-feed.svg)](https://travis-ci.org/jekyll/jekyll-rss-feed) [![Gem Version](https://badge.fury.io/rb/jekyll-rss-feed.svg)](http://badge.fury.io/rb/jekyll-rss-feed)
+[![Build Status](https://travis-ci.org/jekyll/jekyll-feed.svg)](https://travis-ci.org/jekyll/jekyll-feed) [![Gem Version](https://badge.fury.io/rb/jekyll-feed.svg)](http://badge.fury.io/rb/jekyll-feed)
 
 ## Installation
 
 Add this line to your site's Gemfile:
 
 ```ruby
-gem 'jekyll-rss-feed'
+gem 'jekyll-feed'
 ```
 
 And then add this line to your site's `_config.yml`:
 
 ```yml
 gems:
-  - jekyll-rss-feed
+  - jekyll-feed
 ```
 
 ## Usage
@@ -51,9 +51,13 @@ Additionally, the plugin will use the following values, if present in a post's Y
 
 The plugin exposes a helper tag to expose the appropriate meta tags to support automated discovery of your feed. Simply place `{% feed_meta %}` someplace in your template's `<head>` section, to output the necessary metadata.
 
+## Why Atom, and not RSS?
+
+Great question. In short, Atom is a better format. Think of it like RSS 3.0. For more information, see [this discussion on why we chose Atom over RSS 2.0](https://github.com/jekyll/jekyll-rss-feed/issues/2).
+
 ## Contributing
 
-1. Fork it (https://github.com/jekyll/jekyll-rss-feed/fork)
+1. Fork it (https://github.com/jekyll/jekyll-feed/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

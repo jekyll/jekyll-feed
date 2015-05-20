@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe(Jekyll::JekyllRssFeed) do
+describe(Jekyll::JekyllFeed) do
   let(:overrides) do
     {
       "source"      => source_dir,
