@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-feed"
-  spec.version       = "0.1.1"
+  spec.version       = "0.1.2"
   spec.authors       = ["Ben Balter"]
   spec.email         = ["ben.balter@github.com"]
   spec.summary       = "A Jekyll plugin to generate an Atom feed of your Jekyll posts"
