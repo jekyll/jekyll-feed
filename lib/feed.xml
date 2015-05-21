@@ -4,7 +4,7 @@
 {% else %}
   {% assign url_base = site.github.url %}
 {% endif %}
-<feed xmlns="http://www.w3.org/2005/Atom" xml:base="{{ url_base | xml_escape }}">
+<feed xmlns="http://www.w3.org/2005/Atom">
   <generator uri="http://jekyllrb.com" version="{{ jekyll.version }}">Jekyll</generator>
   <link href="{{ page.url | prepend: url_base }}" rel="self" type="application/atom+xml" />
   <link href="{{ url_base }}/" rel="alternate" type="text/html" />
@@ -33,7 +33,9 @@
       <updated>{{ post.date | date_to_xmlschema }}</updated>
 
       <id>{{ post.id | prepend: url_base | xml_escape }}</id>
-      <content type="html">{{ post.content | markdownify | xml_escape }}</content>
+      <content type="html" xml:base="{{ url_base | xml_escape }}">
+        {{ post.content | markdownify | xml_escape }}
+      </content>
 
       {% if post.author %}
         <author>
