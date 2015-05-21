@@ -33,7 +33,7 @@
       <updated>{{ post.date | date_to_xmlschema }}</updated>
 
       <id>{{ post.id | prepend: url_base | xml_escape }}</id>
-      <content type="html" xml:base="{{ url_base | xml_escape }}">
+      <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">
         {{ post.content | markdownify | xml_escape }}
       </content>
 
