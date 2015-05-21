@@ -129,4 +129,20 @@ describe(Jekyll::JekyllFeed) do
       expect(index).to include(expected)
     end
   end
+
+  context "filters" do
+    it "makes protocol-relative urls absolute" do
+      expect(contents).not_to match(/href=&quot;\/\/example.com&quot;/)
+      expect(contents).to match(/href=&quot;http:\/\/example.com&quot;/)
+    end
+
+    it "strips class attributes" do
+      expect(contents).not_to match(/class=&quot;x&quot;/)
+    end
+
+    it "makes relative urls absolute" do
+      expect(contents).not_to match(/src=&quot;\/march.jpg&quot;/)
+      expect(contents).to match(/src=&quot;http:\/\/example.org\/march.jpg&quot;/)
+    end
+  end
 end
