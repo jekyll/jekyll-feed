@@ -69,6 +69,10 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).to match /&lt;p&gt;March the second!&lt;\/p&gt;/
   end
 
+  it "converts uses last_modified_at where available" do
+    expect(contents).to match /<updated>2015-05-12T13:27:59\+00:00<\/updated>/
+  end
+
   context "parsing" do
     let(:feed) { RSS::Parser.parse(contents) }
 
