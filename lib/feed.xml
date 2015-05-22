@@ -30,9 +30,7 @@
         <email>{{ site.author.email | xml_escape }}</email>
       {% endif %}
       {% if site.author.uri %}
-        </uri>{{ site.author.uri | xml_escape }}</uri>
-      {% elsif site.author.url %}
-        </uri>{{ site.author.url | xml_escape }}</uri>
+        <uri>{{ site.author.uri | xml_escape }}</uri>
       {% endif %}
     </author>
   {% endif %}
@@ -62,9 +60,7 @@
             <email>{{ post.author.email | xml_escape }}</email>
           {% endif %}
           {% if post.author.url %}
-            </uri>{{ post.author.url | xml_escape }}</uri>
-          {% elsif post.author.url %}
-            </uri>{{ post.author.url | xml_escape }}</uri>
+            <uri>{{ post.author.url | xml_escape }}</uri>
           {% endif %}
         </author>
       {% endif %}
