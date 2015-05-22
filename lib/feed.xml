@@ -59,8 +59,8 @@
           {% if post.author.email %}
             <email>{{ post.author.email | xml_escape }}</email>
           {% endif %}
-          {% if post.author.url %}
-            <uri>{{ post.author.url | xml_escape }}</uri>
+          {% if post.author.uri %}
+            <uri>{{ post.author.uri | xml_escape }}</uri>
           {% endif %}
         </author>
       {% endif %}
