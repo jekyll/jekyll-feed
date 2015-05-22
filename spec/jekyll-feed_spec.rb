@@ -57,6 +57,11 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).to match /&lt;p&gt;March the second!&lt;\/p&gt;/
   end
 
+  it "includes post geotags" do
+    expect(contents).to match /<georss\:featurename>Some Office<\/georss\:featurename>/
+    expect(contents).to match /<georss\:point>37.7821863 -122.3911002<\/georss\:point>/
+  end
+
   context "parsing" do
     let(:feed) { RSS::Parser.parse(contents) }
 

@@ -4,7 +4,7 @@
 {% else %}
   {% assign url_base = site.github.url %}
 {% endif %}
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:georss="http://www.georss.org/georss">
   <generator uri="http://jekyllrb.com" version="{{ jekyll.version }}">Jekyll</generator>
   <link href="{{ page.url | prepend: url_base }}" rel="self" type="application/atom+xml" />
   <link href="{{ url_base }}/" rel="alternate" type="text/html" />
@@ -48,6 +48,15 @@
       {% for tag in post.tags %}
         <category term="{{ tag | xml_escape }}" />
       {% endfor %}
+
+      {% if post.location %}
+        {% if post.location.name %}
+          <georss:featurename>{{ post.location.name | xml_escape }}</georss:featurename>
+        {% endif %}
+        {% if post.location.latitude and post.location.longitude %}
+          <georss:point>{{ post.location.latitude | xml_escape }} {{ post.location.longitude | xml_escape }}</georss:point>
+        {% endif %}
+      {% endif %}
 
       {% if post.excerpt %}
         <summary>{{ post.excerpt | markdownify | strip_html | strip_newlines | xml_escape }}</summary>
