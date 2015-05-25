@@ -22,7 +22,7 @@ module Jekyll
 
     def render(context)
       @context = context
-      "<link type=\"application/atom+xml\" rel=\"alternate\" href=\"#{url}/feed.xml\" />"
+      "<link type=\"application/atom+xml\" rel=\"alternate\" href=\"#{url}/feed.xml\" title=\"#{config["name"]}\" />"
     end
   end
 
