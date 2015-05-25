@@ -54,7 +54,7 @@ describe(Jekyll::JekyllFeed) do
   end
 
   it "supports post author name as an object" do
-    expect(contents).to match /<author>\s*<name>Ben<\/name>\s*<email>ben@example.com<\/email>\s*<\/author>/
+    expect(contents).to match /<author>\s*<name>Ben<\/name>\s*<email>ben@example.com<\/email>\s*<uri>http:\/\/ben.balter.com<\/uri>\s*<\/author>/
   end
 
   it "supports post author name as a string" do
