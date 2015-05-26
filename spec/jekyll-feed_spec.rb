@@ -141,7 +141,7 @@ describe(Jekyll::JekyllFeed) do
   context "feed meta" do
     it "renders the feed meta" do
       index = File.read(dest_dir("index.html"))
-      expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" />'
+      expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" title="My awesome site" />'
       expect(index).to include(expected)
     end
   end
