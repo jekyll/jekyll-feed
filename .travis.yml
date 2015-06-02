@@ -13,8 +13,13 @@ matrix:
   exclude:
     - rvm: 1.9
       env: JEKYLL_VERSION=3.0.0.beta5
+    - env: JEKYLL_VERSION=2.4
+      rvm: 2.1
+    - rvm: 2.2
+      env: JEKYLL_VERSION=2.4
 
 env:
   matrix:
     - ""
+    - JEKYLL_VERSION=2.4
     - JEKYLL_VERSION=3.0.0.beta5
