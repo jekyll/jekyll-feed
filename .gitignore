@@ -17,3 +17,4 @@ mkmf.log
 Gemfile.lock
 spec/dest
 .bundle
+spec/fixtures/.jekyll-metadata
