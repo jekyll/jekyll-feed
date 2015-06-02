@@ -1,3 +1,4 @@
+/vendor
 /.bundle/
 /.yardoc
 /Gemfile.lock
@@ -16,3 +17,4 @@ mkmf.log
 Gemfile.lock
 spec/dest
 .bundle
+spec/fixtures/.jekyll-metadata

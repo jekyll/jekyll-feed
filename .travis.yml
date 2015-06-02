@@ -1,9 +1,25 @@
 language: ruby
 rvm:
 - 2.1
-- 2.0.0
-- 1.9.3
-before_script: bundle update
+- 2.2
+- 2.0
+- 1.9
 script: "script/cibuild"
-sudo: false
+before_script: bundle update
 cache: bundler
+sudo: false
+
+matrix:
+  exclude:
+    - rvm: 1.9
+      env: JEKYLL_VERSION=3.0.0.beta5
+    - env: JEKYLL_VERSION=2.4
+      rvm: 2.1
+    - rvm: 2.2
+      env: JEKYLL_VERSION=2.4
+
+env:
+  matrix:
+    - ""
+    - JEKYLL_VERSION=2.4
+    - JEKYLL_VERSION=3.0.0.beta5
