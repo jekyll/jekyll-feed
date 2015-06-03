@@ -12,6 +12,10 @@ module Jekyll
       @context.registers[:site].config
     end
 
+    def path
+      config["feed_path"] || "feed.xml"
+    end
+
     def url
       if config["url"]
         config["url"]
@@ -22,7 +26,7 @@ module Jekyll
 
     def render(context)
       @context = context
-      "<link type=\"application/atom+xml\" rel=\"alternate\" href=\"#{url}/feed.xml\" title=\"#{config["name"]}\" />"
+      "<link type=\"application/atom+xml\" rel=\"alternate\" href=\"#{url}/#{path}\" title=\"#{config["name"]}\" />"
     end
   end
 
@@ -30,14 +34,19 @@ module Jekyll
     safe true
     priority :lowest
 
+    # Path to feed from config, or feed.xml for default
+    def path
+      @site.config["feed_path"] || "feed.xml"
+    end
+
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
-      @site.config["time"]         = Time.new
+      @site.config["time"] = Time.new
       unless feed_exists?
         write
         @site.keep_files ||= []
-        @site.keep_files << "feed.xml"
+        @site.keep_files << path
       end
     end
 
@@ -49,9 +58,9 @@ module Jekyll
     # Destination for feed.xml file within the site source directory
     def destination_path
       if @site.respond_to?(:in_dest_dir)
-        @site.in_dest_dir("feed.xml")
+        @site.in_dest_dir(path)
       else
-        Jekyll.sanitized_path(@site.dest, "feed.xml")
+        Jekyll.sanitized_path(@site.dest, path)
       end
     end
 
@@ -62,7 +71,7 @@ module Jekyll
     end
 
     def feed_content
-      site_map = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", "feed.xml")
+      site_map = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", path)
       site_map.content = File.read(source_path).gsub(/\s*\n\s*/, "\n").gsub(/\n{%/, "{%")
       site_map.data["layout"] = nil
       site_map.render(Hash.new, @site.site_payload)
@@ -72,9 +81,9 @@ module Jekyll
     # Checks if a feed already exists in the site source
     def feed_exists?
       if @site.respond_to?(:in_source_dir)
-        File.exists? @site.in_source_dir("feed.xml")
+        File.exists? @site.in_source_dir(path)
       else
-        File.exists? Jekyll.sanitized_path(@site.source, "feed.xml")
+        File.exists? Jekyll.sanitized_path(@site.source, path)
       end
     end
   end
