@@ -148,7 +148,7 @@ describe(Jekyll::JekyllFeed) do
 
   context "changing the feed path" do
     let(:config) do
-      Jekyll.configuration(Jekyll::Utils.deep_merge_hashes(overrides, {"feed_path" => "atom.xml"}))
+      Jekyll.configuration(Jekyll::Utils.deep_merge_hashes(overrides, {"feed" => {"path" => "atom.xml"}}))
     end
     let(:contents) { File.read(dest_dir("feed.xml")) }
 

@@ -13,7 +13,11 @@ module Jekyll
     end
 
     def path
-      config["feed_path"] || "feed.xml"
+      if config["feed"] && config["feed"]["path"]
+        config["feed"]["path"]
+      else
+        "feed.xml"
+      end
     end
 
     def url
@@ -36,7 +40,11 @@ module Jekyll
 
     # Path to feed from config, or feed.xml for default
     def path
-      @site.config["feed_path"] || "feed.xml"
+      if @site.config["feed"] && @site.config["feed"]["path"]
+        @site.config["feed"]["path"]
+      else
+        "feed.xml"
+      end
     end
 
     # Main plugin action, called by Jekyll-core
