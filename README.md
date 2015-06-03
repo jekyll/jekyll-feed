@@ -30,6 +30,7 @@ The plugin will automatically use any of the following configuration variables, 
 * `name` - The title of the site, e.g., "My awesome site"
 * `description` - A longer description of what your site is about, e.g., "Where I blog about Jekyll and other awesome things"
 * `url` - The URL to your site, e.g., `http://example.com`. If none is provided, the plugin will try to use `site.github.url`.
+* `feed_path` - The path to the generated feed, e.g., `atom.xml`. If none is provided, the plugin will default to `feed.xml`.
 * `author` - Your name, e.g., "Dr. Jekyll." This can be a string (with the author's name), or an object with the following properties:
   - `name` - **Required** Display name of the author
   - `email` - Email address of the author
