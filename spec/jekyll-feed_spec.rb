@@ -145,4 +145,21 @@ describe(Jekyll::JekyllFeed) do
       expect(index).to include(expected)
     end
   end
+
+  context "changing the feed path" do
+    let(:config) do
+      Jekyll.configuration(Jekyll::Utils.deep_merge_hashes(overrides, {"feed_path" => "atom.xml"}))
+    end
+    let(:contents) { File.read(dest_dir("feed.xml")) }
+
+    it "should write to atom.xml" do
+      expect(File.exist?(dest_dir("atom.xml"))).to be_truthy
+    end
+
+    it "renders the feed meta with custom feed path" do
+      index = File.read(dest_dir("index.html"))
+      expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/atom.xml" title="My awesome site" />'
+      expect(index).to include(expected)
+    end
+  end
 end
