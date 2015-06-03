@@ -3,6 +3,7 @@ require 'spec_helper'
 describe(Jekyll::JekyllFeed) do
   let(:overrides) do
     {
+      "full_rebuild" => true,
       "source"      => source_dir,
       "destination" => dest_dir,
       "url"         => "http://example.org",
