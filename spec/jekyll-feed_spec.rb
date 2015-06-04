@@ -150,7 +150,7 @@ describe(Jekyll::JekyllFeed) do
     let(:config) do
       Jekyll.configuration(Jekyll::Utils.deep_merge_hashes(overrides, {"feed" => {"path" => "atom.xml"}}))
     end
-    let(:contents) { File.read(dest_dir("feed.xml")) }
+    let(:contents) { File.read(dest_dir("atom.xml")) }
 
     it "should write to atom.xml" do
       expect(File.exist?(dest_dir("atom.xml"))).to be_truthy
