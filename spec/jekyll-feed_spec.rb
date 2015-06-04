@@ -31,7 +31,7 @@ describe(Jekyll::JekyllFeed) do
   end
 
   it "creates a feed.xml file" do
-    expect(File.exist?(dest_dir("feed.xml"))).to be_truthy
+    expect(Pathname.new(dest_dir("feed.xml"))).to exist
   end
 
   it "doesn't have multiple new lines or trailing whitespace" do
@@ -143,6 +143,22 @@ describe(Jekyll::JekyllFeed) do
     it "renders the feed meta" do
       index = File.read(dest_dir("index.html"))
       expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" title="My awesome site" />'
+      expect(index).to include(expected)
+    end
+  end
+
+  context "changing the feed path" do
+    let(:config) do
+      Jekyll.configuration(Jekyll::Utils.deep_merge_hashes(overrides, {"feed" => {"path" => "atom.xml"}}))
+    end
+    
+    it "should write to atom.xml" do
+      expect(Pathname.new(dest_dir("atom.xml"))).to exist
+    end
+
+    it "renders the feed meta with custom feed path" do
+      index = File.read(dest_dir("index.html"))
+      expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/atom.xml" title="My awesome site" />'
       expect(index).to include(expected)
     end
   end
