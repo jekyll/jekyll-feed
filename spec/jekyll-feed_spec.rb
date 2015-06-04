@@ -30,7 +30,7 @@ describe(Jekyll::JekyllFeed) do
   end
 
   it "creates a feed.xml file" do
-    expect(File.exist?(dest_dir("feed.xml"))).to be_truthy
+    expect(Pathname.new(dest_dir("feed.xml"))).to exist
   end
 
   it "doesn't have multiple new lines or trailing whitespace" do
@@ -153,7 +153,7 @@ describe(Jekyll::JekyllFeed) do
     let(:contents) { File.read(dest_dir("atom.xml")) }
 
     it "should write to atom.xml" do
-      expect(File.exist?(dest_dir("atom.xml"))).to be_truthy
+      expect(Pathname.new(dest_dir("atom.xml"))).to exist
     end
 
     it "renders the feed meta with custom feed path" do
