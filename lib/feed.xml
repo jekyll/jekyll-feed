@@ -73,7 +73,7 @@
         <category term="{{ tag | xml_escape }}" />
       {% endfor %}
 
-      {% if post.excerpt %}
+      {% if post.excerpt and post.excerpt != blank %}
         <summary>{{ post.excerpt | markdownify | strip_html | strip_newlines | xml_escape }}</summary>
       {% endif %}
     </entry>
