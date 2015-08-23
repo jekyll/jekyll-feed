@@ -3,4 +3,4 @@
 set -e
 
 bundle exec rspec
-gem build jekyll-feed.gemspec
+bundle exec rake build
