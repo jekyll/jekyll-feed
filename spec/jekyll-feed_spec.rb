@@ -105,7 +105,7 @@ describe(Jekyll::JekyllFeed) do
 
     it "includes the item's excerpt" do
       post = feed.items.last
-      expect(post.summary).to eql("Foo")
+      expect(post.summary.content).to eql("Foo")
     end
 
     it "doesn't include the item's excerpt if blank" do
