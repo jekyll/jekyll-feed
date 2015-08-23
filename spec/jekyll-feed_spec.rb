@@ -102,6 +102,16 @@ describe(Jekyll::JekyllFeed) do
       expect(post.link.href).to eql("http://example.org/2013/12/12/dec-the-second.html")
       expect(post.published.content).to eql(Time.parse("2013-12-12"))
     end
+
+    it "includes the item's excerpt" do
+      post = feed.items.last
+      expect(post.summary).to eql("Foo")
+    end
+
+    it "doesn't include the item's excerpt if blank" do
+      post = feed.items.first
+      expect(post.summary).to be_nil
+    end
   end
 
   context "validation" do
@@ -151,7 +161,7 @@ describe(Jekyll::JekyllFeed) do
     let(:config) do
       Jekyll.configuration(Jekyll::Utils.deep_merge_hashes(overrides, {"feed" => {"path" => "atom.xml"}}))
     end
-    
+
     it "should write to atom.xml" do
       expect(Pathname.new(dest_dir("atom.xml"))).to exist
     end
