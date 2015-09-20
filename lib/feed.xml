@@ -37,7 +37,7 @@
 
   {% for post in site.posts limit: 10 %}
     <entry>
-      <title>{{ post.title | markdownify | strip_html | strip_newlines | xml_escape }}</title>
+      <title>{{ post.title | markdownify | strip_html | replace: '\n', ' ' | xml_escape }}</title>
       <link href="{{ post.url | prepend: url_base }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
       {% if post.last_modified_at %}
@@ -74,7 +74,7 @@
       {% endfor %}
 
       {% if post.excerpt and post.excerpt != empty %}
-        <summary>{{ post.excerpt | markdownify | strip_html | strip_newlines | xml_escape }}</summary>
+        <summary>{{ post.excerpt | markdownify | strip_html | replace: '\n', ' ' | xml_escape }}</summary>
       {% endif %}
     </entry>
   {% endfor %}
