@@ -11,7 +11,9 @@
   <updated>{{ site.time | date_to_xmlschema }}</updated>
   <id>{{ url_base | xml_escape }}/</id>
 
-  {% if site.name %}
+  {% if site.title %}
+    <title>{{ site.title | xml_escape }}</title>
+  {% elsif site.name %}
     <title>{{ site.name | xml_escape }}</title>
   {% endif %}
 
