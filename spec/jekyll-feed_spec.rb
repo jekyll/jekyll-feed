@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe(Jekyll::JekyllFeed) do
-  let(:overrides) do
-    {
+  let(:overrides) { Hash.new }
+  let(:config) do
+    Jekyll.configuration(Jekyll::Utils.deep_merge_hashes({
       "full_rebuild" => true,
       "source"      => source_dir,
       "destination" => dest_dir,
@@ -15,10 +16,7 @@ describe(Jekyll::JekyllFeed) do
         "my_collection" => { "output" => true },
         "other_things"  => { "output" => false }
       }
-    }
-  end
-  let(:config) do
-    Jekyll.configuration(overrides)
+    }, overrides))
   end
   let(:site)     { Jekyll::Site.new(config) }
   let(:contents) { File.read(dest_dir("feed.xml")) }
@@ -138,8 +136,8 @@ describe(Jekyll::JekyllFeed) do
   end
 
   context "with a baseurl" do
-    let(:config) do
-      Jekyll.configuration(Jekyll::Utils.deep_merge_hashes(overrides, {"baseurl" => "/bass"}))
+    let(:overrides) do
+      { "baseurl" => "/bass" }
     end
 
     it "correctly adds the baseurl to the posts" do
@@ -158,8 +156,12 @@ describe(Jekyll::JekyllFeed) do
   end
 
   context "changing the feed path" do
-    let(:config) do
-      Jekyll.configuration(Jekyll::Utils.deep_merge_hashes(overrides, {"feed" => {"path" => "atom.xml"}}))
+    let(:overrides) do
+      {
+        "feed" => {
+          "path" => "atom.xml"
+        }
+      }
     end
 
     it "should write to atom.xml" do
