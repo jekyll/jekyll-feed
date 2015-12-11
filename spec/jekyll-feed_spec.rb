@@ -110,6 +110,34 @@ describe(Jekyll::JekyllFeed) do
       post = feed.items.first
       expect(post.summary).to be_nil
     end
+
+    context "with site.title set" do
+      let(:site_title) { "My Site Title" }
+      let(:overrides) { {"title" => site_title} }
+
+      it "uses site.title for the title" do
+        expect(feed.title.content).to eql(site_title)
+      end
+    end
+
+    context "with site.name set" do
+      let(:site_name) { "My Site Name" }
+      let(:overrides) { {"name" => site_name} }
+
+      it "uses site.name for the title" do
+        expect(feed.title.content).to eql(site_name)
+      end
+    end
+
+    context "with site.name and site.title set" do
+      let(:site_title) { "My Site Title" }
+      let(:site_name) { "My Site Name" }
+      let(:overrides) { {"title" => site_title, "name" => site_name} }
+
+      it "uses site.title for the title, dropping site.name" do
+        expect(feed.title.content).to eql(site_title)
+      end
+    end
   end
 
   context "validation" do
