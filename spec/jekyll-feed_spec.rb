@@ -74,6 +74,10 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).to match /<updated>2015-05-12T13:27:59\+00:00<\/updated>/
   end
 
+  it "replaces newlines in posts to spaces" do
+    expect(contents).to match /<title>The plugin will properly strip newlines.<\/title>/
+  end
+
   context "parsing" do
     let(:feed) { RSS::Parser.parse(contents) }
 
@@ -93,7 +97,7 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "includes the items" do
-      expect(feed.items.count).to eql(7)
+      expect(feed.items.count).to eql(8)
     end
 
     it "includes item contents" do
