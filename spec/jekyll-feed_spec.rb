@@ -97,7 +97,7 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "includes the items" do
-      expect(feed.items.count).to eql(8)
+      expect(feed.items.count).to eql(7)
     end
 
     it "includes item contents" do
