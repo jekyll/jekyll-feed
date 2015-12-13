@@ -7,6 +7,12 @@ module Jekyll
     end
   end
 
+  module StripWhitespace
+    def strip(input)
+      input.to_s.strip
+    end
+  end
+
   class FeedMetaTag < Liquid::Tag
     def config
       @context.registers[:site].config
@@ -95,6 +101,10 @@ module Jekyll
       end
     end
   end
+end
+
+unless defined? Liquid::StandardFilters.strip
+    Liquid::Template.register_filter(Jekyll::StripWhitespace)
 end
 
 Liquid::Template.register_tag('feed_meta', Jekyll::FeedMetaTag)

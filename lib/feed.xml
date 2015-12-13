@@ -39,7 +39,7 @@
 
   {% for post in site.posts limit: 10 %}
     <entry>
-      <title>{{ post.title | markdownify | strip_html | strip_newlines | xml_escape }}</title>
+      <title>{{ post.title | markdownify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</title>
       <link href="{{ post.url | prepend: url_base }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
       {% if post.last_modified_at %}
@@ -49,7 +49,7 @@
       {% endif %}
 
       <id>{{ post.id | prepend: url_base | xml_escape }}</id>
-      <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">{{ post.content | markdownify | xml_escape }}</content>
+      <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">{{ post.content | markdownify | strip | xml_escape }}</content>
 
       {% if post.author %}
         <author>
@@ -76,7 +76,7 @@
       {% endfor %}
 
       {% if post.excerpt and post.excerpt != empty %}
-        <summary>{{ post.excerpt | markdownify | strip_html | strip_newlines | xml_escape }}</summary>
+        <summary>{{ post.excerpt | markdownify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</summary>
       {% endif %}
     </entry>
   {% endfor %}
