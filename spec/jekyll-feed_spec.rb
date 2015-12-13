@@ -76,6 +76,11 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).to match /<title>The plugin will properly strip newlines.<\/title>/
   end
 
+  it "renders Liquid inside posts" do
+    expect(contents).to match /Liquid is rendered\./
+    expect(contents).not_to match /Liquid is not rendered\./
+  end
+
   context "parsing" do
     let(:feed) { RSS::Parser.parse(contents) }
 
@@ -95,7 +100,7 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "includes the items" do
-      expect(feed.items.count).to eql(7)
+      expect(feed.items.count).to eql(8)
     end
 
     it "includes item contents" do

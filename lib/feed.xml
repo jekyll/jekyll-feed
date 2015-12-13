@@ -49,7 +49,7 @@
       {% endif %}
 
       <id>{{ post.id | prepend: url_base | xml_escape }}</id>
-      <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">{{ post.content | markdownify | strip | xml_escape }}</content>
+      <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">{{ post.content | strip | xml_escape }}</content>
 
       {% if post.author %}
         <author>
@@ -76,7 +76,7 @@
       {% endfor %}
 
       {% if post.excerpt and post.excerpt != empty %}
-        <summary>{{ post.excerpt | markdownify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</summary>
+        <summary>{{ post.excerpt | strip_html | replace: '\n', ' ' | strip | xml_escape }}</summary>
       {% endif %}
     </entry>
   {% endfor %}
