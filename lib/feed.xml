@@ -47,7 +47,7 @@
       {% endif %}
 
       <id>{{ post.id | prepend: url_base | xml_escape }}</id>
-      <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">{{ post.content | markdownify | xml_escape }}</content>
+      <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">{{ post.content | markdownify | strip | xml_escape }}</content>
 
       {% if post.author %}
         <author>
