@@ -1,4 +1,4 @@
-require 'fileutils'
+require "fileutils"
 
 module Jekyll
   class PageWithoutAFile < Page
@@ -71,7 +71,7 @@ module Jekyll
       feed = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", path)
       feed.content = File.read(source_path).gsub(/\s*\n\s*/, "\n").gsub(/\s+{%/, "{%").gsub(/\s+</,"<")
       feed.data["layout"] = nil
-      feed.data['sitemap'] = false
+      feed.data["sitemap"] = false
       feed.output
       feed
     end
@@ -91,4 +91,4 @@ unless defined? Liquid::StandardFilters.strip
     Liquid::Template.register_filter(Jekyll::StripWhitespace)
 end
 
-Liquid::Template.register_tag('feed_meta', Jekyll::FeedMetaTag)
+Liquid::Template.register_tag("feed_meta", Jekyll::FeedMetaTag)
