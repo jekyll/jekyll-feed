@@ -33,7 +33,7 @@ The plugin will automatically use any of the following configuration variables, 
 * `author` - Your name, e.g., "Dr. Jekyll." This can be a string (with the author's name), or an object with the following properties:
   - `name` - **Required** Display name of the author
   - `email` - Email address of the author
-  - `uri` - Webpage where more information about the author can be found
+  - `url` - Webpage where more information about the author can be found
 
 ### Already have a feed path?
 
@@ -73,6 +73,6 @@ Great question. In short, Atom is a better format. Think of it like RSS 3.0. For
 
 1. Fork it (https://github.com/jekyll/jekyll-feed/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
