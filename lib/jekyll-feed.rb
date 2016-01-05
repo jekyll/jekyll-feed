@@ -28,7 +28,7 @@ module Jekyll
 
     def url
       if config["url"]
-        config["url"]
+        URI.join(config["url"], config["baseurl"])
       elsif config["github"] && config["github"]["url"]
         config["github"]["url"]
       end
