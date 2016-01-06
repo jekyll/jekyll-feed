@@ -69,7 +69,7 @@ module Jekyll
 
     def feed_content
       feed = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", path)
-      feed.content = File.read(source_path).gsub(/\s*\n\s*/, "\n").gsub(/\s+{%/, "{%").gsub(/\s+</,"<")
+      feed.content = File.read(source_path).gsub(/\s+([{<])/, '\1')
       feed.data["layout"] = nil
       feed.data["sitemap"] = false
       feed.output
