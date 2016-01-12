@@ -87,8 +87,8 @@ module Jekyll
   end
 end
 
-unless defined? Liquid::StandardFilters.strip
-    Liquid::Template.register_filter(Jekyll::StripWhitespace)
+unless Liquid::StandardFilters.method_defined?(:strip)
+  Liquid::Template.register_filter(Jekyll::StripWhitespace)
 end
 
 Liquid::Template.register_tag("feed_meta", Jekyll::FeedMetaTag)
