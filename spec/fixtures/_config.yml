@@ -1,8 +1,5 @@
 timezone: UTC
 
-gems:
-  - jekyll-last-modified-at
-
 defaults:
   -
     scope:

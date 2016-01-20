@@ -20,5 +20,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "typhoeus", "~> 0.7"
   spec.add_development_dependency "nokogiri", "~> 1.6"
-  spec.add_development_dependency "jekyll-last-modified-at", "0.3.4"
 end
