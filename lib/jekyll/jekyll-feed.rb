@@ -5,21 +5,23 @@ module Jekyll
     safe true
     priority :lowest
 
-    # Path to feed from config, or feed.xml for default
-    def path
-      if @site.config["feed"] && @site.config["feed"]["path"]
-        @site.config["feed"]["path"]
-      else
-        "feed.xml"
-      end
-    end
-
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
       @site.config["time"] = Time.new
       unless feed_exists?
         @site.pages << feed_content
+      end
+    end
+
+    private
+
+    # Path to feed from config, or feed.xml for default
+    def path
+      if @site.config["feed"] && @site.config["feed"]["path"]
+        @site.config["feed"]["path"]
+      else
+        "feed.xml"
       end
     end
 

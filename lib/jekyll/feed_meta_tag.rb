@@ -1,6 +1,13 @@
 module Jekyll
   class FeedMetaTag < Liquid::Tag
 
+    def render(context)
+      @context = context
+      "<link type=\"application/atom+xml\" rel=\"alternate\" href=\"#{url}/#{path}\" title=\"#{config["name"]}\" />"
+    end
+
+    private
+
     def config
       @context.registers[:site].config
     end
@@ -19,11 +26,6 @@ module Jekyll
       elsif config["github"] && config["github"]["url"]
         config["github"]["url"]
       end
-    end
-
-    def render(context)
-      @context = context
-      "<link type=\"application/atom+xml\" rel=\"alternate\" href=\"#{url}/#{path}\" title=\"#{config["name"]}\" />"
     end
   end
 end
