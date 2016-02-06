@@ -27,7 +27,7 @@ The plugin will automatically generate an Atom feed at `/feed.xml`.
 
 The plugin will automatically use any of the following configuration variables, if they are present in your site's `_config.yml` file.
 
-* `name` - The title of the site, e.g., "My awesome site"
+* `title` or `name` - The title of the site, e.g., "My awesome site"
 * `description` - A longer description of what your site is about, e.g., "Where I blog about Jekyll and other awesome things"
 * `url` - The URL to your site, e.g., `http://example.com`. If none is provided, the plugin will try to use `site.github.url`.
 * `author` - Your name, e.g., "Dr. Jekyll." This can be a string (with the author's name), or an object with the following properties:
