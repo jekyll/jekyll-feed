@@ -7,6 +7,7 @@ describe(Jekyll::JekyllFeed) do
       "full_rebuild" => true,
       "source"      => source_dir,
       "destination" => dest_dir,
+      "show_drafts" => true,
       "url"         => "http://example.org",
       "name"       => "My awesome site",
       "author"      => {
@@ -41,6 +42,9 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).to match /http:\/\/example\.org\/2014\/03\/04\/march-the-fourth\.html/
     expect(contents).to match /http:\/\/example\.org\/2014\/03\/02\/march-the-second\.html/
     expect(contents).to match /http:\/\/example\.org\/2013\/12\/12\/dec-the-second\.html/
+    if Gem::Version.new(Jekyll::VERSION) > Gem::Version.new('3')
+      expect(contents).to_not match /http:\/\/example\.org\/2016\/02\/09\/a-draft\.html/
+    end
   end
 
   it "does not include assets or any static files that aren't .html" do
@@ -100,7 +104,11 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "includes the items" do
-      expect(feed.items.count).to eql(8)
+      if Gem::Version.new(Jekyll::VERSION) > Gem::Version.new('3')
+        expect(feed.items.count).to eql(8)
+      else
+        expect(feed.items.count).to eql(9)
+      end
     end
 
     it "includes item contents" do
@@ -116,7 +124,11 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "doesn't include the item's excerpt if blank" do
-      post = feed.items.first
+      if Gem::Version.new(Jekyll::VERSION) > Gem::Version.new('3')
+        post = feed.items.first
+      else
+        post = feed.items.fetch(1)
+      end
       expect(post.summary).to be_nil
     end
 

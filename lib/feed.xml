@@ -38,6 +38,7 @@
   {% endif %}
 
   {% for post in site.posts limit: 10 %}
+  {% unless post.draft %}
     <entry>
       <title>{{ post.title | markdownify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</title>
       <link href="{{ post.url | prepend: url_base }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
@@ -79,5 +80,6 @@
         <summary>{{ post.excerpt | strip_html | replace: '\n', ' ' | strip | xml_escape }}</summary>
       {% endif %}
     </entry>
+  {% endunless %}
   {% endfor %}
 </feed>
