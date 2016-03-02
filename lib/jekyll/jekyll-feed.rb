@@ -42,9 +42,9 @@ module Jekyll
     # Checks if a feed already exists in the site source
     def feed_exists?
       if @site.respond_to?(:in_source_dir)
-        File.exists? @site.in_source_dir(path)
+        File.exist? @site.in_source_dir(path)
       else
-        File.exists? Jekyll.sanitized_path(@site.source, path)
+        File.exist? Jekyll.sanitized_path(@site.source, path)
       end
     end
   end

@@ -1,9 +1,8 @@
 module Jekyll
   class FeedMetaTag < Liquid::Tag
-
     def render(context)
       @context = context
-      "<link type=\"application/atom+xml\" rel=\"alternate\" href=\"#{url}/#{path}\" title=\"#{config["name"]}\" />"
+      %(<link type="application/atom+xml" rel="alternate" href="#{url}/#{path}" title="#{config["name"]}" />)
     end
 
     private
