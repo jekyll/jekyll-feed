@@ -3,7 +3,5 @@
 set -e
 
 bundle exec rspec
-if [ "$JEKYLL_VERSION" == "3.0" ]; then
-  bundle exec rubocop -S -D
-fi
+bundle exec rubocop -S -D
 bundle exec rake build
