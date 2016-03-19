@@ -4,10 +4,10 @@
 {% else %}
   {% assign url_base = site.github.url %}
 {% endif %}
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom"{% if site.lang %} xml:lang="{{ site.lang }}"{% endif %}>
   <generator uri="http://jekyllrb.com" version="{{ jekyll.version }}">Jekyll</generator>
   <link href="{{ page.url | prepend: url_base }}" rel="self" type="application/atom+xml" />
-  <link href="{{ url_base }}/" rel="alternate" type="text/html" />
+  <link href="{{ url_base }}/" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
   <id>{{ url_base | xml_escape }}/</id>
 
@@ -39,7 +39,7 @@
 
   {% for post in site.posts limit: 10 %}
   {% unless post.draft %}
-    <entry>
+    <entry{% if post.lang %} xml:lang="{{ post.lang }}"{% endif %}>
       <title>{{ post.title | markdownify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</title>
       <link href="{{ post.url | prepend: url_base }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
