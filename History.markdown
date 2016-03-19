@@ -1,6 +1,7 @@
 ## HEAD
 
   * Consolidate regexps for stripping whitespace (#82)
+  * Only test against Jekyll 3 (#99)
 
 ### Minor Enhancements
 
