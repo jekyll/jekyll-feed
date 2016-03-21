@@ -208,6 +208,20 @@ describe(Jekyll::JekyllFeed) do
       expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" title="My awesome site" />'
       expect(feed_meta).to eql(expected)
     end
+
+    context "with a blank site name" do
+      let(:config) do
+        Jekyll.configuration({
+          "source"      => source_dir,
+          "destination" => dest_dir,
+          "url"         => "http://example.org"
+        })
+      end
+
+      it "does not output blank title" do
+        expect(feed_meta).not_to include('title=')
+      end
+    end
   end
 
   context "changing the feed path" do

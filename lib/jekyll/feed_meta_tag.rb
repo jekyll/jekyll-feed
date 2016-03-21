@@ -2,13 +2,23 @@ module Jekyll
   class FeedMetaTag < Liquid::Tag
     def render(context)
       @context = context
-      %(<link type="application/atom+xml" rel="alternate" href="#{url}/#{path}" title="#{config["name"]}" />)
+      attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(' ')
+      "<link #{attrs} />"
     end
 
     private
 
     def config
       @context.registers[:site].config
+    end
+
+    def attributes
+      {
+        :type => 'application/atom+xml',
+        :rel => 'alternate',
+        :href => "#{url}/#{path}",
+        :title => title
+      }.keep_if { |_, v| v }
     end
 
     def path
@@ -25,6 +35,10 @@ module Jekyll
       elsif config["github"] && config["github"]["url"]
         config["github"]["url"]
       end
+    end
+
+    def title
+      config["title"] || config["name"]
     end
   end
 end
