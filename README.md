@@ -112,6 +112,9 @@ There are several ways to convey author-specific information. Author information
   author: benbalter
   ```
 
+* `image` - URL of an image that is representative of the post.  
+  **Note:** URL must be relative to the site root, eg: `/images/example.png`
+
 ### Meta tags
 
 The plugin exposes a helper tag to expose the appropriate meta tags to support automated discovery of your feed. Simply place `{% feed_meta %}` someplace in your template's `<head>` section, to output the necessary metadata.
