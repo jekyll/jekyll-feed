@@ -21,6 +21,8 @@ describe(Jekyll::JekyllFeed) do
   end
   let(:site)     { Jekyll::Site.new(config) }
   let(:contents) { File.read(dest_dir("feed.xml")) }
+  let(:context)  { make_context(site: site) }
+  let(:feed_meta) { Liquid::Template.parse("{% feed_meta %}").render!(context, {}) }
   before(:each) do
     site.process
   end
@@ -196,17 +198,15 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "renders the feed meta" do
-      index = File.read(dest_dir("index.html"))
-      expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/bass/feed.xml" title="My awesome site" />'
-      expect(index).to include(expected)
+      expected = 'href="http://example.org/bass/feed.xml"'
+      expect(feed_meta).to include(expected)
     end
   end
 
   context "feed meta" do
     it "renders the feed meta" do
-      index = File.read(dest_dir("index.html"))
       expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" title="My awesome site" />'
-      expect(index).to include(expected)
+      expect(feed_meta).to eql(expected)
     end
   end
 
@@ -224,9 +224,8 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "renders the feed meta with custom feed path" do
-      index = File.read(dest_dir("index.html"))
-      expected = '<link type="application/atom+xml" rel="alternate" href="http://example.org/atom.xml" title="My awesome site" />'
-      expect(index).to include(expected)
+      expected = 'href="http://example.org/atom.xml"'
+      expect(feed_meta).to include(expected)
     end
   end
 end

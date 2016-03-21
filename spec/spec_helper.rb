@@ -21,4 +21,8 @@ RSpec.configure do |config|
   def dest_dir(*files)
     File.join(DEST_DIR, *files)
   end
+
+  def make_context(registers = {})
+    Liquid::Context.new({}, {}, { site: site }.merge(registers))
+  end
 end
