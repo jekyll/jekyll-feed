@@ -52,18 +52,34 @@
       <id>{{ post.id | prepend: url_base | xml_escape }}</id>
       <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">{{ post.content | strip | xml_escape }}</content>
 
-      {% if post.author %}
+      {% assign post_author = post.author | default: post.authors[0] | default: site.author %}
+      {% assign post_author_email = false %}
+      {% assign post_author_uri = false %}
+      {% if post_author %}
+        {% if post_author.email %}
+          {% assign post_author_email = post_author.email %}
+        {% else %}
+          {% if site.data.authors and site.data.authors[post_author] %}
+            {% assign post_author_email = site.data.authors[post_author].email %}
+          {% endif %}
+        {% endif %}
+        {% if post_author.uri %}
+          {% assign post_author_uri = post_author.uri %}
+        {% else %}
+          {% if site.data.authors and site.data.authors[post_author] %}
+            {% assign post_author_email = site.data.authors[post_author].uri %}
+          {% endif %}
+        {% endif %}
+        {% if post_author.name %}
+          {% assign post_author = post_author.name %}
+        {% endif %}
         <author>
-          {% if post.author.name %}
-            <name>{{ post.author.name | xml_escape }}</name>
-          {% else %}
-            <name>{{ post.author | xml_escape }}</name>
+            <name>{{ post_author | xml_escape }}</name>
+          {% if post_author_email %}
+            <email>{{ post_author_email | xml_escape }}</email>
           {% endif %}
-          {% if post.author.email %}
-            <email>{{ post.author.email | xml_escape }}</email>
-          {% endif %}
-          {% if post.author.uri %}
-            <uri>{{ post.author.uri | xml_escape }}</uri>
+          {% if post_author_uri %}
+            <uri>{{ post_author_uri | xml_escape }}</uri>
           {% endif %}
         </author>
       {% endif %}
