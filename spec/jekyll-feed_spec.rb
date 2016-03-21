@@ -44,9 +44,7 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).to match /http:\/\/example\.org\/2014\/03\/04\/march-the-fourth\.html/
     expect(contents).to match /http:\/\/example\.org\/2014\/03\/02\/march-the-second\.html/
     expect(contents).to match /http:\/\/example\.org\/2013\/12\/12\/dec-the-second\.html/
-    if Gem::Version.new(Jekyll::VERSION) > Gem::Version.new('3')
-      expect(contents).to_not match /http:\/\/example\.org\/2016\/02\/09\/a-draft\.html/
-    end
+    expect(contents).to_not match /http:\/\/example\.org\/2016\/02\/09\/a-draft\.html/
   end
 
   it "does not include assets or any static files that aren't .html" do
@@ -106,11 +104,7 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "includes the items" do
-      if Gem::Version.new(Jekyll::VERSION) > Gem::Version.new('3')
-        expect(feed.items.count).to eql(8)
-      else
-        expect(feed.items.count).to eql(9)
-      end
+      expect(feed.items.count).to eql(8)
     end
 
     it "includes item contents" do
@@ -126,11 +120,7 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "doesn't include the item's excerpt if blank" do
-      if Gem::Version.new(Jekyll::VERSION) > Gem::Version.new('3')
-        post = feed.items.first
-      else
-        post = feed.items.fetch(1)
-      end
+      post = feed.items.first
       expect(post.summary).to be_nil
     end
 
