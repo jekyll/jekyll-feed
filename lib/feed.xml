@@ -96,8 +96,12 @@
         <summary>{{ post.excerpt | strip_html | replace: '\n', ' ' | strip | xml_escape }}</summary>
       {% endif %}
 
-      {% if post.image %}
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post.image | prepend: url_base | xml_escape }}" />
+      {% assign post_image = post.image %}
+      {% if post_image %}
+        {% unless post_image contains "://" %}
+          {% assign post_image = post_image | prepend: url_base | xml_escape  %}
+        {% endunless %}
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post_image }}" />
       {% endif %}
     </entry>
   {% endunless %}

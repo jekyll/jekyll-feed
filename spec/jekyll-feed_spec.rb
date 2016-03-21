@@ -87,6 +87,7 @@ describe(Jekyll::JekyllFeed) do
 
   it "includes the item image" do
     expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/image.png" />')
+    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://cdn.example.org/absolute.png" />')
   end
 
   context "parsing" do

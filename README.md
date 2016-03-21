@@ -113,7 +113,6 @@ There are several ways to convey author-specific information. Author information
   ```
 
 * `image` - URL of an image that is representative of the post.  
-  **Note:** URL must be relative to the site root, eg: `/images/example.png`
 
 ### Meta tags
 
