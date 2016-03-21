@@ -85,6 +85,11 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).not_to match /Liquid is not rendered\./
   end
 
+  it "allows posts to override the default post.id" do
+    expected = "<id>postID</id>"
+    expect(contents).to include(expected)
+  end
+
   context "parsing" do
     let(:feed) { RSS::Parser.parse(contents) }
 
@@ -105,9 +110,9 @@ describe(Jekyll::JekyllFeed) do
 
     it "includes the items" do
       if Gem::Version.new(Jekyll::VERSION) > Gem::Version.new('3')
-        expect(feed.items.count).to eql(8)
-      else
         expect(feed.items.count).to eql(9)
+      else
+        expect(feed.items.count).to eql(10)
       end
     end
 
@@ -125,9 +130,9 @@ describe(Jekyll::JekyllFeed) do
 
     it "doesn't include the item's excerpt if blank" do
       if Gem::Version.new(Jekyll::VERSION) > Gem::Version.new('3')
-        post = feed.items.first
-      else
         post = feed.items.fetch(1)
+      else
+        post = feed.items.fetch(2)
       end
       expect(post.summary).to be_nil
     end
