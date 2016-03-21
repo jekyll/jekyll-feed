@@ -7,6 +7,7 @@
 ### Minor Enhancements
 
   * Use Module#method_defined? (#83)
+  * Use site.title for meta tag if available (#100)
 
 ### Development Fixes
 
