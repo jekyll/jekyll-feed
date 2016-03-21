@@ -12,6 +12,7 @@
 
   * Do not require [**jekyll-last-modified-at**](https://github.com/gjtorikian/jekyll-last-modified-at) in tests (#87)
   * Add Rubocop (#81)
+  * Correct typo in tests (#102)
 
 ## 0.4.0 / 2015-12-30
 
