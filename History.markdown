@@ -5,6 +5,7 @@
   * Think about how i18n might work (#75)
   * Find author by reference (#106)
   * Drop support for Jekyll 2 (#105)
+  * Add support for post image (#104)
 
 ### Minor Enhancements
 
