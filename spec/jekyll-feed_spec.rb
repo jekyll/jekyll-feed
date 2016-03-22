@@ -85,6 +85,11 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).not_to match /Liquid is not rendered\./
   end
 
+  it "includes the item image" do
+    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/image.png" />')
+    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://cdn.example.org/absolute.png" />')
+  end
+
   context "parsing" do
     let(:feed) { RSS::Parser.parse(contents) }
 
