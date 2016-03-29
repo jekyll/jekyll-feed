@@ -4,6 +4,13 @@
 {% else %}
   {% assign url_base = site.github.url %}
 {% endif %}
+
+{% if site.feed && site.feed.limit %}
+  {% assign feed_limit = site.feed.limit %}
+{% else %}
+  {% assign feed_limit = 10 %}
+{% endif %}
+
 <feed xmlns="http://www.w3.org/2005/Atom"{% if site.lang %} xml:lang="{{ site.lang }}"{% endif %}>
   <generator uri="http://jekyllrb.com" version="{{ jekyll.version }}">Jekyll</generator>
   <link href="{{ page.url | prepend: url_base }}" rel="self" type="application/atom+xml" />
@@ -37,7 +44,7 @@
     </author>
   {% endif %}
 
-  {% for post in site.posts limit: 10 %}
+  {% for post in site.posts limit: feed_limit %}
   {% unless post.draft %}
     <entry{% if post.lang %} xml:lang="{{ post.lang }}"{% endif %}>
       <title>{{ post.title | markdownify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</title>
