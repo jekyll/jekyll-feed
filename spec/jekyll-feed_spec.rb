@@ -237,4 +237,20 @@ describe(Jekyll::JekyllFeed) do
       expect(feed_meta).to include(expected)
     end
   end
+
+  context "limit the number of feed entries" do
+    let(:overrides) do
+      {
+        "feed" => {
+          "limit" => "4"
+        }
+      }
+    end
+
+    let(:feed) { RSS::Parser.parse(contents) }
+
+    it "limits the feed entries " do
+      expect(feed.items.count).to be <= 4
+    end
+  end
 end
