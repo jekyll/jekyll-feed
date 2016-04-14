@@ -18,6 +18,7 @@
   * Add Rubocop (#81)
   * Correct typo in tests (#102)
   * Simplify testing feed_meta tag (#101)
+  * Quiet known warnings in tests (#103)
 
 ## 0.4.0 / 2015-12-30
 
