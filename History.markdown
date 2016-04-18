@@ -1,4 +1,4 @@
-## HEAD
+## 0.5.1 / 2016-04-18
 
   * Fix mangling of whitespace when `site.lang` is set (#110)
 
