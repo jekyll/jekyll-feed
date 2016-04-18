@@ -1,3 +1,7 @@
+## HEAD
+
+  * Fix mangling of whitespace when `site.lang` is set (#110)
+
 ## 0.5.0 / 2016-04-13
 
   * Consolidate regexps for stripping whitespace (#82)
