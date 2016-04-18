@@ -244,4 +244,12 @@ describe(Jekyll::JekyllFeed) do
       expect(feed_meta).to include(expected)
     end
   end
+
+  context "with site.lang set" do
+    let(:overrides) { { "lang" => "en-US" } }
+
+    it "should set the language" do
+      expect(contents).to match %r{type="text/html" hreflang="en-US" />}
+    end
+  end
 end
