@@ -243,6 +243,14 @@ describe(Jekyll::JekyllFeed) do
         expect(feed_meta).not_to include('title=')
       end
     end
+
+    context "with an invalid site URL" do
+      let(:overrides) { { "url" => "example.org" } }
+
+      it "throws an error" do
+        expect {feed_meta}.to raise_error(Jekyll::Errors::JekyllFeed::InvalidURLConfigurationError, %r!url = "example.org"!)
+      end
+    end
   end
 
   context "changing the feed path" do
