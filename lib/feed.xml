@@ -67,11 +67,15 @@
           {% assign post_author_uri = post_author.uri %}
         {% else %}
           {% if site.data.authors and site.data.authors[post_author] %}
-            {% assign post_author_email = site.data.authors[post_author].uri %}
+            {% assign post_author_uri = site.data.authors[post_author].uri %}
           {% endif %}
         {% endif %}
         {% if post_author.name %}
           {% assign post_author = post_author.name %}
+        {% else %}
+          {% if site.data.authors and site.data.authors[post_author] %}
+            {% assign post_author = site.data.authors[post_author].name %}
+          {% endif %}
         {% endif %}
         <author>
             <name>{{ post_author | xml_escape }}</name>
