@@ -53,30 +53,12 @@
       <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">{{ post.content | strip | xml_escape }}</content>
 
       {% assign post_author = post.author | default: post.authors[0] | default: site.author %}
-      {% assign post_author_email = false %}
-      {% assign post_author_uri = false %}
+      {% assign post_author = site.data.authors[post_author] | default: post_author %}
+      {% assign post_author_email = post_author.email | default: nil %}
+      {% assign post_author_uri = post_author.uri | default: nil %}
+      {% assign post_author = post_author.name | default: post_author %}
+
       {% if post_author %}
-        {% if post_author.email %}
-          {% assign post_author_email = post_author.email %}
-        {% else %}
-          {% if site.data.authors and site.data.authors[post_author] %}
-            {% assign post_author_email = site.data.authors[post_author].email %}
-          {% endif %}
-        {% endif %}
-        {% if post_author.uri %}
-          {% assign post_author_uri = post_author.uri %}
-        {% else %}
-          {% if site.data.authors and site.data.authors[post_author] %}
-            {% assign post_author_uri = site.data.authors[post_author].uri %}
-          {% endif %}
-        {% endif %}
-        {% if post_author.name %}
-          {% assign post_author = post_author.name %}
-        {% else %}
-          {% if site.data.authors and site.data.authors[post_author] %}
-            {% assign post_author = site.data.authors[post_author].name %}
-          {% endif %}
-        {% endif %}
         <author>
             <name>{{ post_author | xml_escape }}</name>
           {% if post_author_email %}
