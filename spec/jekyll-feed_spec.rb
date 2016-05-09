@@ -68,6 +68,10 @@ describe(Jekyll::JekyllFeed) do
     expect(contents).not_to match /<author>\s*<name><\/name>\s*<\/author>/
   end
 
+  it "does use author reference with data from _data/authors.yml" do
+    expect(contents).to match /<author>\s*<name>Garth<\/name>\s*<email>example@mail.com<\/email>\s*<uri>http:\/\/garthdb.com<\/uri>\s*<\/author>/
+  end
+
   it "converts markdown posts to HTML" do
     expect(contents).to match /&lt;p&gt;March the second!&lt;\/p&gt;/
   end
@@ -109,7 +113,7 @@ describe(Jekyll::JekyllFeed) do
     end
 
     it "includes the items" do
-      expect(feed.items.count).to eql(8)
+      expect(feed.items.count).to eql(9)
     end
 
     it "includes item contents" do
