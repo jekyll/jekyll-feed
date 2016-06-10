@@ -12,6 +12,9 @@ module Jekyll
       unless feed_exists?
         @site.pages << feed_content
       end
+      unless xslt_exists?
+        @site.pages << xslt_content
+      end
     end
 
     private
@@ -45,6 +48,31 @@ module Jekyll
         File.exist? @site.in_source_dir(path)
       else
         File.exist? Jekyll.sanitized_path(@site.source, path)
+      end
+    end
+
+    # Path to the feed.xslt.xml template file
+    def xslt_source_path
+      File.expand_path "../feed.xslt.xml", File.dirname(__FILE__)
+    end
+
+    def xslt_content
+      xslt_path = "feed.xslt.xml"
+      xslt = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", xslt_path)
+      xslt.content = File.read(xslt_source_path).gsub(/(?<!\")\s+([<{])/, '\1')
+      xslt.data["layout"] = nil
+      xslt.data["sitemap"] = false
+      xslt.output
+      xslt
+    end
+
+    # Checks if a feed stylesheet exists in the site source
+    def xslt_exists?
+      xslt_path = "feed.xslt.xml"
+      if @site.respond_to?(:in_source_dir)
+        File.exist? @site.in_source_dir(xslt_path)
+      else
+        File.exist? Jekyll.sanitized_path(@site.source, xslt_path)
       end
     end
   end

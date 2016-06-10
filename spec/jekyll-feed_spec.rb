@@ -249,6 +249,12 @@ describe(Jekyll::JekyllFeed) do
     end
   end
 
+  context "feed stylesheet" do
+    it "includes a default stylesheet" do
+      expect(contents).to include('<?xml-stylesheet type="text/xml" href="feed.xslt.xml"?>')
+    end
+  end
+
   context "with site.lang set" do
     let(:overrides) { { "lang" => "en-US" } }
 
