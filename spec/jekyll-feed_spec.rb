@@ -35,6 +35,10 @@ describe(Jekyll::JekyllFeed) do
     expect(Pathname.new(dest_dir("feed.xml"))).to exist
   end
 
+  it "creates a feed.xslt.xml file" do
+    expect(Pathname.new(dest_dir("feed.xslt.xml"))).to exist
+  end
+
   it "doesn't have multiple new lines or trailing whitespace" do
     expect(contents).to_not match /\s+\n/
     expect(contents).to_not match /\n{2,}/
