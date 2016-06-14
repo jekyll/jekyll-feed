@@ -35,6 +35,10 @@ describe(Jekyll::JekyllFeed) do
     expect(Pathname.new(dest_dir("feed.xml"))).to exist
   end
 
+  it "creates a feed.xslt.xml file" do
+    expect(Pathname.new(dest_dir("feed.xslt.xml"))).to exist
+  end
+
   it "doesn't have multiple new lines or trailing whitespace" do
     expect(contents).to_not match /\s+\n/
     expect(contents).to_not match /\n{2,}/
@@ -246,6 +250,12 @@ describe(Jekyll::JekyllFeed) do
     it "renders the feed meta with custom feed path" do
       expected = 'href="http://example.org/atom.xml"'
       expect(feed_meta).to include(expected)
+    end
+  end
+
+  context "feed stylesheet" do
+    it "includes a default stylesheet" do
+      expect(contents).to include('<?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?>')
     end
   end
 
