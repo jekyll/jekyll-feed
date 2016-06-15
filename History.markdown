@@ -2,6 +2,7 @@
 
   * Cleanup `post_author` logic (#113)
   * Add XML stylesheet example with XSLT (#119)
+  * DRY up and add more doc (#120)
 
 ## 0.5.1 / 2016-04-18
 
