@@ -12,7 +12,7 @@ module Jekyll
       unless file_exists?(feed_path)
         @site.pages << content_for_file(feed_path, feed_source_path)
       end
-      unless file_exists?("feed.xslt.xml")
+      unless file_exists?(xslt_path)
         @site.pages << content_for_file(xslt_path, xslt_source_path)
       end
     end
@@ -28,6 +28,7 @@ module Jekyll
       end
     end
 
+    # Path to feed stylesheet from config
     def xslt_path
       "feed.xslt.xml"
     end
