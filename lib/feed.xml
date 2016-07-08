@@ -13,9 +13,9 @@
   <id>{{ url_base | xml_escape }}/</id>
 
   {% if site.title %}
-    <title>{{ site.title | xml_escape }}</title>
+    <title>{{ site.title | smartify | xml_escape }}</title>
   {% elsif site.name %}
-    <title>{{ site.name | xml_escape }}</title>
+    <title>{{ site.name | smartify | xml_escape }}</title>
   {% endif %}
 
   {% if site.description %}
@@ -41,7 +41,7 @@
   {% for post in site.posts limit: 10 %}
   {% unless post.draft %}
     <entry{% if post.lang %} xml:lang="{{ post.lang }}"{% endif %}>
-      <title>{{ post.title | markdownify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</title>
+      <title>{{ post.title | smartify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</title>
       <link href="{{ post.url | prepend: url_base }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
       {% if post.last_modified_at %}

@@ -166,6 +166,16 @@ describe(Jekyll::JekyllFeed) do
     end
   end
 
+  context "smartify" do
+    let(:site_title) { "Pat's Site" }
+    let(:overrides) { { "title" => site_title } }
+    let(:feed) { RSS::Parser.parse(contents) }
+
+    it "processes site title with SmartyPants" do
+      expect(feed.title.content).to eql("Pat’s Site")
+    end
+  end
+
   context "validation" do
     it "validates" do
       # See https://validator.w3.org/docs/api.html
