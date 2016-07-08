@@ -1,4 +1,4 @@
-## HEAD
+## 0.6.0 / 2016-07-08
 
   * Cleanup `post_author` logic (#113)
   * Add XML stylesheet example with XSLT (#119)
