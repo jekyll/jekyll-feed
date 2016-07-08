@@ -112,11 +112,15 @@ There are several ways to convey author-specific information. Author information
   author: benbalter
   ```
 
-* `image` - URL of an image that is representative of the post.  
+* `image` - URL of an image that is representative of the post.
 
 ### Meta tags
 
 The plugin exposes a helper tag to expose the appropriate meta tags to support automated discovery of your feed. Simply place `{% feed_meta %}` someplace in your template's `<head>` section, to output the necessary metadata.
+
+### SmartyPants
+
+The plugin uses [Jekyll's `smartify` filter](https://jekyllrb.com/docs/templates/) for processing the site title and post titles. This will translate plain ASCII punctuation into "smart" typographic punctuation. This will not render or strip any Markdown you may be using in a title.
 
 ## Why Atom, and not RSS?
 
