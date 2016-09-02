@@ -85,7 +85,7 @@ describe(Jekyll::JekyllFeed) do
   end
 
   it "replaces newlines in posts to spaces" do
-    expect(contents).to match /<title>The plugin will properly strip newlines.<\/title>/
+    expect(contents).to match %r!<title type="html">The plugin will properly strip newlines.</title>!
   end
 
   it "renders Liquid inside posts" do
