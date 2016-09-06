@@ -1,4 +1,4 @@
-## HEAD
+## 0.7.0 / 2016-09-06
 
   * Use type="html" to skirt around double escaping problem (#127)
 
