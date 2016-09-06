@@ -1,3 +1,7 @@
+## HEAD
+
+  * Use type="html" to skirt around double escaping problem (#127)
+
 ## 0.6.0 / 2016-07-08
 
   * Cleanup `post_author` logic (#113)
