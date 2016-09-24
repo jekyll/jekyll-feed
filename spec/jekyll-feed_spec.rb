@@ -265,7 +265,7 @@ describe(Jekyll::JekyllFeed) do
 
   context "feed stylesheet" do
     it "includes a default stylesheet" do
-      expect(contents).to include('<?xml-stylesheet type="text/xml" href="/feed.xslt.xml"?>')
+      expect(contents).to include('<?xml-stylesheet type="text/xml" href="http://example.org/feed.xslt.xml"?>')
     end
   end
 
