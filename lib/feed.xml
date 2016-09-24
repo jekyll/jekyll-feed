@@ -19,11 +19,7 @@
 
   {% if site.author %}
     <author>
-      {% if site.author.name %}
-        <name>{{ site.author.name | xml_escape }}</name>
-      {% else %}
-        <name>{{ site.author | xml_escape }}</name>
-      {% endif %}
+        <name>{{ site.author.name | default: site.author | xml_escape }}</name>
       {% if site.author.email %}
         <email>{{ site.author.email | xml_escape }}</email>
       {% endif %}
@@ -39,12 +35,7 @@
       <title type="html">{{ post.title | smartify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</title>
       <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
-      {% if post.last_modified_at %}
-        <updated>{{ post.last_modified_at | date_to_xmlschema }}</updated>
-      {% else %}
-        <updated>{{ post.date | date_to_xmlschema }}</updated>
-      {% endif %}
-
+      <updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated>
       <id>{{ post.id | absolute_url | xml_escape }}</id>
       <content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}">{{ post.content | strip | xml_escape }}</content>
 
