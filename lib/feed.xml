@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xml" href="{{ url_base }}/feed.xslt.xml"?>
 {% if site.url %}
   {% assign url_base = site.url | append: site.baseurl %}
 {% else %}
   {% assign url_base = site.github.url %}
 {% endif %}
+<?xml-stylesheet type="text/xml" href="{{ url_base }}/feed.xslt.xml"?>
 <feed xmlns="http://www.w3.org/2005/Atom"{% if site.lang %} xml:lang="{{ site.lang }}"{% endif %}>
   <generator uri="http://jekyllrb.com" version="{{ jekyll.version }}">Jekyll</generator>
   <link href="{{ page.url | prepend: url_base }}" rel="self" type="application/atom+xml" />
