@@ -1,4 +1,4 @@
-## HEAD
+## 0.7.1 / 2016-09-26
 
   * Assign `url_base` before first usage (#133)
 
