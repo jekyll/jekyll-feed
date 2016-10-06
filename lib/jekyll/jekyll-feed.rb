@@ -8,7 +8,6 @@ module Jekyll
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
-      @site.config["time"] = Time.new
       unless file_exists?(feed_path)
         @site.pages << content_for_file(feed_path, feed_source_path)
       end
