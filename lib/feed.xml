@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-{% if site.url %}
-  {% assign url_base = site.url | append: site.baseurl %}
-{% else %}
-  {% assign url_base = site.github.url %}
-{% endif %}
-<?xml-stylesheet type="text/xml" href="{{ url_base }}/feed.xslt.xml"?>
+<?xml-stylesheet type="text/xml" href="{{ '/feed.xslt.xml' | absolute_url }}"?>
 <feed xmlns="http://www.w3.org/2005/Atom"{% if site.lang %} xml:lang="{{ site.lang }}"{% endif %}>
   <generator uri="http://jekyllrb.com" version="{{ jekyll.version }}">Jekyll</generator>
-  <link href="{{ page.url | prepend: url_base }}" rel="self" type="application/atom+xml" />
-  <link href="{{ url_base }}/" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
+  <link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
+  <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
-  <id>{{ url_base | xml_escape }}/</id>
+  <id>{{ '/' | absolute_url | xml_escape }}/</id>
 
   {% if site.title %}
     <title type="html">{{ site.title | smartify | xml_escape }}</title>
@@ -24,11 +19,7 @@
 
   {% if site.author %}
     <author>
-      {% if site.author.name %}
-        <name>{{ site.author.name | xml_escape }}</name>
-      {% else %}
-        <name>{{ site.author | xml_escape }}</name>
-      {% endif %}
+        <name>{{ site.author.name | default: site.author | xml_escape }}</name>
       {% if site.author.email %}
         <email>{{ site.author.email | xml_escape }}</email>
       {% endif %}
@@ -42,16 +33,11 @@
   {% unless post.draft %}
     <entry{% if post.lang %} xml:lang="{{ post.lang }}"{% endif %}>
       <title type="html">{{ post.title | smartify | strip_html | replace: '\n', ' ' | strip | xml_escape }}</title>
-      <link href="{{ post.url | prepend: url_base }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
+      <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
-      {% if post.last_modified_at %}
-        <updated>{{ post.last_modified_at | date_to_xmlschema }}</updated>
-      {% else %}
-        <updated>{{ post.date | date_to_xmlschema }}</updated>
-      {% endif %}
-
-      <id>{{ post.id | prepend: url_base | xml_escape }}</id>
-      <content type="html" xml:base="{{ post.url | prepend: url_base | xml_escape }}">{{ post.content | strip | xml_escape }}</content>
+      <updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated>
+      <id>{{ post.id | absolute_url | xml_escape }}</id>
+      <content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}">{{ post.content | strip | xml_escape }}</content>
 
       {% assign post_author = post.author | default: post.authors[0] | default: site.author %}
       {% assign post_author = site.data.authors[post_author] | default: post_author %}
@@ -86,7 +72,7 @@
       {% assign post_image = post.image.path | default: post.image %}
       {% if post_image %}
         {% unless post_image contains "://" %}
-          {% assign post_image = post_image | prepend: url_base | xml_escape  %}
+          {% assign post_image = post_image | absolute_url | xml_escape  %}
         {% endunless %}
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post_image }}" />
       {% endif %}
