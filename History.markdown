@@ -1,6 +1,6 @@
 ## 0.7.2 / 2016-10-06
 
-  * Support `image.path` when `post.image` is an object #137
+  * Support `image.path` when `post.image` is an object (#137)
 
 ## 0.7.1 / 2016-09-26
 
