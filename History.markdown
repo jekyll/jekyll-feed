@@ -6,6 +6,10 @@
 
   * Don't set @site.config["time"] on feed generation (#138)
 
+### pedantry
+
+  * Appease Rubocop (#139)
+
 ## 0.7.2 / 2016-10-06
 
   * Support `image.path` when `post.image` is an object (#137)
