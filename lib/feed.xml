@@ -83,7 +83,7 @@
         <summary type="html">{{ post.excerpt | strip_html | replace: '\n', ' ' | strip | xml_escape }}</summary>
       {% endif %}
 
-      {% assign post_image = post.image %}
+      {% assign post_image = post.image.path | default: post.image %}
       {% if post_image %}
         {% unless post_image contains "://" %}
           {% assign post_image = post_image | prepend: url_base | xml_escape  %}
