@@ -1,5 +1,7 @@
 ## HEAD
 
+  * Use filters to clean up Liquid template (#134)
+
 ### Minor Enhancements
 
   * Don't set @site.config["time"] on feed generation (#138)
