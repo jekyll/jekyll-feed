@@ -1,4 +1,4 @@
-## HEAD
+## 0.8.0 / 2016-10-06
 
   * Use filters to clean up Liquid template (#134)
 
