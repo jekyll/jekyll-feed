@@ -54,7 +54,7 @@ module Jekyll
     # Generates contents for a file
     def content_for_file(file_path, file_source_path)
       file = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", file_path)
-      file.content = File.read(file_source_path).gsub(/(?<!\")\s+([<{])/, '\1')
+      file.content = File.read(file_source_path).gsub(%r!(?<\!")\s+([<{])!, '\1')
       file.data["layout"] = nil
       file.data["sitemap"] = false
       file.output
