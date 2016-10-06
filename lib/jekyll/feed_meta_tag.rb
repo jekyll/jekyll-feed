@@ -2,7 +2,7 @@ module Jekyll
   class FeedMetaTag < Liquid::Tag
     def render(context)
       @context = context
-      attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(' ')
+      attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(" ")
       "<link #{attrs} />"
     end
 
@@ -14,9 +14,9 @@ module Jekyll
 
     def attributes
       {
-        :type => 'application/atom+xml',
-        :rel => 'alternate',
-        :href => "#{url}/#{path}",
+        :type  => "application/atom+xml",
+        :rel   => "alternate",
+        :href  => "#{url}/#{path}",
         :title => title
       }.keep_if { |_, v| v }
     end
