@@ -18,6 +18,12 @@ module Jekyll
 
     private
 
+    # Matches all whitespace that follows
+    #   1. A '>', which closes an XML tag or
+    #   2. A '}', which closes a Liquid tag
+    # We will strip all of this whitespace to minify the template
+    MINIFY_REGEX = %r!(?<=>|})\s+!
+
     # Path to feed from config, or feed.xml for default
     def feed_path
       if @site.config["feed"] && @site.config["feed"]["path"]
@@ -54,7 +60,7 @@ module Jekyll
     # Generates contents for a file
     def content_for_file(file_path, file_source_path)
       file = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", file_path)
-      file.content = File.read(file_source_path).gsub(%r!(?<\!")\s+([<{])!, '\1')
+      file.content = File.read(file_source_path).gsub(MINIFY_REGEX, "")
       file.data["layout"] = nil
       file.data["sitemap"] = false
       file.output
