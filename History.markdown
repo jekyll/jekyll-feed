@@ -4,6 +4,10 @@
 
   * Simplify minify regular expression (#141)
 
+### Minor Enhancements
+
+  * Use new `normalize_whitespace` filter (#143)
+
 ## 0.8.0 / 2016-10-06
 
   * Use filters to clean up Liquid template (#134)
