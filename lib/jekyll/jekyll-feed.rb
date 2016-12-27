@@ -8,12 +8,8 @@ module Jekyll
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
-      unless file_exists?(feed_path)
-        @site.pages << content_for_file(feed_path, feed_source_path)
-      end
-      unless file_exists?(xslt_path)
-        @site.pages << content_for_file(xslt_path, xslt_source_path)
-      end
+      return if file_exists?(feed_path)
+      @site.pages << content_for_file(feed_path, feed_source_path)
     end
 
     private
@@ -33,19 +29,9 @@ module Jekyll
       end
     end
 
-    # Path to feed stylesheet from config
-    def xslt_path
-      "feed.xslt.xml"
-    end
-
     # Path to feed.xml template file
     def feed_source_path
       File.expand_path "../feed.xml", File.dirname(__FILE__)
-    end
-
-    # Path to the feed.xslt.xml template file
-    def xslt_source_path
-      File.expand_path "../feed.xslt.xml", File.dirname(__FILE__)
     end
 
     # Checks if a file already exists in the site source
@@ -63,6 +49,7 @@ module Jekyll
       file.content = File.read(file_source_path).gsub(MINIFY_REGEX, "")
       file.data["layout"] = nil
       file.data["sitemap"] = false
+      file.data["xsl"] = file_exists?("feed.xslt.xml")
       file.output
       file
     end
