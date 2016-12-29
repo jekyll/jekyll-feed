@@ -1,11 +1,13 @@
 ## HEAD
 
+ * Make feed stylesheet optional (#149)
+ 
 ### Development Fixes
 
   * Simplify minify regular expression (#141)
 
 ### Minor Enhancements
-
+ 
   * Use new `normalize_whitespace` filter (#143)
 
 ## 0.8.0 / 2016-10-06
