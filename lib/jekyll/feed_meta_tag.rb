@@ -31,10 +31,25 @@ module Jekyll
 
     def url
       if config["url"]
-        URI.join(config["url"], config["baseurl"])
+        begin
+          URI.join(config["url"], config["baseurl"])
+        rescue
+          raise Jekyll::Errors::JekyllFeed::InvalidURLConfigurationError, url_error
+        end
       elsif config["github"] && config["github"]["url"]
         config["github"]["url"]
       end
+    end
+
+    def url_error
+      <<-EOS
+One or both of `url` and `baseurl` are invalid in your configuration file. We were unable to create a valid URL with them:
+
+    url = #{config["url"].inspect}
+    baseurl = #{config["baseurl"].inspect}
+
+Please correct them, or remove them from your configuration.
+      EOS
     end
 
     def title
