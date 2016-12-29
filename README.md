@@ -122,6 +122,10 @@ The plugin exposes a helper tag to expose the appropriate meta tags to support a
 
 The plugin uses [Jekyll's `smartify` filter](https://jekyllrb.com/docs/templates/) for processing the site title and post titles. This will translate plain ASCII punctuation into "smart" typographic punctuation. This will not render or strip any Markdown you may be using in a title.
 
+### Custom styling
+
+Want to style what your feed looks like in the browser? Simply add an XSLT at `/feed.xslt.xml` and Jekyll Feed will link to the stylesheet.
+
 ## Why Atom, and not RSS?
 
 Great question. In short, Atom is a better format. Think of it like RSS 3.0. For more information, see [this discussion on why we chose Atom over RSS 2.0](https://github.com/jekyll/jekyll-rss-feed/issues/2).
