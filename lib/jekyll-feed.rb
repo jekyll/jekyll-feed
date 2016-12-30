@@ -1,3 +1,10 @@
-require "jekyll/feed_meta_tag"
-require "jekyll/jekyll-feed"
-require "jekyll/page_without_a_file"
+require "jekyll"
+require "fileutils"
+require "jekyll-feed/generator"
+
+module JekyllFeed
+  autoload :MetaTag,          "jekyll-feed/meta-tag"
+  autoload :PageWithoutAFile, "jekyll-feed/page-without-a-file.rb"
+end
+
+Liquid::Template.register_tag "feed_meta", JekyllFeed::MetaTag

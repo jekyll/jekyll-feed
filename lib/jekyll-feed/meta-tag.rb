@@ -1,5 +1,5 @@
-module Jekyll
-  class FeedMetaTag < Liquid::Tag
+module JekyllFeed
+  class MetaTag < Liquid::Tag
     def render(context)
       @context = context
       attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(" ")
@@ -42,5 +42,3 @@ module Jekyll
     end
   end
 end
-
-Liquid::Template.register_tag("feed_meta", Jekyll::FeedMetaTag)
