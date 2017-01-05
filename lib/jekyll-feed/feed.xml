@@ -59,9 +59,6 @@
         </author>
       {% endif %}
 
-      {% if post.category %}
-        <category term="{{ post.category | xml_escape }}" />
-      {% endif %}
       {% for category in post.categories %}
         <category term="{{ category | xml_escape }}" />
       {% endfor %}
