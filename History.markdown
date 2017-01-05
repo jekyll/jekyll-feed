@@ -1,14 +1,14 @@
 ## HEAD
 
- * Make feed stylesheet optional (#149)
- 
+### Minor Enhancements
+
+  * Use absolute_url to generate the feed_meta url (#150)
+  * Make feed stylesheet optional (#149)
+  * Use new `normalize_whitespace` filter (#143)
+
 ### Development Fixes
 
   * Simplify minify regular expression (#141)
-
-### Minor Enhancements
- 
-  * Use new `normalize_whitespace` filter (#143)
 
 ## 0.8.0 / 2016-10-06
 
