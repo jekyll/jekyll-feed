@@ -48,7 +48,7 @@
       {% assign post_author_name = post_author.name | default: post_author %}
 
       <author>
-          <name>{{ post_author_name | xml_escape }}</name>
+          <name>{{ post_author_name | default: "" | xml_escape }}</name>
         {% if post_author_email %}
           <email>{{ post_author_email | xml_escape }}</email>
         {% endif %}
