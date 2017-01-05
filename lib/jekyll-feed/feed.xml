@@ -47,17 +47,15 @@
       {% assign post_author_uri = post_author.uri | default: nil %}
       {% assign post_author_name = post_author.name | default: post_author %}
 
-      {% if post_author %}
-        <author>
-            <name>{{ post_author_name | xml_escape }}</name>
-          {% if post_author_email %}
-            <email>{{ post_author_email | xml_escape }}</email>
-          {% endif %}
-          {% if post_author_uri %}
-            <uri>{{ post_author_uri | xml_escape }}</uri>
-          {% endif %}
-        </author>
-      {% endif %}
+      <author>
+          <name>{{ post_author_name | xml_escape }}</name>
+        {% if post_author_email %}
+          <email>{{ post_author_email | xml_escape }}</email>
+        {% endif %}
+        {% if post_author_uri %}
+          <uri>{{ post_author_uri | xml_escape }}</uri>
+        {% endif %}
+      </author>
 
       {% if post.category %}
         <category term="{{ post.category | xml_escape }}" />
