@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe(Jekyll::JekyllFeed) do
+describe(JekyllFeed) do
   let(:overrides) { Hash.new }
   let(:config) do
     Jekyll.configuration(Jekyll::Utils.deep_merge_hashes({

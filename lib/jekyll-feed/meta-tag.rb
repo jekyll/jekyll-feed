@@ -1,5 +1,5 @@
-module Jekyll
-  class FeedMetaTag < Liquid::Tag
+module JekyllFeed
+  class MetaTag < Liquid::Tag
     # Use Jekyll's native relative_url filter
     include Jekyll::Filters::URLFilters
 
@@ -37,5 +37,3 @@ module Jekyll
     end
   end
 end
-
-Liquid::Template.register_tag("feed_meta", Jekyll::FeedMetaTag)

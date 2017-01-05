@@ -1,7 +1,5 @@
-require "fileutils"
-
-module Jekyll
-  class JekyllFeed < Jekyll::Generator
+module JekyllFeed
+  class Generator < Jekyll::Generator
     safe true
     priority :lowest
 
@@ -31,7 +29,7 @@ module Jekyll
 
     # Path to feed.xml template file
     def feed_source_path
-      File.expand_path "../feed.xml", File.dirname(__FILE__)
+      File.expand_path "./feed.xml", File.dirname(__FILE__)
     end
 
     # Checks if a file already exists in the site source
