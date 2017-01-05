@@ -262,6 +262,33 @@ describe(JekyllFeed) do
     end
   end
 
+  context "with categories" do
+    let(:overrides) do
+      {
+        "source" => source_dir2
+      }
+    end
+    let(:feed) { RSS::Parser.parse(contents) }
+
+    it "includes the items" do
+      expect(feed.items.count).to eql(2)
+    end
+
+    it "outputs categories for posts with one `category`" do
+      post = feed.items.last
+      expect(post.categories[0].term).to eql('single')
+      expect(post.categories.count).to eql(1)
+    end
+
+    it "outputs categories for posts with one `category`" do
+      post = feed.items.first
+      expect(post.categories[0].term).to eql('1')
+      expect(post.categories[1].term).to eql('2')
+      expect(post.categories[2].term).to eql('3')
+      expect(post.categories.count).to eql(3)
+    end
+  end
+
   context "feed stylesheet" do
     it "includes the stylesheet" do
       expect(contents).to include('<?xml-stylesheet type="text/xml" href="http://example.org/feed.xslt.xml"?>')
