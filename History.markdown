@@ -9,6 +9,7 @@
 ### Development Fixes
 
   * Simplify minify regular expression (#141)
+  * Namespace as JekyllFeed (#151)
 
 ## 0.8.0 / 2016-10-06
 
