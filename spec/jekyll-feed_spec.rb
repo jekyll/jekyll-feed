@@ -282,9 +282,9 @@ describe(JekyllFeed) do
 
     it "outputs categories for posts with one `category`" do
       post = feed.items.first
-      expect(post.categories[0].term).to eql('1')
-      expect(post.categories[1].term).to eql('2')
-      expect(post.categories[2].term).to eql('3')
+      expect(post.categories[0].term).to eql('first')
+      expect(post.categories[1].term).to eql('second')
+      expect(post.categories[2].term).to eql('third')
       expect(post.categories.count).to eql(3)
     end
   end
