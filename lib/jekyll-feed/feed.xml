@@ -31,8 +31,8 @@
     </author>
   {% endif %}
 
-  {% for post in site.posts limit: 10 %}
-  {% unless post.draft %}
+  {% assign posts = site.posts | where_exp: "post", "post.draft != true" %}
+  {% for post in posts limit: 10 %}
     <entry{% if post.lang %} xml:lang="{{ post.lang }}"{% endif %}>
       <title type="html">{{ post.title | smartify | strip_html | normalize_whitespace | xml_escape }}</title>
       <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
@@ -79,6 +79,5 @@
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post_image }}" />
       {% endif %}
     </entry>
-  {% endunless %}
   {% endfor %}
 </feed>

@@ -45,6 +45,7 @@ describe(JekyllFeed) do
     expect(contents).to match /http:\/\/example\.org\/2014\/03\/04\/march-the-fourth\.html/
     expect(contents).to match /http:\/\/example\.org\/2014\/03\/02\/march-the-second\.html/
     expect(contents).to match /http:\/\/example\.org\/2013\/12\/12\/dec-the-second\.html/
+    expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
     expect(contents).to_not match /http:\/\/example\.org\/2016\/02\/09\/a-draft\.html/
   end
 
@@ -115,7 +116,7 @@ describe(JekyllFeed) do
     end
 
     it "includes the items" do
-      expect(feed.items.count).to eql(9)
+      expect(feed.items.count).to eql(10)
     end
 
     it "includes item contents" do
