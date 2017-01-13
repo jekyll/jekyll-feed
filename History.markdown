@@ -11,6 +11,10 @@
   * Simplify minify regular expression (#141)
   * Namespace as JekyllFeed (#151)
 
+### Bug Fixes
+
+  * Filter out drafts before limit (#154)
+
 ## 0.8.0 / 2016-10-06
 
   * Use filters to clean up Liquid template (#134)
