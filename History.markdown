@@ -5,6 +5,7 @@
   * Use absolute_url to generate the feed_meta url (#150)
   * Make feed stylesheet optional (#149)
   * Use new `normalize_whitespace` filter (#143)
+  * Feed entries must contain <author> (#152)
 
 ### Development Fixes
 
