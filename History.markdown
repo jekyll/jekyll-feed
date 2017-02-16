@@ -11,6 +11,7 @@
 
   * Simplify minify regular expression (#141)
   * Namespace as JekyllFeed (#151)
+  * rubocop -a (#160)
 
 ### Bug Fixes
 
