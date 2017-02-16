@@ -7,7 +7,7 @@
   <link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
   <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
-  <id>{{ '/' | absolute_url | xml_escape }}/</id>
+  <id>{{ '/' | absolute_url | xml_escape }}</id>
 
   {% if site.title %}
     <title type="html">{{ site.title | smartify | xml_escape }}</title>
