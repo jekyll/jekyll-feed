@@ -6,6 +6,7 @@
   * Make feed stylesheet optional (#149)
   * Use new `normalize_whitespace` filter (#143)
   * Feed entries must contain <author> (#152)
+  * Remove trailing slash from feed ID (#159)
 
 ### Development Fixes
 
