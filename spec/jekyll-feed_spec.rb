@@ -149,7 +149,12 @@ describe(JekyllFeed) do
       end
 
       it "outputs the correct language" do
-        expect(feed.lang).to match(lang)
+        expect(feed.lang).to eql(lang)
+      end
+
+      it "sets the language of entries" do
+        post = feed.items.first
+        expect(post.lang).to eql(lang)
       end
     end
 
