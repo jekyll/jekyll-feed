@@ -105,6 +105,7 @@ describe(JekyllFeed) do
       expect(feed.feed_version).to eql("1.0")
       expect(feed.encoding).to eql("UTF-8")
       expect(feed.lang).to be_nil
+      expect(feed.valid?).to eql(true)
     end
 
     it "outputs the link" do
@@ -144,6 +145,7 @@ describe(JekyllFeed) do
         expect(feed.feed_type).to eql("atom")
         expect(feed.feed_version).to eql("1.0")
         expect(feed.encoding).to eql("UTF-8")
+        expect(feed.valid?).to eql(true)
       end
 
       it "outputs the correct language" do
