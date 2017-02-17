@@ -156,6 +156,11 @@ describe(JekyllFeed) do
         post = feed.items.first
         expect(post.lang).to eql(lang)
       end
+
+      it "renders the feed meta" do
+        expected = %r!<link href="http://example.org/" rel="alternate" type="text/html" hreflang="#{lang}" />!
+        expect(contents).to match(expected)
+      end
     end
 
     context "with site.title set" do
