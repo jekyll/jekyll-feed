@@ -1,3 +1,9 @@
+## HEAD
+
+### Minor Enhancements
+
+  * Update feed.xml (#162)
+
 ## 0.9.0 / 2017-02-16
 
 ### Minor Enhancements
