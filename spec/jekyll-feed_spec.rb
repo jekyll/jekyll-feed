@@ -104,6 +104,7 @@ describe(JekyllFeed) do
       expect(feed.feed_type).to eql("atom")
       expect(feed.feed_version).to eql("1.0")
       expect(feed.encoding).to eql("UTF-8")
+      expect(feed.lang).to be_nil
     end
 
     it "outputs the link" do
@@ -134,6 +135,20 @@ describe(JekyllFeed) do
     it "doesn't include the item's excerpt if blank" do
       post = feed.items.first
       expect(post.summary).to be_nil
+    end
+
+    context "with site.lang set" do
+      lang = "en_US"
+      let(:overrides) { {"lang" => lang} }
+      it "outputs a valid feed" do
+        expect(feed.feed_type).to eql("atom")
+        expect(feed.feed_version).to eql("1.0")
+        expect(feed.encoding).to eql("UTF-8")
+      end
+
+      it "outputs the correct language" do
+        expect(feed.lang).to match(lang)
+      end
     end
 
     context "with site.title set" do
@@ -265,14 +280,6 @@ describe(JekyllFeed) do
   context "feed stylesheet" do
     it "includes the stylesheet" do
       expect(contents).to include('<?xml-stylesheet type="text/xml" href="http://example.org/feed.xslt.xml"?>')
-    end
-  end
-
-  context "with site.lang set" do
-    let(:overrides) { { "lang" => "en-US" } }
-
-    it "should set the language" do
-      expect(contents).to match %r{type="text/html" hreflang="en-US" />}
     end
   end
 end
