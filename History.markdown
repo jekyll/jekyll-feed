@@ -1,3 +1,9 @@
+## HEAD
+
+### Documentation
+
+  * Use `https` in more places. (#165)
+
 ## 0.9.1 / 2017-02-17
 
 ### Minor Enhancements
