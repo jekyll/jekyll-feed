@@ -4,6 +4,10 @@
 
   * Use `https` in more places. (#165)
 
+### Minor Enhancements
+
+  * fix <entry> template for posts with post.lang defined (#168)
+
 ## 0.9.1 / 2017-02-17
 
 ### Minor Enhancements
