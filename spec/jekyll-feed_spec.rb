@@ -92,9 +92,9 @@ describe(JekyllFeed) do
   end
 
   it "includes the item image" do
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/image.png" />')
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://cdn.example.org/absolute.png" />')
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/object-image.png" />')
+    expect(contents).to include('<media:content xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/image.png" medium="image" />')
+    expect(contents).to include('<media:content xmlns:media="http://search.yahoo.com/mrss/" url="https://cdn.example.org/absolute.png" medium="image" />')
+    expect(contents).to include('<media:content xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/object-image.png" medium="image" />')
   end
 
   context "parsing" do
