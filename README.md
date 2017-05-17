@@ -21,7 +21,7 @@ gems:
 
 ## Usage
 
-The plugin will automatically generate an Atom feed at `/feed.xml`.
+The plugin will automatically generate an Atom feed at `/feed.xml` and a [JSON feed](https://jsonfeed.org/) at `/feed.json`.
 
 ### Optional configuration options
 
