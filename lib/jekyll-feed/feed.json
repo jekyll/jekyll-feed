@@ -1,6 +1,6 @@
 {
   "version": "https://jsonfeed.org/version/1",
-  {% assign site_title = site.title | site.name }
+  {% assign site_title = site.title | site.name %}
   {% if site_title %}
     "title": {{ site_title | smartify | json }},
   {% endif %}
