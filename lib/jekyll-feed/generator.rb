@@ -7,7 +7,7 @@ module JekyllFeed
     def generate(site)
       @site = site
 
-      return if file_exists?(feed_path) and file_exists?(json_feed_path)
+      return if file_exists?(feed_path) && file_exists?(json_feed_path)
       @site.pages << xml_content_for_file(feed_path, feed_source_path)
       @site.pages << json_content_for_file(json_feed_path, feed_json_source_path)
     end
