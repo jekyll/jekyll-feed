@@ -6,7 +6,7 @@ module JekyllFeed
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
-      
+
       return if file_exists?(feed_path) and file_exists?(json_feed_path)
       @site.pages << xml_content_for_file(feed_path, feed_source_path)
       @site.pages << json_content_for_file(json_feed_path, feed_json_source_path)
@@ -31,8 +31,8 @@ module JekyllFeed
 
     # Path to JSON feed from config, or feed.json for default
     def json_feed_path
-      if @site.config["feed"] && @site.config["feed"]["path"]
-        @site.config["feed"]["path"]
+      if @site.config["feed"] && @site.config["feed"]["json_path"]
+        @site.config["feed"]["json_path"]
       else
         "feed.json"
       end
