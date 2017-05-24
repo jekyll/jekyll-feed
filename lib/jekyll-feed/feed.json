@@ -19,7 +19,7 @@
   {% endif %}
   "items": [
     {% assign posts = site.posts | where_exp: "post", "post.draft != true" %}
-    {% for post in posts limmit: 10 %}
+    {% for post in posts limit: 10 %}
       {
         "id": {{ post.id | absolute_url | json }},
         "url": "{{ post.url | absolute_url }}",
