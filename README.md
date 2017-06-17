@@ -1,6 +1,6 @@
 # Jekyll Feed plugin
 
-A Jekyll plugin to generate an Atom (RSS-like) feed of your Jekyll posts
+A Jekyll plugin to generate an Atom (RSS-like) feed and a [JSON feed](https://jsonfeed.org/version/1) of your Jekyll posts
 
 [![Build Status](https://travis-ci.org/jekyll/jekyll-feed.svg)](https://travis-ci.org/jekyll/jekyll-feed) [![Gem Version](https://badge.fury.io/rb/jekyll-feed.svg)](https://badge.fury.io/rb/jekyll-feed)
 
@@ -21,7 +21,7 @@ gems:
 
 ## Usage
 
-The plugin will automatically generate an Atom feed at `/feed.xml`.
+The plugin will automatically generate an Atom feed at `/feed.xml` and a [JSON feed](https://jsonfeed.org/) at `/feed.json`.
 
 ### Optional configuration options
 
@@ -39,6 +39,7 @@ Do you already have an existing feed someplace other than `/feed.xml`, but are o
 ```yml
 feed:
   path: atom.xml
+  json_path: json_feed.json
 ```
 
 To note, you shouldn't have to do this unless you already have a feed you're using, and you can't or wish not to redirect existing subscribers.
