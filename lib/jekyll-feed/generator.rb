@@ -29,7 +29,7 @@ module JekyllFeed
 
     # Path to feed.xml template file
     def feed_source_path
-      File.expand_path "./feed.xml", File.dirname(__FILE__)
+      File.expand_path "feed.xml", __dir__
     end
 
     # Checks if a file already exists in the site source
@@ -43,7 +43,7 @@ module JekyllFeed
 
     # Generates contents for a file
     def content_for_file(file_path, file_source_path)
-      file = PageWithoutAFile.new(@site, File.dirname(__FILE__), "", file_path)
+      file = PageWithoutAFile.new(@site, __dir__, "", file_path)
       file.content = File.read(file_source_path).gsub(MINIFY_REGEX, "")
       file.data["layout"] = nil
       file.data["sitemap"] = false
