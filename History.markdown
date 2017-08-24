@@ -1,5 +1,7 @@
 ## HEAD
 
+  * Define path with __dir (#187)
+
 ### Documentation
 
   * Use `https` in more places. (#165)
