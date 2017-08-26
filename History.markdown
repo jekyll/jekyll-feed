@@ -1,6 +1,7 @@
 ## HEAD
 
   * Define path with __dir (#187)
+  * Bump Ruby for Travis (#188)
 
 ### Documentation
 
