@@ -19,6 +19,8 @@ gems:
   - jekyll-feed
 ```
 
+:bulb: If you are using Jekyll 3.5.0 or greater, you probably want to use the `plugins` key instead of `gems`.
+
 ## Usage
 
 The plugin will automatically generate an Atom feed at `/feed.xml`.
