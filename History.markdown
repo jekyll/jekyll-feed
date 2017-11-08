@@ -14,6 +14,7 @@
 ### Development Fixes
 
   * Rubocop: Target Ruby 2.1 (#195)
+  * Test feeds that have a `site.lang` (#164)
 
 ## 0.9.1 / 2017-02-17
 
