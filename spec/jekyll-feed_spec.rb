@@ -294,4 +294,19 @@ describe(JekyllFeed) do
       expect(contents).to include('<?xml-stylesheet type="text/xml" href="http://example.org/feed.xslt.xml"?>')
     end
   end
+
+  context "with site.lang set" do
+    let(:overrides) { { "lang" => "en-US" } }
+
+    it "should set the language" do
+      expect(contents).to match %r{type="text/html" hreflang="en-US" />}
+    end
+  end
+
+  context "with post.lang set"do
+    it "should set the language for that entry" do
+      expect(contents).to match %r{<entry xml:lang="en">}
+      expect(contents).to match %r{<entry>}
+    end
+  end
 end

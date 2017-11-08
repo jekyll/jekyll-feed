@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllFeed
   class MetaTag < Liquid::Tag
     # Use Jekyll's native relative_url filter
