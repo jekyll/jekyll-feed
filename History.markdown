@@ -6,6 +6,7 @@
 ### Documentation
 
   * Use `https` in more places. (#165)
+  * Fix: Add note about using plugins instead of gems key (#197)
 
 ### Minor Enhancements
 
