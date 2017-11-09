@@ -15,11 +15,11 @@ gem 'jekyll-feed'
 And then add this line to your site's `_config.yml`:
 
 ```yml
-gems:
+plugins:
   - jekyll-feed
 ```
 
-:bulb: If you are using Jekyll 3.5.0 or greater, you probably want to use the `plugins` key instead of `gems`.
+:warning: If you are using Jekyll < 3.5.0 use the `gems` key instead of `plugins`.
 
 ## Usage
 
