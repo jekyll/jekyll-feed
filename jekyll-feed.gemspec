@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+lib = File.expand_path("lib", __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require "jekyll-feed/version"
+
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-feed"
-  spec.version       = "0.9.2"
+  spec.version       = Jekyll::Feed::VERSION
   spec.authors       = ["Ben Balter"]
   spec.email         = ["ben.balter@github.com"]
   spec.summary       = "A Jekyll plugin to generate an Atom feed of your Jekyll posts"
