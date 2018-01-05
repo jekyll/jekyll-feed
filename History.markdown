@@ -1,12 +1,21 @@
 ## HEAD
 
+  * Define path with __dir (#187)
+  * Bump Ruby for Travis (#188)
+
 ### Documentation
 
   * Use `https` in more places. (#165)
+  * Fix: Add note about using plugins instead of gems key (#197)
 
 ### Minor Enhancements
 
   * fix <entry> template for posts with post.lang defined (#168)
+
+### Development Fixes
+
+  * Rubocop: Target Ruby 2.1 (#195)
+  * Test feeds that have a `site.lang` (#164)
 
 ## 0.9.1 / 2017-02-17
 

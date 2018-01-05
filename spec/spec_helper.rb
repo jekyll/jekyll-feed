@@ -2,7 +2,7 @@ require 'jekyll'
 require 'typhoeus'
 require 'nokogiri'
 require 'rss'
-require File.expand_path('../lib/jekyll-feed', File.dirname(__FILE__))
+require File.expand_path('../lib/jekyll-feed', __dir__)
 
 Jekyll.logger.log_level = :error
 
@@ -11,8 +11,8 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.order = 'random'
 
-  SOURCE_DIR = File.expand_path("../fixtures", __FILE__)
-  DEST_DIR   = File.expand_path("../dest",     __FILE__)
+  SOURCE_DIR = File.expand_path("fixtures", __dir__)
+  DEST_DIR   = File.expand_path("dest",     __dir__)
 
   def source_dir(*files)
     File.join(SOURCE_DIR, *files)
