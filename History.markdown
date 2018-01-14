@@ -6,6 +6,7 @@
 ### Documentation
 
   * Use `https` in more places. (#165)
+  * Fix: Add note about using plugins instead of gems key (#197)
 
 ### Minor Enhancements
 
@@ -14,6 +15,8 @@
 ### Development Fixes
 
   * Rubocop: Target Ruby 2.1 (#195)
+  * Test feeds that have a `site.lang` (#164)
+  * Test against Ruby 2.5 (#201)
 
 ## 0.9.1 / 2017-02-17
 
