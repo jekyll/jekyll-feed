@@ -133,6 +133,14 @@ The plugin exposes a helper tag to expose the appropriate meta tags to support a
 
 The plugin uses [Jekyll's `smartify` filter](https://jekyllrb.com/docs/templates/) for processing the site title and post titles. This will translate plain ASCII punctuation into "smart" typographic punctuation. This will not render or strip any Markdown you may be using in a title.
 
+Jekyll's `smartify` filter uses [kramdown](https://kramdown.gettalong.org/options.html) as a processor.  Accordingly, if you do not want "smart" typographic punctuation, disabling them in kramdown in your `_config.yml` will disable them in your feed. For example:
+
+   ```yml
+   kramdown:
+     smart_quotes:               apos,apos,quot,quot
+     typographic_symbols:        {hellip: ...}
+   ```
+
 ### Custom styling
 
 Want to style what your feed looks like in the browser? Simply add an XSLT at `/feed.xslt.xml` and Jekyll Feed will link to the stylesheet.
