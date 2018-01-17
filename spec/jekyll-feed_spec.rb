@@ -190,6 +190,20 @@ describe(JekyllFeed) do
         expect(feed.title.content).to eql(site_title)
       end
     end
+
+    context "with site.feed.limit set" do
+      let(:overrides) do
+        {
+          "feed" => {
+            "limit" => 5
+          }
+        }
+      end
+
+      it "should limit the number of items" do
+        expect(feed.items.count).to eql(5)
+      end
+    end
   end
 
   context "smartify" do
