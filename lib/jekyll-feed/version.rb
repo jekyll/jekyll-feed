@@ -2,6 +2,6 @@
 
 module Jekyll
   module Feed
-    VERSION = "0.9.2".freeze
+    VERSION = "0.9.3"
   end
 end
