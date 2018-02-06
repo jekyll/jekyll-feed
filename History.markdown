@@ -1,3 +1,9 @@
+## HEAD
+
+### Bug Fixes
+
+  * Fix #208 (#209)
+
 ## 0.9.3 / 2018-02-04
 
   * Define path with __dir (#187)
@@ -7,6 +13,7 @@
 
   * Fix: Add note about using plugins instead of gems key (#197)
   * Add documentation for disabling smartify filter (#205)
+  * Use `https` in more places. (#165)
 
 ### Development Fixes
 
@@ -14,15 +21,11 @@
   * Test feeds that have a `site.lang` (#164)
   * Test against Ruby 2.5 (#201)
 
-## 0.9.3 / 2017-03-28
-
 ### Minor Enhancements
 
   * fix <entry> template for posts with post.lang defined (#168)
 
-### Documentation
-
-  * Use `https` in more places. (#165)
+## 0.9.3 / 2017-03-28
 
 ## 0.9.1 / 2017-02-17
 
