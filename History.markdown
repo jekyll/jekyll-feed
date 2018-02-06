@@ -2,7 +2,7 @@
 
 ### Bug Fixes
 
-  * Fix #208 (#209)
+  * Escape image URL (#209)
 
 ## 0.9.3 / 2018-02-04
 
