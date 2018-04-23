@@ -93,7 +93,7 @@ describe(JekyllFeed) do
 
   it "includes the item image" do
     expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/image.png" />')
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://cdn.example.org/absolute.png" />')
+    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://cdn.example.org/absolute.png?h=188&amp;w=250" />')
     expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/object-image.png" />')
   end
 
@@ -104,6 +104,8 @@ describe(JekyllFeed) do
       expect(feed.feed_type).to eql("atom")
       expect(feed.feed_version).to eql("1.0")
       expect(feed.encoding).to eql("UTF-8")
+      expect(feed.lang).to be_nil
+      expect(feed.valid?).to eql(true)
     end
 
     it "outputs the link" do
@@ -134,6 +136,31 @@ describe(JekyllFeed) do
     it "doesn't include the item's excerpt if blank" do
       post = feed.items.first
       expect(post.summary).to be_nil
+    end
+
+    context "with site.lang set" do
+      lang = "en_US"
+      let(:overrides) { {"lang" => lang} }
+      it "outputs a valid feed" do
+        expect(feed.feed_type).to eql("atom")
+        expect(feed.feed_version).to eql("1.0")
+        expect(feed.encoding).to eql("UTF-8")
+        expect(feed.valid?).to eql(true)
+      end
+
+      it "outputs the correct language" do
+        expect(feed.lang).to eql(lang)
+      end
+
+      it "sets the language of entries" do
+        post = feed.items.first
+        expect(post.lang).to eql(lang)
+      end
+
+      it "renders the feed meta" do
+        expected = %r!<link href="http://example.org/" rel="alternate" type="text/html" hreflang="#{lang}" />!
+        expect(contents).to match(expected)
+      end
     end
 
     context "with site.title set" do
@@ -300,6 +327,13 @@ describe(JekyllFeed) do
 
     it "should set the language" do
       expect(contents).to match %r{type="text/html" hreflang="en-US" />}
+    end
+  end
+
+  context "with post.lang set"do
+    it "should set the language for that entry" do
+      expect(contents).to match %r{<entry xml:lang="en">}
+      expect(contents).to match %r{<entry>}
     end
   end
 end

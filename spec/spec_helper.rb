@@ -2,7 +2,7 @@ require 'jekyll'
 require 'typhoeus'
 require 'nokogiri'
 require 'rss'
-require File.expand_path('../lib/jekyll-feed', File.dirname(__FILE__))
+require File.expand_path('../lib/jekyll-feed', __dir__)
 
 Jekyll.logger.log_level = :error
 

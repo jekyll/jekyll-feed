@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllFeed
   class MetaTag < Liquid::Tag
     # Use Jekyll's native relative_url filter
@@ -20,7 +22,7 @@ module JekyllFeed
         :type  => "application/atom+xml",
         :rel   => "alternate",
         :href  => absolute_url(path),
-        :title => title
+        :title => title,
       }.keep_if { |_, v| v }
     end
 

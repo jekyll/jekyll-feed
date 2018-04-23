@@ -2,7 +2,7 @@
 
 A Jekyll plugin to generate an Atom (RSS-like) feed of your Jekyll posts
 
-[![Build Status](https://travis-ci.org/jekyll/jekyll-feed.svg)](https://travis-ci.org/jekyll/jekyll-feed) [![Gem Version](https://badge.fury.io/rb/jekyll-feed.svg)](http://badge.fury.io/rb/jekyll-feed)
+[![Build Status](https://travis-ci.org/jekyll/jekyll-feed.svg)](https://travis-ci.org/jekyll/jekyll-feed) [![Gem Version](https://badge.fury.io/rb/jekyll-feed.svg)](https://badge.fury.io/rb/jekyll-feed)
 
 ## Installation
 
@@ -15,9 +15,11 @@ gem 'jekyll-feed'
 And then add this line to your site's `_config.yml`:
 
 ```yml
-gems:
+plugins:
   - jekyll-feed
 ```
+
+:warning: If you are using Jekyll < 3.5.0 use the `gems` key instead of `plugins`.
 
 ## Usage
 
@@ -121,6 +123,14 @@ The plugin exposes a helper tag to expose the appropriate meta tags to support a
 ### SmartyPants
 
 The plugin uses [Jekyll's `smartify` filter](https://jekyllrb.com/docs/templates/) for processing the site title and post titles. This will translate plain ASCII punctuation into "smart" typographic punctuation. This will not render or strip any Markdown you may be using in a title.
+
+Jekyll's `smartify` filter uses [kramdown](https://kramdown.gettalong.org/options.html) as a processor.  Accordingly, if you do not want "smart" typographic punctuation, disabling them in kramdown in your `_config.yml` will disable them in your feed. For example:
+
+   ```yml
+   kramdown:
+     smart_quotes:               apos,apos,quot,quot
+     typographic_symbols:        {hellip: ...}
+   ```
 
 ### Custom styling
 
