@@ -1,44 +1,45 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe(JekyllFeed) do
-  let(:overrides) { Hash.new }
+  let(:overrides) { {} }
   let(:config) do
     Jekyll.configuration(Jekyll::Utils.deep_merge_hashes({
       "full_rebuild" => true,
-      "source"      => source_dir,
-      "destination" => dest_dir,
-      "show_drafts" => true,
-      "url"         => "http://example.org",
-      "name"       => "My awesome site",
-      "author"      => {
-        "name"        => "Dr. Jekyll"
+      "source"       => source_dir,
+      "destination"  => dest_dir,
+      "show_drafts"  => true,
+      "url"          => "http://example.org",
+      "name"         => "My awesome site",
+      "author"       => {
+        "name" => "Dr. Jekyll",
       },
-      "collections" => {
+      "collections"  => {
         "my_collection" => { "output" => true },
-        "other_things"  => { "output" => false }
-      }
+        "other_things"  => { "output" => false },
+      },
     }, overrides))
   end
   let(:site)     { Jekyll::Site.new(config) }
   let(:contents) { File.read(dest_dir("feed.xml")) }
-  let(:context)  { make_context(site: site) }
+  let(:context)  { make_context(:site => site) }
   let(:feed_meta) { Liquid::Template.parse("{% feed_meta %}").render!(context, {}) }
   before(:each) do
     site.process
   end
 
   it "has no layout" do
-    expect(contents).not_to match(/\ATHIS IS MY LAYOUT/)
+    expect(contents).not_to match(%r!\ATHIS IS MY LAYOUT!)
   end
 
   it "creates a feed.xml file" do
     expect(Pathname.new(dest_dir("feed.xml"))).to exist
   end
 
-
   it "doesn't have multiple new lines or trailing whitespace" do
-    expect(contents).to_not match /\s+\n/
-    expect(contents).to_not match /\n{2,}/
+    expect(contents).to_not match %r!\s+\n!
+    expect(contents).to_not match %r!\n{2,}!
   end
 
   it "puts all the posts in the feed.xml file" do
@@ -55,7 +56,7 @@ describe(JekyllFeed) do
   end
 
   it "preserves linebreaks in preformatted text in posts" do
-    expect(contents).to match /Line 1\nLine 2\nLine 3/
+    expect(contents).to match %r!Line 1\nLine 2\nLine 3!
   end
 
   it "supports post author name as an object" do
@@ -87,8 +88,8 @@ describe(JekyllFeed) do
   end
 
   it "renders Liquid inside posts" do
-    expect(contents).to match /Liquid is rendered\./
-    expect(contents).not_to match /Liquid is not rendered\./
+    expect(contents).to match %r!Liquid is rendered\.!
+    expect(contents).not_to match %r!Liquid is not rendered\.!
   end
 
   it "includes the item image" do
@@ -140,7 +141,7 @@ describe(JekyllFeed) do
 
     context "with site.lang set" do
       lang = "en_US"
-      let(:overrides) { {"lang" => lang} }
+      let(:overrides) { { "lang" => lang } }
       it "outputs a valid feed" do
         expect(feed.feed_type).to eql("atom")
         expect(feed.feed_version).to eql("1.0")
@@ -165,7 +166,7 @@ describe(JekyllFeed) do
 
     context "with site.title set" do
       let(:site_title) { "My Site Title" }
-      let(:overrides) { {"title" => site_title} }
+      let(:overrides) { { "title" => site_title } }
 
       it "uses site.title for the title" do
         expect(feed.title.content).to eql(site_title)
@@ -174,7 +175,7 @@ describe(JekyllFeed) do
 
     context "with site.name set" do
       let(:site_name) { "My Site Name" }
-      let(:overrides) { {"name" => site_name} }
+      let(:overrides) { { "name" => site_name } }
 
       it "uses site.name for the title" do
         expect(feed.title.content).to eql(site_name)
@@ -184,7 +185,7 @@ describe(JekyllFeed) do
     context "with site.name and site.title set" do
       let(:site_title) { "My Site Title" }
       let(:site_name) { "My Site Name" }
-      let(:overrides) { {"title" => site_title, "name" => site_name} }
+      let(:overrides) { { "title" => site_title, "name" => site_name } }
 
       it "uses site.title for the title, dropping site.name" do
         expect(feed.title.content).to eql(site_title)
@@ -206,20 +207,20 @@ describe(JekyllFeed) do
     it "validates" do
       # See https://validator.w3.org/docs/api.html
       url = "https://validator.w3.org/feed/check.cgi?output=soap12"
-      response = Typhoeus.post(url, body: { rawdata: contents }, accept_encoding: "gzip")
+      response = Typhoeus.post(url, :body => { :rawdata => contents }, :accept_encoding => "gzip")
       pending "Something went wrong with the W3 validator" unless response.success?
-      result  = Nokogiri::XML(response.body)
+      result = Nokogiri::XML(response.body)
       result.remove_namespaces!
 
       result.css("warning").each do |warning|
         # Quiet a warning that results from us passing the feed as a string
-        next if warning.css("text").text =~ /Self reference doesn't match document location/
+        next if warning.css("text").text =~ %r!Self reference doesn't match document location!
 
         # Quiet expected warning that results from blank summary test case
-        next if warning.css("text").text =~ /(content|summary) should not be blank/
+        next if warning.css("text").text =~ %r!(content|summary) should not be blank!
 
         # Quiet expected warning about multiple posts with same updated time
-        next if warning.css("text").text =~ /Two entries with the same value for atom:updated/
+        next if warning.css("text").text =~ %r!Two entries with the same value for atom:updated!
 
         warn "Validation warning: #{warning.css("text").text} on line #{warning.css("line").text} column #{warning.css("column").text}"
       end
@@ -260,12 +261,12 @@ describe(JekyllFeed) do
         Jekyll.configuration({
           "source"      => source_dir,
           "destination" => dest_dir,
-          "url"         => "http://example.org"
+          "url"         => "http://example.org",
         })
       end
 
       it "does not output blank title" do
-        expect(feed_meta).not_to include('title=')
+        expect(feed_meta).not_to include("title=")
       end
     end
   end
@@ -274,8 +275,8 @@ describe(JekyllFeed) do
     let(:overrides) do
       {
         "feed" => {
-          "path" => "atom.xml"
-        }
+          "path" => "atom.xml",
+        },
       }
     end
 
@@ -326,14 +327,14 @@ describe(JekyllFeed) do
     let(:overrides) { { "lang" => "en-US" } }
 
     it "should set the language" do
-      expect(contents).to match %r{type="text/html" hreflang="en-US" />}
+      expect(contents).to match %r!type="text/html" hreflang="en-US" />!
     end
   end
 
-  context "with post.lang set"do
+  context "with post.lang set" do
     it "should set the language for that entry" do
-      expect(contents).to match %r{<entry xml:lang="en">}
-      expect(contents).to match %r{<entry>}
+      expect(contents).to match %r!<entry xml:lang="en">!
+      expect(contents).to match %r!<entry>!
     end
   end
 end
