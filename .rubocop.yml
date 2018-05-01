@@ -27,3 +27,7 @@ AllCops:
     - features/**/*
     - script/**/*
     - spec/**/*
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - lib/jekyll-feed/page-without-a-file.rb

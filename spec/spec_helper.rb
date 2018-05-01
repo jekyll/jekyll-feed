@@ -1,15 +1,17 @@
-require 'jekyll'
-require 'typhoeus'
-require 'nokogiri'
-require 'rss'
-require File.expand_path('../lib/jekyll-feed', __dir__)
+# frozen_string_literal: true
+
+require "jekyll"
+require "typhoeus"
+require "nokogiri"
+require "rss"
+require File.expand_path("../lib/jekyll-feed", __dir__)
 
 Jekyll.logger.log_level = :error
 
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
-  config.order = 'random'
+  config.order = "random"
 
   SOURCE_DIR = File.expand_path("fixtures", __dir__)
   DEST_DIR   = File.expand_path("dest",     __dir__)
@@ -23,6 +25,6 @@ RSpec.configure do |config|
   end
 
   def make_context(registers = {})
-    Liquid::Context.new({}, {}, { site: site }.merge(registers))
+    Liquid::Context.new({}, {}, { :site => site }.merge(registers))
   end
 end
