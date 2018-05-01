@@ -26,6 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "nokogiri", "~> 1.6"
   spec.add_development_dependency "rake", "~> 12.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop", "0.51"
+  spec.add_development_dependency "rubocop", "0.55"
   spec.add_development_dependency "typhoeus", "~> 0.7"
 end

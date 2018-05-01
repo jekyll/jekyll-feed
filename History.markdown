@@ -4,6 +4,10 @@
 
   * Escape image URL (#209)
 
+### Development Fixes
+
+  * Rubocop 0.55 (#223)
+
 ## 0.9.3 / 2018-02-04
 
   * Define path with __dir (#187)
