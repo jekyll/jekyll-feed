@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+DEFAULT_ENTRIES = [{ "feed_source_path" => "feed.xml", "feed_output_path" => "feed.xml" }]
+
 module JekyllFeed
   class Generator < Jekyll::Generator
     safe true
@@ -8,8 +10,9 @@ module JekyllFeed
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
-      return if file_exists?(feed_path)
-      @site.pages << content_for_file(feed_path, feed_source_path)
+      entries.each do |e|
+        @site.pages << content_for_file(e["feed_output_path"], feed_source_path(e["feed_source_path"]))
+      end
     end
 
     private
@@ -20,18 +23,25 @@ module JekyllFeed
     # We will strip all of this whitespace to minify the template
     MINIFY_REGEX = %r!(?<=>|})\s+!
 
-    # Path to feed from config, or feed.xml for default
-    def feed_path
-      if @site.config["feed"] && @site.config["feed"]["path"]
-        @site.config["feed"]["path"]
+    # @return [Array<Object>] all of the template-to-output paths
+    def entries
+      return DEFAULT_ENTRIES unless @site.config["feed"] && (@site.config["feed"]["path"].is_a?(String) || @site.config["feed"]["paths"].is_a?(Array))
+
+      if @site.config["feed"]["path"].nil?
+        @site.config["feed"]["paths"]
       else
-        "feed.xml"
+        [{ "feed_source_path" => "feed.xml", "feed_output_path" => @site.config["feed"]["path"] }]
       end
     end
 
-    # Path to feed.xml template file
-    def feed_source_path
-      File.expand_path "feed.xml", __dir__
+    # @param [String] file path
+    # @return [String] expanded file path
+    def feed_source_path(file_path)
+      if (file_path == "feed.xml")
+        File.expand_path("feed.xml", __dir__)
+      else
+        File.expand_path(file_path, @site.source)
+      end
     end
 
     # Checks if a file already exists in the site source
