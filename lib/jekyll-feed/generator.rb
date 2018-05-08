@@ -44,7 +44,7 @@ module JekyllFeed
       prefix = collection == "posts" ? "/feed" : "feed/#{collection}"
       if category
         "#{prefix}/#{category}.xml"
-      elsif collections[collection]["path"]
+      elsif collections[collection] && collections[collection]["path"]
         collections[collection]["path"]
       else
         "#{prefix}.xml"
