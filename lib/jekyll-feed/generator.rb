@@ -36,12 +36,12 @@ module JekyllFeed
     # collection - the name of a collection, e.g., "posts"
     # category - a category within that collection, e.g., "news"
     #
-    # Will return "feed.xml", or the config-specified default feed for posts
+    # Will return "/feed.xml", or the config-specified default feed for posts
     # Will return `/feed/category.xml` for post categories
     # WIll return `/feed/collection.xml` for other collections
     # Will return `/feed/collection/category.xml` for other collection categories
     def feed_path(collection: "posts", category: nil)
-      prefix = collection == "posts" ? "/feed" : "feed/#{collection}"
+      prefix = collection == "posts" ? "/feed" : "/feed/#{collection}"
       if category
         "#{prefix}/#{category}.xml"
       elsif collections[collection] && collections[collection]["path"]
