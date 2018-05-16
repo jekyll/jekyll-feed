@@ -7,6 +7,7 @@
 ### Development Fixes
 
   * Rubocop 0.55 (#223)
+  * Bump Rubocop (#230)
 
 ## 0.9.3 / 2018-02-04
 
