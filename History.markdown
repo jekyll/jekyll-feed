@@ -1,4 +1,4 @@
-## HEAD
+## 0.10.0 / 2018-06-04
 
 ### Bug Fixes
 
@@ -8,6 +8,10 @@
 
   * Rubocop 0.55 (#223)
   * Bump Rubocop (#230)
+
+### Minor Enhancements
+
+  * Support Typhoeus 1.0 (#232)
 
 ## 0.9.3 / 2018-02-04
 
