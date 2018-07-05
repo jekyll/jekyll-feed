@@ -22,16 +22,18 @@ module JekyllFeed
 
     # Path to feed from config, or feed.xml for default
     def feed_path
-      if @site.config["feed"] && @site.config["feed"]["path"]
-        @site.config["feed"]["path"]
-      else
-        "feed.xml"
+      @feed_path ||= begin
+        if @site.config["feed"] && @site.config["feed"]["path"]
+          @site.config["feed"]["path"]
+        else
+          "feed.xml"
+        end
       end
     end
 
     # Path to feed.xml template file
     def feed_source_path
-      File.expand_path "feed.xml", __dir__
+      @feed_source_path ||= File.expand_path("feed.xml", __dir__)
     end
 
     # Checks if a file already exists in the site source
