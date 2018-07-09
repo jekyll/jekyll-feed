@@ -15,47 +15,7 @@ module JekyllFeed
       # All feed documents use the same template, so just read it once.
       @feed_source = File.read(feed_source_path).gsub(MINIFY_REGEX, "")
 
-      # Any archive pages should link to the current feed, so set up that page
-      # early so we can ask it for its URL later.
-      current = PageWithoutAFile.new(@site, __dir__, "", feed_path)
-
-      # Each feed needs to link to the archive feed before it, except for the
-      # first archive feed.
-      prev_archive = nil
-
-      feed_posts = @site.posts.docs.reject(&:draft?)
-
-      # Never include the most recent post in an archive feed. We'll have some
-      # overlap between the last archive feed and the current feed, but there's
-      # no point duplicating _all_ the posts in both places.
-      archive_page_count = (feed_posts.length - 1).div(PER_PAGE)
-
-      dir = File.dirname(feed_path)
-      base = File.basename(feed_path, ".*")
-      ext = File.extname(feed_path)
-
-      # Generate archive feeds first, starting from the oldest posts.
-      1.upto(archive_page_count) do |pagenum|
-        posts = feed_posts[(pagenum - 1) * PER_PAGE, PER_PAGE].reverse
-
-        # If any of the posts in this page change, then we need to ensure that
-        # RFC5005 consumers see the changes. Do this with the standard
-        # cache-busting trick of including a hash of the important contents in
-        # the filename. Also change this hash if the filename of the previous
-        # page changed, because consumers will only work backward from the
-        # newest page.
-        digest = digest_posts(posts, prev_archive)
-        page_path = File.join(dir, "#{base}-#{pagenum}-#{digest.hexdigest}#{ext}")
-
-        page = PageWithoutAFile.new(@site, __dir__, "", page_path)
-        prev_archive = content_for_file(page, posts, prev_archive, current)
-        @site.pages << prev_archive
-      end
-
-      # Finally, generate the current feed. We can't do this earlier because we
-      # have to compute the filename of the last archive feed first.
-      posts = feed_posts.reverse.take(PER_PAGE)
-      @site.pages << content_for_file(current, posts, prev_archive, nil)
+      make_feeds(@site.posts.docs.reject(&:draft?))
     end
 
     private
@@ -92,6 +52,31 @@ module JekyllFeed
       end
     end
 
+    def make_feeds(feed_posts)
+      # Any archive pages should link to the current feed, so set up that page
+      # early so we can ask it for its URL later.
+      current = PageWithoutAFile.new(@site, __dir__, "", feed_path)
+
+      # Each feed needs to link to the archive feed before it, except for the
+      # first archive feed.
+      prev_archive = nil
+
+      # Generate archive feeds first, starting from the oldest posts. Never
+      # include the most recent post in an archive feed. We'll have some overlap
+      # between the last archive feed and the current feed, but there's no point
+      # duplicating _all_ the posts in both places.
+      1.upto((feed_posts.length - 1).div(PER_PAGE)) do |pagenum|
+        posts = feed_posts[(pagenum - 1) * PER_PAGE, PER_PAGE].reverse
+        prev_archive = archived_feed(prev_archive, pagenum, posts, current)
+        @site.pages << prev_archive
+      end
+
+      # Finally, generate the current feed. We can't do this earlier because we
+      # have to compute the filename of the last archive feed first.
+      posts = feed_posts.reverse.take(PER_PAGE)
+      @site.pages << content_for_file(current, posts, prev_archive, nil)
+    end
+
     # Hash the important parts of an array of posts
     def digest_posts(posts, prev_archive)
       digest = Digest::MD5.new
@@ -101,6 +86,24 @@ module JekyllFeed
       end
       digest.update(prev_archive.url) unless prev_archive.nil?
       digest
+    end
+
+    def archived_feed(prev_archive, pagenum, posts, current)
+      dir = File.dirname(feed_path)
+      base = File.basename(feed_path, ".*")
+      ext = File.extname(feed_path)
+
+      # If any of the posts in this page change, then we need to ensure that
+      # RFC5005 consumers see the changes. Do this with the standard
+      # cache-busting trick of including a hash of the important contents in
+      # the filename. Also change this hash if the filename of the previous
+      # page changed, because consumers will only work backward from the
+      # newest page.
+      digest = digest_posts(posts, prev_archive)
+      page_path = File.join(dir, "#{base}-#{pagenum}-#{digest.hexdigest}#{ext}")
+
+      page = PageWithoutAFile.new(@site, __dir__, "", page_path)
+      content_for_file(page, posts, prev_archive, current)
     end
 
     # Generates contents for a file
