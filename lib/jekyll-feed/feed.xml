@@ -4,8 +4,20 @@
 {% endif %}
 <feed xmlns="http://www.w3.org/2005/Atom" {% if site.lang %}xml:lang="{{ site.lang }}"{% endif %}>
   <generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator>
+
+  {% unless page.current or page.prev_archive %}
+    <fh:complete xmlns:fh="http://purl.org/syndication/history/1.0"/>
+  {% endunless %}
+  {% if page.current %}
+    <fh:archive xmlns:fh="http://purl.org/syndication/history/1.0"/>
+    <link href="{{ page.current.url | absolute_url }}" rel="current"/>
+  {% endif %}
+  {% if page.prev_archive %}
+    <link href="{{ page.prev_archive.url | absolute_url }}" rel="prev-archive"/>
+  {% endif %}
   <link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
   <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
+
   <updated>{{ site.time | date_to_xmlschema }}</updated>
   <id>{{ '/' | absolute_url | xml_escape }}</id>
 
@@ -31,8 +43,7 @@
     </author>
   {% endif %}
 
-  {% assign posts = site.posts | where_exp: "post", "post.draft != true" %}
-  {% for post in posts limit: 10 %}
+  {% for post in page.posts %}
     <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
       <title type="html">{{ post.title | smartify | strip_html | normalize_whitespace | xml_escape }}</title>
       <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
