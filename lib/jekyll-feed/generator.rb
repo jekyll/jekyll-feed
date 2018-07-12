@@ -8,8 +8,15 @@ module JekyllFeed
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
-      return if file_exists?(feed_path)
-      @site.pages << content_for_file(feed_path, feed_source_path)
+      unless file_exists?(feed_path)
+        @site.pages << content_for_file(feed_path, feed_source_path)
+      end
+      @site.categories.each do |category|
+        path = "/feed/" + category.first + ".xml"
+        unless file_exists?(path)
+          @site.pages << content_for_file(path, feed_source_path, category.first)
+        end
+      end
     end
 
     private
@@ -44,12 +51,14 @@ module JekyllFeed
     end
 
     # Generates contents for a file
-    def content_for_file(file_path, file_source_path)
+
+    def content_for_file(file_path, file_source_path, category = false)
       file = PageWithoutAFile.new(@site, __dir__, "", file_path)
       file.content = File.read(file_source_path).gsub(MINIFY_REGEX, "")
       file.data["layout"] = nil
       file.data["sitemap"] = false
       file.data["xsl"] = file_exists?("feed.xslt.xml")
+      file.data["category"] = category
       file.output
       file
     end
