@@ -6,9 +6,11 @@ module JekyllFeed
     include Jekyll::Filters::URLFilters
 
     def render(context)
-      @context = context
-      attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(" ")
-      "<link #{attrs} />"
+      Jekyll::Cache.new("jekyll-feed").getset("metatag") do
+        @context = context
+        attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(" ")
+        "<link #{attrs} />"
+      end
     end
 
     private
