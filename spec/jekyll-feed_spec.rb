@@ -43,9 +43,9 @@ describe(JekyllFeed) do
   end
 
   it "puts all the posts in the feed.xml file" do
-    expect(contents).to match /http:\/\/example\.org\/2014\/03\/04\/march-the-fourth\.html/
-    expect(contents).to match /http:\/\/example\.org\/2014\/03\/02\/march-the-second\.html/
-    expect(contents).to match /http:\/\/example\.org\/2013\/12\/12\/dec-the-second\.html/
+    expect(contents).to match /http:\/\/example\.org\/updates\/2014\/03\/04\/march-the-fourth\.html/
+    expect(contents).to match /http:\/\/example\.org\/news\/2014\/03\/02\/march-the-second\.html/
+    expect(contents).to match /http:\/\/example\.org\/news\/2013\/12\/12\/dec-the-second\.html/
     expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
     expect(contents).to_not match /http:\/\/example\.org\/2016\/02\/09\/a-draft\.html/
   end
@@ -125,7 +125,7 @@ describe(JekyllFeed) do
     it "includes item contents" do
       post = feed.items.last
       expect(post.title.content).to eql("Dec The Second")
-      expect(post.link.href).to eql("http://example.org/2013/12/12/dec-the-second.html")
+      expect(post.link.href).to eql("http://example.org/news/2013/12/12/dec-the-second.html")
       expect(post.published.content).to eql(Time.parse("2013-12-12"))
     end
 
@@ -239,9 +239,9 @@ describe(JekyllFeed) do
     end
 
     it "correctly adds the baseurl to the posts" do
-      expect(contents).to match /http:\/\/example\.org\/bass\/2014\/03\/04\/march-the-fourth\.html/
-      expect(contents).to match /http:\/\/example\.org\/bass\/2014\/03\/02\/march-the-second\.html/
-      expect(contents).to match /http:\/\/example\.org\/bass\/2013\/12\/12\/dec-the-second\.html/
+      expect(contents).to match /http:\/\/example\.org\/bass\/updates\/2014\/03\/04\/march-the-fourth\.html/
+      expect(contents).to match /http:\/\/example\.org\/bass\/news\/2014\/03\/02\/march-the-second\.html/
+      expect(contents).to match /http:\/\/example\.org\/bass\/news\/2013\/12\/12\/dec-the-second\.html/
     end
 
     it "renders the feed meta" do
@@ -290,6 +290,29 @@ describe(JekyllFeed) do
     end
   end
 
+  context "changing the file path via collection meta" do
+    let(:overrides) do
+      {
+        "feed" => {
+          "collections" => {
+            "posts" => {
+              "path" => "atom.xml"
+            }
+          }
+        },
+      }
+    end
+
+    it "should write to atom.xml" do
+      expect(Pathname.new(dest_dir("atom.xml"))).to exist
+    end
+
+    it "renders the feed meta with custom feed path" do
+      expected = 'href="http://example.org/atom.xml"'
+      expect(feed_meta).to include(expected)
+    end
+  end
+
   context "feed stylesheet" do
     it "includes the stylesheet" do
       expect(contents).to include('<?xml-stylesheet type="text/xml" href="http://example.org/feed.xslt.xml"?>')
@@ -308,6 +331,144 @@ describe(JekyllFeed) do
     it "should set the language for that entry" do
       expect(contents).to match %r!<entry xml:lang="en">!
       expect(contents).to match %r!<entry>!
+    end
+  end
+
+  context "categories" do
+    context "with top-level post categories" do
+      let(:overrides) {
+        {
+          "feed" => { "categories" => ["news"] }
+        }
+      }
+      let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
+
+      it "outputs the primary feed" do
+        expect(contents).to match /http:\/\/example\.org\/updates\/2014\/03\/04\/march-the-fourth\.html/
+        expect(contents).to match /http:\/\/example\.org\/news\/2014\/03\/02\/march-the-second\.html/
+        expect(contents).to match /http:\/\/example\.org\/news\/2013\/12\/12\/dec-the-second\.html/
+        expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+        expect(contents).to_not match /http:\/\/example\.org\/2016\/02\/09\/a-draft\.html/
+      end
+
+      it "outputs the category feed" do
+        expect(news_feed).to match "<title type=\"html\">My awesome site | News</title>"
+        expect(news_feed).to match /http:\/\/example\.org\/news\/2014\/03\/02\/march-the-second\.html/
+        expect(news_feed).to match /http:\/\/example\.org\/news\/2013\/12\/12\/dec-the-second\.html/
+        expect(news_feed).to_not match /http:\/\/example\.org\/updates\/2014\/03\/04\/march-the-fourth\.html/
+        expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      end
+    end
+
+    context "with collection-level post categories" do
+      let(:overrides) {
+        {
+          "feed" => {
+            "collections" => {
+              "posts" => {
+                "categories" => ["news"]
+              }
+            }
+          }
+        }
+      }
+      let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
+
+      it "outputs the primary feed" do
+        expect(contents).to match /http:\/\/example\.org\/updates\/2014\/03\/04\/march-the-fourth\.html/
+        expect(contents).to match /http:\/\/example\.org\/news\/2014\/03\/02\/march-the-second\.html/
+        expect(contents).to match /http:\/\/example\.org\/news\/2013\/12\/12\/dec-the-second\.html/
+        expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+        expect(contents).to_not match /http:\/\/example\.org\/2016\/02\/09\/a-draft\.html/
+      end
+
+      it "outputs the category feed" do
+        expect(news_feed).to match "<title type=\"html\">My awesome site | News</title>"
+        expect(news_feed).to match /http:\/\/example\.org\/news\/2014\/03\/02\/march-the-second\.html/
+        expect(news_feed).to match /http:\/\/example\.org\/news\/2013\/12\/12\/dec-the-second\.html/
+        expect(news_feed).to_not match /http:\/\/example\.org\/updates\/2014\/03\/04\/march-the-fourth\.html/
+        expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      end
+    end
+  end
+
+  context "collections" do
+    let(:collection_feed) { File.read(dest_dir("feed/collection.xml")) }
+
+    context "when initialized as an array" do
+      let(:overrides) {
+        {
+          "collections" => {
+            "collection" => {
+              "output" => true
+            }
+          },
+          "feed" => { "collections" => ["collection"] }
+        }
+      }
+
+
+      it "outputs the collection feed" do
+        expect(collection_feed).to match "<title type=\"html\">My awesome site | Collection</title>"
+        expect(collection_feed).to match "http://example.org/collection/2018-01-01-collection-doc.html"
+        expect(collection_feed).to match "http://example.org/collection/2018-01-02-collection-category-doc.html"
+        expect(collection_feed).to_not match /http:\/\/example\.org\/updates\/2014\/03\/04\/march-the-fourth\.html/
+        expect(collection_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      end
+    end
+
+    context "with categories" do
+      let(:overrides) {
+        {
+          "collections" => {
+            "collection" => {
+              "output" => true
+            }
+          },
+          "feed" => {
+            "collections" => {
+              "collection" => {
+                "categories" => ["news"]
+              }
+            }
+          }
+        }
+      }
+      let(:news_feed) { File.read(dest_dir("feed/collection/news.xml")) }
+
+      it "outputs the collection category feed" do
+        expect(news_feed).to match "<title type=\"html\">My awesome site | Collection | News</title>"
+        expect(news_feed).to match "http://example.org/collection/2018-01-02-collection-category-doc.html"
+        expect(news_feed).to_not match "http://example.org/collection/2018-01-01-collection-doc.html"
+        expect(news_feed).to_not match /http:\/\/example\.org\/updates\/2014\/03\/04\/march-the-fourth\.html/
+        expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      end
+    end
+
+    context "with a custom path" do
+      let(:overrides) {
+        {
+          "collections" => {
+            "collection" => {
+              "output" => true
+            }
+          },
+          "feed" => {
+            "collections" => {
+              "collection" => {
+                "categories" => ["news"],
+                "path" => "custom.xml"
+              }
+            }
+          }
+        }
+      }
+
+      it "should write to the custom path" do
+        expect(Pathname.new(dest_dir("custom.xml"))).to exist
+        expect(Pathname.new(dest_dir("feed/collection.xml"))).to_not exist
+        expect(Pathname.new(dest_dir("feed/collection/news.xml"))).to exist
+      end
     end
   end
 end

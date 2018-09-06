@@ -4,6 +4,10 @@
 
   * Require Ruby 2.3 (#222)
 
+### Minor Enhancements
+
+  * Categories and collections (#228)
+
 ## 0.10.0 / 2018-06-04
 
 ### Bug Fixes

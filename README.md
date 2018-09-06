@@ -140,6 +140,48 @@ Want to style what your feed looks like in the browser? Simply add an XSLT at `/
 
 Great question. In short, Atom is a better format. Think of it like RSS 3.0. For more information, see [this discussion on why we chose Atom over RSS 2.0](https://github.com/jekyll/jekyll-rss-feed/issues/2).
 
+## Categories
+
+Jekyll Feed can generate feeds for each category. Simply define which categories you'd like feeds for in your config:
+
+```yml
+feed:
+  categories:
+    - news
+    - updates
+```
+
+## Collections
+
+Jekyll Feed can generate feeds for collections other than the Posts collection. This works best for chronological collections (e.g., collections with dates in the filenames). Simply define which collections you'd like feeds for in your config:
+
+```yml
+feed:
+  collections:
+    - changes
+```
+
+By default, collection feeds will be outputted to `/feed/<COLLECTION>.xml`. If you'd like to customize the output path, specify a collection's custom path as follows:
+
+```yml
+feed:
+  collections:
+    changes:
+      path: "/changes.xml"
+```
+
+Finally, collections can also have category feeds which are outputted as `/feed/<COLLECTION>/<CATEGORY>.xml`. Specify categories like so:
+
+```yml
+feed:
+  collections:
+    changes:
+      path: "/changes.xml"
+      categories:
+        - news
+        - updates
+```
+
 ## Contributing
 
 1. Fork it (https://github.com/jekyll/jekyll-feed/fork)
