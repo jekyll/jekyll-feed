@@ -7,6 +7,7 @@
 ### Minor Enhancements
 
   * Categories and collections (#228)
+  * Remove check for older version of Jekyll (#234)
 
 ## 0.10.0 / 2018-06-04
 
