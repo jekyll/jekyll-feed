@@ -7,12 +7,20 @@
   <link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
   <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
-  <id>{{ '/' | absolute_url | xml_escape }}</id>
+  <id>{{ page.url | absolute_url | xml_escape }}</id>
 
-  {% if site.title %}
-    <title type="html">{{ site.title | smartify | xml_escape }}</title>
-  {% elsif site.name %}
-    <title type="html">{{ site.name | smartify | xml_escape }}</title>
+  {% assign title = site.title | default: site.name %}
+  {% if page.collection != "posts" %}
+    {% assign collection = page.collection | capitalize %}
+    {% assign title = title | append: " | " | append: collection %}
+  {% endif %}
+  {% if page.category %}
+    {% assign category = page.category | capitalize %}
+    {% assign title = title | append: " | " | append: category %}
+  {% endif %}
+
+  {% if title %}
+    <title type="html">{{ title | smartify | xml_escape }}</title>
   {% endif %}
 
   {% if site.description %}
@@ -31,7 +39,10 @@
     </author>
   {% endif %}
 
-  {% assign posts = site.posts | where_exp: "post", "post.draft != true" %}
+  {% assign posts = site[page.collection] | where_exp: "post", "post.draft != true" | sort: "date" | reverse %}
+  {% if page.category %}
+    {% assign posts = posts | where: "category",page.category %}
+  {% endif %}
   {% for post in posts limit: 10 %}
     <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
       <title type="html">{{ post.title | smartify | strip_html | normalize_whitespace | xml_escape }}</title>
