@@ -1,8 +1,13 @@
 ## HEAD
 
+  * Release 💎 0.11 (#241)
+
+## 0.11.0 / 2018-09-09
+
 ### Development Fixes
 
   * Require Ruby 2.3 (#222)
+  * Refactor to remove redundant calls and variables (#240)
 
 ### Minor Enhancements
 
