@@ -28,7 +28,7 @@ module JekyllFeed
 
     # Returns the plugin's config or an empty hash if not set
     def config
-      @site.config["feed"] || {}
+      @config ||= @site.config["feed"] || {}
     end
 
     # Determines the destination path of a given feed
@@ -42,13 +42,9 @@ module JekyllFeed
     # Will return `/feed/collection/category.xml` for other collection categories
     def feed_path(collection: "posts", category: nil)
       prefix = collection == "posts" ? "/feed" : "/feed/#{collection}"
-      if category
-        "#{prefix}/#{category}.xml"
-      elsif collections[collection] && collections[collection]["path"]
-        collections[collection]["path"]
-      else
-        "#{prefix}.xml"
-      end
+      return "#{prefix}/#{category}.xml" if category
+
+      collections.dig(collection, "path") || "#{prefix}.xml"
     end
 
     # Returns a hash representing all collections to be processed and their metadata
@@ -65,7 +61,7 @@ module JekyllFeed
                      end
 
       @collections = normalize_posts_meta(@collections)
-      @collections.each do |_name, meta|
+      @collections.each_value do |meta|
         meta["categories"] = (meta["categories"] || []).to_set
       end
 
@@ -89,17 +85,17 @@ module JekyllFeed
     # Generates contents for a file
 
     def make_page(file_path, collection: "posts", category: nil)
-      file = PageWithoutAFile.new(@site, __dir__, "", file_path)
-      file.content = feed_template
-      file.data.merge!({
-        "layout"     => nil,
-        "sitemap"    => false,
-        "xsl"        => file_exists?("feed.xslt.xml"),
-        "collection" => collection,
-        "category"   => category,
-      })
-      file.output
-      file
+      PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
+        file.content = feed_template
+        file.data.merge!(
+          "layout"     => nil,
+          "sitemap"    => false,
+          "xsl"        => file_exists?("feed.xslt.xml"),
+          "collection" => collection,
+          "category"   => category
+        )
+        file.output
+      end
     end
 
     # Special case the "posts" collection, which, for ease of use and backwards
