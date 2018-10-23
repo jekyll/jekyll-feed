@@ -3,7 +3,7 @@ tags:
  - '"/><VADER>'
 image:
   path: "/object-image.png"
-category: updates
+categories: updates jekyll
 ---
 
 March the fourth!
