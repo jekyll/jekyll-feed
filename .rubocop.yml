@@ -19,10 +19,7 @@ AllCops:
     - LICENSE.txt
     - README.md
 
-    - features/**/*
     - script/**/*
-    - spec/**/*
-    - test/**/*
     - vendor/**/*
 
 Naming/MemoizedInstanceVariableName:
