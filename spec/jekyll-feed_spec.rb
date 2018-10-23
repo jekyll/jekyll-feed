@@ -258,11 +258,11 @@ describe(JekyllFeed) do
 
     context "with a blank site name" do
       let(:config) do
-        Jekyll.configuration({
+        Jekyll.configuration(
           "source"      => source_dir,
           "destination" => dest_dir,
-          "url"         => "http://example.org",
-        })
+          "url"         => "http://example.org"
+        )
       end
 
       it "does not output blank title" do
@@ -296,9 +296,9 @@ describe(JekyllFeed) do
         "feed" => {
           "collections" => {
             "posts" => {
-              "path" => "atom.xml"
-            }
-          }
+              "path" => "atom.xml",
+            },
+          },
         },
       }
     end
@@ -336,11 +336,11 @@ describe(JekyllFeed) do
 
   context "categories" do
     context "with top-level post categories" do
-      let(:overrides) {
+      let(:overrides) do
         {
-          "feed" => { "categories" => ["news"] }
+          "feed" => { "categories" => ["news"] },
         }
-      }
+      end
       let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
 
       it "outputs the primary feed" do
@@ -361,17 +361,17 @@ describe(JekyllFeed) do
     end
 
     context "with collection-level post categories" do
-      let(:overrides) {
+      let(:overrides) do
         {
           "feed" => {
             "collections" => {
               "posts" => {
-                "categories" => ["news"]
-              }
-            }
-          }
+                "categories" => ["news"],
+              },
+            },
+          },
         }
-      }
+      end
       let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
 
       it "outputs the primary feed" do
@@ -396,17 +396,16 @@ describe(JekyllFeed) do
     let(:collection_feed) { File.read(dest_dir("feed/collection.xml")) }
 
     context "when initialized as an array" do
-      let(:overrides) {
+      let(:overrides) do
         {
           "collections" => {
             "collection" => {
-              "output" => true
-            }
+              "output" => true,
+            },
           },
-            "feed"      => { "collections" => ["collection"] }
+          "feed"        => { "collections" => ["collection"] },
         }
-      }
-
+      end
 
       it "outputs the collection feed" do
         expect(collection_feed).to match "<title type=\"html\">My awesome site | Collection</title>"
@@ -418,22 +417,22 @@ describe(JekyllFeed) do
     end
 
     context "with categories" do
-      let(:overrides) {
+      let(:overrides) do
         {
           "collections" => {
             "collection" => {
-              "output" => true
-            }
+              "output" => true,
+            },
           },
-          "feed" => {
+          "feed"        => {
             "collections" => {
               "collection" => {
-                "categories" => ["news"]
-              }
-            }
-          }
+                "categories" => ["news"],
+              },
+            },
+          },
         }
-      }
+      end
       let(:news_feed) { File.read(dest_dir("feed/collection/news.xml")) }
 
       it "outputs the collection category feed" do
@@ -446,23 +445,23 @@ describe(JekyllFeed) do
     end
 
     context "with a custom path" do
-      let(:overrides) {
+      let(:overrides) do
         {
           "collections" => {
             "collection" => {
-              "output" => true
-            }
+              "output" => true,
+            },
           },
-          "feed" => {
+          "feed"        => {
             "collections" => {
               "collection" => {
                 "categories" => ["news"],
-                "path" => "custom.xml"
-              }
-            }
-          }
+                "path"       => "custom.xml",
+              },
+            },
+          },
         }
-      }
+      end
 
       it "should write to the custom path" do
         expect(Pathname.new(dest_dir("custom.xml"))).to exist
