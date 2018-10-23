@@ -43,24 +43,24 @@ describe(JekyllFeed) do
   end
 
   it "puts all the posts in the feed.xml file" do
-    expect(contents).to match %r!http://example\.org/updates/2014/03/04/march-the-fourth\.html!
-    expect(contents).to match %r!http://example\.org/news/2014/03/02/march-the-second\.html!
-    expect(contents).to match %r!http://example\.org/news/2013/12/12/dec-the-second\.html!
+    expect(contents).to match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+    expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
+    expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
     expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
-    expect(contents).to_not match %r!http://example\.org/2016/02/09/a-draft\.html!
+    expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
   end
 
   it "does not include assets or any static files that aren't .html" do
-    expect(contents).not_to match %r!http://example\.org/images/hubot\.png!
-    expect(contents).not_to match %r!http://example\.org/feeds/atom\.xml!
+    expect(contents).not_to match "http://example.org/images/hubot.png"
+    expect(contents).not_to match "http://example.org/feeds/atom.xml"
   end
 
   it "preserves linebreaks in preformatted text in posts" do
-    expect(contents).to match %r!Line 1\nLine 2\nLine 3!
+    expect(contents).to match "Line 1\nLine 2\nLine 3"
   end
 
   it "supports post author name as an object" do
-    expect(contents).to match %r!<author>\s*<name>Ben</name>\s*<email>ben@example\.com</email>\s*<uri>http://ben\.balter.com</uri>\s*</author>!
+    expect(contents).to match %r!<author>\s*<name>Ben</name>\s*<email>ben@example\.com</email>\s*<uri>http://ben\.balter\.com</uri>\s*</author>!
   end
 
   it "supports post author name as a string" do
@@ -84,12 +84,12 @@ describe(JekyllFeed) do
   end
 
   it "replaces newlines in posts to spaces" do
-    expect(contents).to match %r!<title type="html">The plugin will properly strip newlines\.</title>!
+    expect(contents).to match '<title type="html">The plugin will properly strip newlines.</title>'
   end
 
   it "renders Liquid inside posts" do
-    expect(contents).to match %r!Liquid is rendered\.!
-    expect(contents).not_to match %r!Liquid is not rendered\.!
+    expect(contents).to match "Liquid is rendered."
+    expect(contents).not_to match "Liquid is not rendered."
   end
 
   it "includes the item image" do
@@ -159,7 +159,7 @@ describe(JekyllFeed) do
       end
 
       it "renders the feed meta" do
-        expected = %r!<link href="http://example\.org/" rel="alternate" type="text/html" hreflang="#{lang}" />!
+        expected = %r!<link href="http://example.org/" rel="alternate" type="text/html" hreflang="#{lang}" />!
         expect(contents).to match(expected)
       end
     end
@@ -239,9 +239,9 @@ describe(JekyllFeed) do
     end
 
     it "correctly adds the baseurl to the posts" do
-      expect(contents).to match %r!http://example\.org/bass/updates/2014/03/04/march-the-fourth\.html!
-      expect(contents).to match %r!http://example\.org/bass/news/2014/03/02/march-the-second\.html!
-      expect(contents).to match %r!http://example\.org/bass/news/2013/12/12/dec-the-second\.html!
+      expect(contents).to match "http://example.org/bass/updates/2014/03/04/march-the-fourth.html"
+      expect(contents).to match "http://example.org/bass/news/2014/03/02/march-the-second.html"
+      expect(contents).to match "http://example.org/bass/news/2013/12/12/dec-the-second.html"
     end
 
     it "renders the feed meta" do
@@ -323,14 +323,14 @@ describe(JekyllFeed) do
     let(:overrides) { { "lang" => "en-US" } }
 
     it "should set the language" do
-      expect(contents).to match %r!type="text/html" hreflang="en-US" />!
+      expect(contents).to match 'type="text/html" hreflang="en-US" />'
     end
   end
 
   context "with post.lang set" do
     it "should set the language for that entry" do
-      expect(contents).to match %r!<entry xml:lang="en">!
-      expect(contents).to match %r!<entry>!
+      expect(contents).to match '<entry xml:lang="en">'
+      expect(contents).to match '<entry>'
     end
   end
 
@@ -344,18 +344,18 @@ describe(JekyllFeed) do
       let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
 
       it "outputs the primary feed" do
-        expect(contents).to match %r!http://example\.org/updates/2014/03/04/march-the-fourth\.html!
-        expect(contents).to match %r!http://example\.org/news/2014/03/02/march-the-second\.html!
-        expect(contents).to match %r!http://example\.org/news/2013/12/12/dec-the-second\.html!
+        expect(contents).to match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+        expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
+        expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
         expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
-        expect(contents).to_not match %r!http://example\.org/2016/02/09/a-draft\.html!
+        expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
       end
 
       it "outputs the category feed" do
-        expect(news_feed).to match "<title type=\"html\">My awesome site | News</title>"
-        expect(news_feed).to match %r!http://example\.org/news/2014/03/02/march-the-second\.html!
-        expect(news_feed).to match %r!http://example\.org/news/2013/12/12/dec-the-second\.html!
-        expect(news_feed).to_not match %r!http://example\.org/updates/2014/03/04/march-the-fourth\.html!
+        expect(news_feed).to match '<title type="html">My awesome site | News</title>'
+        expect(news_feed).to match "http://example.org/news/2014/03/02/march-the-second.html"
+        expect(news_feed).to match "http://example.org/news/2013/12/12/dec-the-second.html"
+        expect(news_feed).to_not match "http://example.org/updates/2014/03/04/march-the-fourth.html"
         expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
       end
     end
@@ -375,18 +375,18 @@ describe(JekyllFeed) do
       let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
 
       it "outputs the primary feed" do
-        expect(contents).to match %r!http://example\.org/updates/2014/03/04/march-the-fourth\.html!
-        expect(contents).to match %r!http://example\.org/news/2014/03/02/march-the-second\.html!
-        expect(contents).to match %r!http://example\.org/news/2013/12/12/dec-the-second\.html!
+        expect(contents).to match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+        expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
+        expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
         expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
-        expect(contents).to_not match %r!http://example\.org/2016/02/09/a-draft\.html!
+        expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
       end
 
       it "outputs the category feed" do
-        expect(news_feed).to match "<title type=\"html\">My awesome site | News</title>"
-        expect(news_feed).to match %r!http://example\.org/news/2014/03/02/march-the-second\.html!
-        expect(news_feed).to match %r!http://example\.org/news/2013/12/12/dec-the-second\.html!
-        expect(news_feed).to_not match %r!http://example\.org/updates/2014/03/04/march-the-fourth\.html!
+        expect(news_feed).to match '<title type="html">My awesome site | News</title>'
+        expect(news_feed).to match "http://example.org/news/2014/03/02/march-the-second.html"
+        expect(news_feed).to match "http://example.org/news/2013/12/12/dec-the-second.html"
+        expect(news_feed).to_not match "http://example.org/updates/2014/03/04/march-the-fourth.html"
         expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
       end
     end
@@ -408,10 +408,10 @@ describe(JekyllFeed) do
       end
 
       it "outputs the collection feed" do
-        expect(collection_feed).to match "<title type=\"html\">My awesome site | Collection</title>"
+        expect(collection_feed).to match '<title type="html">My awesome site | Collection</title>'
         expect(collection_feed).to match "http://example.org/collection/2018-01-01-collection-doc.html"
         expect(collection_feed).to match "http://example.org/collection/2018-01-02-collection-category-doc.html"
-        expect(collection_feed).to_not match %r!http://example\.org/updates/2014/03/04/march-the-fourth\.html!
+        expect(collection_feed).to_not match "http://example.org/updates/2014/03/04/march-the-fourth.html"
         expect(collection_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
       end
     end
@@ -436,10 +436,10 @@ describe(JekyllFeed) do
       let(:news_feed) { File.read(dest_dir("feed/collection/news.xml")) }
 
       it "outputs the collection category feed" do
-        expect(news_feed).to match "<title type=\"html\">My awesome site | Collection | News</title>"
+        expect(news_feed).to match '<title type="html">My awesome site | Collection | News</title>'
         expect(news_feed).to match "http://example.org/collection/2018-01-02-collection-category-doc.html"
         expect(news_feed).to_not match "http://example.org/collection/2018-01-01-collection-doc.html"
-        expect(news_feed).to_not match %r!http://example\.org/updates/2014/03/04/march-the-fourth\.html!
+        expect(news_feed).to_not match "http://example.org/updates/2014/03/04/march-the-fourth.html"
         expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
       end
     end
