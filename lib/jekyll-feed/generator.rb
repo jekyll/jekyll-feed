@@ -25,7 +25,7 @@ module JekyllFeed
     #   1. A '>', which closes an XML tag or
     #   2. A '}', which closes a Liquid tag
     # We will strip all of this whitespace to minify the template
-    MINIFY_REGEX = %r!(?<=>|})\s+!
+    MINIFY_REGEX = %r!(?<=>|})\s+!.freeze
 
     # Returns the plugin's config or an empty hash if not set
     def config
