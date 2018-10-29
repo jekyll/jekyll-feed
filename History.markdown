@@ -1,16 +1,82 @@
 ## HEAD
 
+  * Release 💎 0.11 (#241)
+
+### Development Fixes
+
+  * style: fix offenses in specs (#248)
+
+## 0.11.0 / 2018-09-09
+
+### Development Fixes
+
+  * Require Ruby 2.3 (#222)
+  * Refactor to remove redundant calls and variables (#240)
+
+### Minor Enhancements
+
+  * Categories and collections (#228)
+  * Remove check for older version of Jekyll (#234)
+
+## 0.10.0 / 2018-06-04
+
+### Bug Fixes
+
+  * Escape image URL (#209)
+
+### Development Fixes
+
+  * Rubocop 0.55 (#223)
+  * Bump Rubocop (#230)
+
+### Minor Enhancements
+
+  * Support Typhoeus 1.0 (#232)
+
+## 0.9.3 / 2018-02-04
+
+  * Define path with __dir (#187)
+  * Bump Ruby for Travis (#188)
+
+### Documentation
+
+  * Fix: Add note about using plugins instead of gems key (#197)
+  * Add documentation for disabling smartify filter (#205)
+  * Use `https` in more places. (#165)
+
+### Development Fixes
+
+  * Rubocop: Target Ruby 2.2 (#195)
+  * Test feeds that have a `site.lang` (#164)
+  * Test against Ruby 2.5 (#201)
+
+### Minor Enhancements
+
+  * fix <entry> template for posts with post.lang defined (#168)
+
+## 0.9.3 / 2017-03-28
+
+## 0.9.1 / 2017-02-17
+
+### Minor Enhancements
+
+  * Update feed.xml (#162)
+
+## 0.9.0 / 2017-02-16
+
 ### Minor Enhancements
 
   * Use absolute_url to generate the feed_meta url (#150)
   * Make feed stylesheet optional (#149)
   * Use new `normalize_whitespace` filter (#143)
   * Feed entries must contain <author> (#152)
+  * Remove trailing slash from feed ID (#159)
 
 ### Development Fixes
 
   * Simplify minify regular expression (#141)
   * Namespace as JekyllFeed (#151)
+  * rubocop -a (#160)
 
 ### Bug Fixes
 

@@ -2,17 +2,25 @@
 {% if page.xsl %}
   <?xml-stylesheet type="text/xml" href="{{ '/feed.xslt.xml' | absolute_url }}"?>
 {% endif %}
-<feed xmlns="http://www.w3.org/2005/Atom"{% if site.lang %} xml:lang="{{ site.lang }}"{% endif %}>
-  <generator uri="http://jekyllrb.com" version="{{ jekyll.version }}">Jekyll</generator>
+<feed xmlns="http://www.w3.org/2005/Atom" {% if site.lang %}xml:lang="{{ site.lang }}"{% endif %}>
+  <generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator>
   <link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
   <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
-  <id>{{ '/' | absolute_url | xml_escape }}/</id>
+  <id>{{ page.url | absolute_url | xml_escape }}</id>
 
-  {% if site.title %}
-    <title type="html">{{ site.title | smartify | xml_escape }}</title>
-  {% elsif site.name %}
-    <title type="html">{{ site.name | smartify | xml_escape }}</title>
+  {% assign title = site.title | default: site.name %}
+  {% if page.collection != "posts" %}
+    {% assign collection = page.collection | capitalize %}
+    {% assign title = title | append: " | " | append: collection %}
+  {% endif %}
+  {% if page.category %}
+    {% assign category = page.category | capitalize %}
+    {% assign title = title | append: " | " | append: category %}
+  {% endif %}
+
+  {% if title %}
+    <title type="html">{{ title | smartify | xml_escape }}</title>
   {% endif %}
 
   {% if site.description %}
@@ -36,9 +44,12 @@
     </author>
   {% endif %}
 
-  {% assign posts = site.posts | where_exp: "post", "post.draft != true" %}
+  {% assign posts = site[page.collection] | where_exp: "post", "post.draft != true" | sort: "date" | reverse %}
+  {% if page.category %}
+    {% assign posts = posts | where: "category",page.category %}
+  {% endif %}
   {% for post in posts limit: 10 %}
-    <entry{% if post.lang %} xml:lang="{{ post.lang }}"{% endif %}>
+    <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
       <title type="html">{{ post.title | smartify | strip_html | normalize_whitespace | xml_escape }}</title>
       <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
@@ -77,9 +88,9 @@
       {% assign post_image = post.image.path | default: post.image %}
       {% if post_image %}
         {% unless post_image contains "://" %}
-          {% assign post_image = post_image | absolute_url | xml_escape  %}
+          {% assign post_image = post_image | absolute_url %}
         {% endunless %}
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post_image }}" />
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post_image | xml_escape }}" />
       {% endif %}
     </entry>
   {% endfor %}

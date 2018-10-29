@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllFeed
   class MetaTag < Liquid::Tag
     # Use Jekyll's native relative_url filter
@@ -12,7 +14,7 @@ module JekyllFeed
     private
 
     def config
-      @context.registers[:site].config
+      @config ||= @context.registers[:site].config
     end
 
     def attributes
@@ -20,16 +22,12 @@ module JekyllFeed
         :type  => "application/atom+xml",
         :rel   => "alternate",
         :href  => absolute_url(path),
-        :title => title
+        :title => title,
       }.keep_if { |_, v| v }
     end
 
     def path
-      if config["feed"] && config["feed"]["path"]
-        config["feed"]["path"]
-      else
-        "feed.xml"
-      end
+      config.dig("feed", "path") || "feed.xml"
     end
 
     def title

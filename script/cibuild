@@ -2,6 +2,6 @@
 
 set -e
 
-bundle exec rspec
-bundle exec rubocop -S -D
+script/test
+script/fmt
 bundle exec rake build
