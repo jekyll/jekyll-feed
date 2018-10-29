@@ -2,6 +2,10 @@
 
   * Release 💎 0.11 (#241)
 
+### Development Fixes
+
+  * style: fix offenses in specs (#248)
+
 ## 0.11.0 / 2018-09-09
 
 ### Development Fixes
