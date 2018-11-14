@@ -170,6 +170,15 @@ feed:
       path: "/changes.xml"
 ```
 
+Collection feed titles will include the capitalized collection name. If you'd like to customize the feed title, specify a collection's custom title as follows:
+
+```yml
+feed:
+  collections:
+    changes:
+      title: "My collection title"
+```
+
 Finally, collections can also have category feeds which are outputted as `/feed/<COLLECTION>/<CATEGORY>.xml`. Specify categories like so:
 
 ```yml
