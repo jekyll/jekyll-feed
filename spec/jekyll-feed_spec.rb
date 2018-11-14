@@ -269,6 +269,32 @@ describe(JekyllFeed) do
         expect(feed_meta).not_to include("title=")
       end
     end
+    context "with a collection" do
+      let(:overrides) do
+        {
+          "collections" => {
+            "collection" => {
+              "output" => true,
+            },
+          },
+          "feed"        => {
+            "collections" => {
+              "collection" => {
+                "categories" => ["news"],
+              },
+            },
+          },
+        }
+      end
+      it "renders a feed meta for each collection" do
+        default_feed    = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" title="My awesome site" />'
+        collection_feed = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection.xml" title="My awesome site" />'
+        category_feed   = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection/news.xml" title="My awesome site" />'
+        expect(feed_meta).to include(default_feed)
+        expect(feed_meta).to include(collection_feed)
+        expect(feed_meta).to include(category_feed)
+      end
+    end
   end
 
   context "changing the feed path" do

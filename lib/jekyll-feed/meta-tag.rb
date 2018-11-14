@@ -7,8 +7,15 @@ module JekyllFeed
 
     def render(context)
       @context = context
-      attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(" ")
-      "<link #{attrs} />"
+      @generator = generator
+      links = []
+      generator.collections.each do |collection, meta|
+        (meta["categories"] + [nil]).each do |category|
+          attrs = attributes(collection, category).map { |k, v| %(#{k}="#{v}") }.join(" ")
+          links << "<link #{attrs} />"
+        end
+      end
+      links.reverse.join "\n"
     end
 
     private
@@ -17,17 +24,18 @@ module JekyllFeed
       @config ||= @context.registers[:site].config
     end
 
-    def attributes
+    def generator
+      @generator ||= @context.registers[:site].generators.select { |it| it.is_a? JekyllFeed::Generator }.first # rubocop:disable Metrics/LineLength
+    end
+
+    def attributes(collection, category)
+      href = absolute_url(generator.feed_path(:collection => collection, :category => category))
       {
         :type  => "application/atom+xml",
         :rel   => "alternate",
-        :href  => absolute_url(path),
+        :href  => href,
         :title => title,
       }.keep_if { |_, v| v }
-    end
-
-    def path
-      config.dig("feed", "path") || "feed.xml"
     end
 
     def title

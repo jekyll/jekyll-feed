@@ -19,19 +19,6 @@ module JekyllFeed
       end
     end
 
-    private
-
-    # Matches all whitespace that follows
-    #   1. A '>', which closes an XML tag or
-    #   2. A '}', which closes a Liquid tag
-    # We will strip all of this whitespace to minify the template
-    MINIFY_REGEX = %r!(?<=>|})\s+!.freeze
-
-    # Returns the plugin's config or an empty hash if not set
-    def config
-      @config ||= @site.config["feed"] || {}
-    end
-
     # Determines the destination path of a given feed
     #
     # collection - the name of a collection, e.g., "posts"
@@ -45,7 +32,7 @@ module JekyllFeed
       prefix = collection == "posts" ? "/feed" : "/feed/#{collection}"
       return "#{prefix}/#{category}.xml" if category
 
-      collections.dig(collection, "path") || "#{prefix}.xml"
+      @collections.dig(collection, "path") || "#{prefix}.xml"
     end
 
     # Returns a hash representing all collections to be processed and their metadata
@@ -67,6 +54,19 @@ module JekyllFeed
       end
 
       @collections
+    end
+
+    private
+
+    # Matches all whitespace that follows
+    #   1. A '>', which closes an XML tag or
+    #   2. A '}', which closes a Liquid tag
+    # We will strip all of this whitespace to minify the template
+    MINIFY_REGEX = %r!(?<=>|})\s+!.freeze
+
+    # Returns the plugin's config or an empty hash if not set
+    def config
+      @config ||= @site.config["feed"] || {}
     end
 
     # Path to feed.xml template file
