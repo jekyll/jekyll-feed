@@ -12,9 +12,10 @@ module JekyllFeed
         Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
         (meta["categories"] + [nil]).each do |category|
           path = feed_path(:collection => name, :category => category)
+          feed_title = feed_title(:collection => name, :category => category)
           next if file_exists?(path)
 
-          @site.pages << make_page(path, :collection => name, :category => category)
+          @site.pages << make_page(path, feed_title, :collection => name, :category => category)
         end
       end
     end
@@ -46,6 +47,22 @@ module JekyllFeed
       return "#{prefix}/#{category}.xml" if category
 
       collections.dig(collection, "path") || "#{prefix}.xml"
+    end
+
+    # Determines the title of a given feed
+    #
+    # collection - the name of a collection, e.g., "posts"
+    # category - a category within that collection, e.g., "news"
+    #
+    # Will return the site title or name
+    # ...followed by collection title or capitalized name
+    # ...followed by capitalized category name
+    def feed_title(collection: "posts", category: nil)
+      words = []
+      words << (@site.config["title"] || @site.config["name"])
+      words << collections.dig(collection, "title") || collection.capitalize unless collection == "posts" # rubocop:disable Metrics/LineLength
+      words << category.capitalize if category
+      words.uniq.join " | "
     end
 
     # Returns a hash representing all collections to be processed and their metadata
@@ -85,7 +102,7 @@ module JekyllFeed
 
     # Generates contents for a file
 
-    def make_page(file_path, collection: "posts", category: nil)
+    def make_page(file_path, title, collection: "posts", category: nil)
       PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
         file.content = feed_template
         file.data.merge!(
@@ -93,7 +110,8 @@ module JekyllFeed
           "sitemap"    => false,
           "xsl"        => file_exists?("feed.xslt.xml"),
           "collection" => collection,
-          "category"   => category
+          "category"   => category,
+          "feed_title" => title
         )
         file.output
       end
