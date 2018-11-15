@@ -64,7 +64,7 @@ module JekyllFeed
         words << (collections.dig(collection, "title") || collection.capitalize)
       end
       words << category.capitalize if category
-      words.uniq.join " | "
+      words.compact.join " | "
     end
 
     # Returns a hash representing all collections to be processed and their metadata
