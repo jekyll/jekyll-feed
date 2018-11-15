@@ -60,7 +60,9 @@ module JekyllFeed
     def feed_title(collection: "posts", category: nil)
       words = []
       words << (@site.config["title"] || @site.config["name"])
-      words << collections.dig(collection, "title") || collection.capitalize unless collection == "posts" # rubocop:disable Metrics/LineLength
+      unless collection == "posts"
+        words << (collections.dig(collection, "title") || collection.capitalize)
+      end
       words << category.capitalize if category
       words.uniq.join " | "
     end
