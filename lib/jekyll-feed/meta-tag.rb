@@ -44,16 +44,13 @@ module JekyllFeed
 
     def attributes(collection, category)
       href = absolute_url(generator.feed_path(:collection => collection, :category => category))
+      title = generator.feed_title(:collection => collection, :category => category)
       {
         :type  => "application/atom+xml",
         :rel   => "alternate",
         :href  => href,
         :title => title,
-      }.keep_if { |_, v| v }
-    end
-
-    def title
-      config["title"] || config["name"]
+      }.delete_if { |_, v| v.strip.empty? }
     end
 
     def valid_collection
