@@ -3,7 +3,6 @@ cache: bundler
 sudo: false
 rvm:
 - 2.5
-- 2.4
 - 2.3
 env:
   global:
