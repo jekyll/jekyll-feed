@@ -251,6 +251,27 @@ describe(JekyllFeed) do
         expect(collection_feed).to match '<title type="html">A custom feed title</title>'
       end
     end
+
+    context "with collection.collection.description set" do
+      let(:page_description) { "A custom description of the collection feed." }
+      let(:overrides) do
+        {
+          "collections" => {
+            "collection" => {
+              "description" => page_description,
+              "output" => true,
+            },
+          },
+          "feed" => { "collections" => ["collection"] },
+        }
+      end
+      let(:collection_feed) { File.read(dest_dir("feed/collection.xml")) }
+
+      it "users collections.collection.description for the feed description" do
+        expect(collection_feed).to match "<subtitle>#{page_description}</subtitle>"
+      end
+    end
+
   end
 
   context "smartify" do

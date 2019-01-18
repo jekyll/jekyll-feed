@@ -38,6 +38,10 @@ module JekyllFeed
       @site.config["collections"][name]
     end
 
+    def description(collection = nil)
+      data_for_collection(collection)["description"] || nil
+    end
+
     # Determines the destination path of a given feed
     #
     # collection - the name of a collection, e.g., "posts"
@@ -121,13 +125,14 @@ module JekyllFeed
       PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
         file.content = feed_template
         file.data.merge!(
-          "layout"     => nil,
-          "sitemap"    => false,
-          "xsl"        => file_exists?("feed.xslt.xml"),
-          "title"      => title(collection),
-          "collection" => collection,
-          "category"   => category,
-          "tags"       => tags
+          "layout"      => nil,
+          "sitemap"     => false,
+          "xsl"         => file_exists?("feed.xslt.xml"),
+          "title"       => title(collection),
+          "description" => description(collection),
+          "collection"  => collection,
+          "category"    => category,
+          "tags"        => tags
         )
         file.output
       end

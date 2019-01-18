@@ -22,8 +22,9 @@
     <title type="html">{{ title | smartify | xml_escape }}</title>
   {% endif %}
 
-  {% if site.description %}
-    <subtitle>{{ site.description | xml_escape }}</subtitle>
+  {% assign description = page.description | default: site.description %}
+  {% if description %}
+    <subtitle>{{ description | xml_escape }}</subtitle>
   {% endif %}
 
   {% if site.author %}
