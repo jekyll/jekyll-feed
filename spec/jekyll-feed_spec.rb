@@ -231,6 +231,26 @@ describe(JekyllFeed) do
         expect(feed.title.content).to eql(site_title.encode(xml: :text))
       end
     end
+
+    context "with collections.collection.title set" do
+      let(:page_title) { "A custom feed title" }
+      let(:overrides) do
+        {
+          "collections" => {
+            "collection" => {
+              "title" => page_title,
+              "output" => true,
+            },
+          },
+          "feed" => { "collections" => ["collection"] },
+        }
+      end
+      let(:collection_feed) { File.read(dest_dir("feed/collection.xml")) }
+
+      it "uses collections.collection.title for the feed title" do
+        expect(collection_feed).to match '<title type="html">A custom feed title</title>'
+      end
+    end
   end
 
   context "smartify" do
@@ -521,6 +541,31 @@ describe(JekyllFeed) do
         expect(Pathname.new(dest_dir("custom.xml"))).to exist
         expect(Pathname.new(dest_dir("feed/collection.xml"))).to_not exist
         expect(Pathname.new(dest_dir("feed/collection/news.xml"))).to exist
+      end
+    end
+
+    context "with collections.collection.title set" do
+      let(:overrides) do
+        {
+          "collections" => {
+            "collection" => {
+              "title" => "A custom feed title",
+              "output" => true,
+            },
+          },
+          "feed"        => {
+            "collections" => {
+              "collection" => {
+                "categories" => ["news"],
+              },
+            },
+          },
+        }
+      end
+      let(:news_feed) { File.read(dest_dir("feed/collection/news.xml")) }
+
+      it "should use the title from the collection metadata and append the categories" do
+        expect(news_feed).to match '<title type="html">My custom feed title | News</title>'
       end
     end
   end
