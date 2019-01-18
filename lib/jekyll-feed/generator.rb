@@ -33,6 +33,11 @@ module JekyllFeed
       @config ||= @site.config["feed"] || {}
     end
 
+    # Returns the metadata for the collection in the argument
+    def data_for_collection(name)
+      @site.config["collections"][name]
+    end
+
     # Determines the destination path of a given feed
     #
     # collection - the name of a collection, e.g., "posts"
@@ -119,6 +124,7 @@ module JekyllFeed
           "layout"     => nil,
           "sitemap"    => false,
           "xsl"        => file_exists?("feed.xslt.xml"),
+          "title"      => title(collection),
           "collection" => collection,
           "category"   => category,
           "tags"       => tags
@@ -135,6 +141,13 @@ module JekyllFeed
       hash["posts"]["categories"] ||= config["categories"]
       config["path"] ||= hash["posts"]["path"]
       hash
+    end
+
+    # Returns the configured title for the collection if defined. Otherwise, it
+    # returns a fallback value of "Site Name | Collection"
+    def title(collection = nil)
+      title = data_for_collection(collection)["title"]
+      title || "#{@site.config["name"]} | #{collection.capitalize}" unless title == "posts"
     end
   end
 end
