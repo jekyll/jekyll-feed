@@ -10,7 +10,7 @@ module JekyllFeed
       @site = site
       collections.each do |name, meta|
         Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
-        (meta["categories"] + [nil]).each do |category|
+        (meta["categories"] + JekyllFeed::NIL_ARRAY).each do |category|
           path = feed_path(:collection => name, :category => category)
           next if file_exists?(path)
 

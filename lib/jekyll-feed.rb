@@ -5,6 +5,8 @@ require "fileutils"
 require "jekyll-feed/generator"
 
 module JekyllFeed
+  NIL_ARRAY = [nil].freeze
+
   autoload :MetaTag,          "jekyll-feed/meta-tag"
   autoload :PageWithoutAFile, "jekyll-feed/page-without-a-file.rb"
 end
