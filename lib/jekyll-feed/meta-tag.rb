@@ -15,7 +15,7 @@ module JekyllFeed
       @collection = nil
       @category   = nil
 
-      if @args.strip == "include: all"
+      if @args == "include: all"
         links = []
         generator.collections.each do |collection, meta|
           (meta["categories"] + [nil]).each do |category|
