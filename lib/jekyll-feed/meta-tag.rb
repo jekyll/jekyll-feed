@@ -12,6 +12,9 @@ module JekyllFeed
 
     def render(context)
       @context = context
+      @collection = nil
+      @category   = nil
+
       if @args.strip == "include: all"
         links = []
         generator.collections.each do |collection, meta|
