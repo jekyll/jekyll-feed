@@ -37,7 +37,9 @@ module JekyllFeed
     end
 
     def generator
-      @generator ||= @context.registers[:site].generators.select { |it| it.is_a? JekyllFeed::Generator }.first # rubocop:disable Metrics/LineLength
+      @generator ||= @context.registers[:site].generators.find do |generator|
+        generator.is_a? JekyllFeed::Generator
+      end
     end
 
     def link(collection, category)
