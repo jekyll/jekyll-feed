@@ -56,11 +56,7 @@ module JekyllFeed
     def valid_collection
       return true if generator.collections.key? @collection
 
-      Jekyll.logger.warn(
-        "Jekyll Feed:",
-        "Invalid collection name. Please review `{% feed_meta #{@args} %}`"
-      )
-      false
+      invalidate_with_warning("collection")
     end
 
     def valid_category
@@ -69,9 +65,13 @@ module JekyllFeed
       collection = generator.collections[@collection]
       return true if collection.key?("categories") && collection["categories"].include?(@category)
 
+      invalidate_with_warning("category")
+    end
+
+    def invalidate_with_warning(type)
       Jekyll.logger.warn(
         "Jekyll Feed:",
-        "Invalid category name. Please review `{% feed_meta #{@args} %}`"
+        "Invalid #{type} name. Please review `{% feed_meta #{@args} %}`"
       )
       false
     end
