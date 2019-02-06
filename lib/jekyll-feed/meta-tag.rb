@@ -7,7 +7,7 @@ module JekyllFeed
 
     def initialize(tag_name, args, tokens)
       super
-      @args = args
+      @args = args.strip
     end
 
     def render(context)
