@@ -17,6 +17,13 @@ module JekyllFeed
           @site.pages << make_page(path, :collection => name, :category => category)
         end
       end
+      @site.tags.each do |tag, _meta|
+        Jekyll.logger.info "Jekyll Feed:", "testing #{tag}"
+        path = feed_path(:collection => "by_tag", :category => tag)
+        next if file_exists?(path)
+
+        @site.pages << make_page(path, :collection => "posts", :category => tag)
+      end
     end
 
     private

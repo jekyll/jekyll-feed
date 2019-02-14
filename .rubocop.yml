@@ -25,3 +25,7 @@ AllCops:
 Naming/MemoizedInstanceVariableName:
   Exclude:
     - lib/jekyll-feed/page-without-a-file.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - lib/jekyll-feed/generator.rb
