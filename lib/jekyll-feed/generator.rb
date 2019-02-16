@@ -17,12 +17,56 @@ module JekyllFeed
           @site.pages << make_page(path, :collection => name, :category => category)
         end
       end
-      @site.tags.each do |tag, _meta|
-        Jekyll.logger.info "Jekyll Feed:", "testing #{tag}"
-        path = feed_path(:collection => "by_tag", :category => tag)
-        next if file_exists?(path)
+      tags
+    end
 
-        @site.pages << make_page(path, :collection => "posts", :category => tag)
+    def tags
+      @config = config
+      @config.each do |name, data|
+        if name.match("tags")
+          includes = []
+          tags_path = "feed/by_tag/"
+          excludes = []
+          unless data.nil?
+            data.each do |name, content|
+              case name
+              when "path"
+                tags_path = content
+              when "includes"
+                content.each do |include|
+                  includes.push(include)
+                end
+              when "excludes"
+                content.each do |exclude|
+                  excludes.push(exclude)
+                end
+              end
+            end
+          end
+          Jekyll.logger.info tags_path
+	  unless includes.empty?
+            includes.each do |include|
+              unless excludes.include? include
+                Jekyll.logger.info include
+                Jekyll.logger.info "Jekyll Feed:", "We should Generate a feed for #{include}"
+                path = "#{tags_path}#{include}.xml"
+                next if file_exists?(path)
+
+                @site.pages << make_page(path, :collection => "posts", :category => include)
+              end
+            end
+          else
+            @site.tags.each do |tag, _meta|
+              unless excludes.include? tag
+                Jekyll.logger.info "Jekyll Feed:", "testing #{tag}"
+                path = "#{tags_path}#{tag}.xml"
+                next if file_exists?(path)
+
+                @site.pages << make_page(path, :collection => "posts", :category => tag)
+              end
+            end
+          end
+        end
       end
     end
 
