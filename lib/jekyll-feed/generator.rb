@@ -23,46 +23,44 @@ module JekyllFeed
     def tags
       @config = config
       @config.each do |name, data|
-        if name.match("tags")
-          includes = []
-          tags_path = "feed/by_tag/"
-          excludes = []
-          unless data.nil?
-            data.each do |setting, content|
-              case setting
-              when "path"
-                tags_path = content
-              when "includes"
-                content.each do |include|
-                  includes.push(include)
-                end
-              when "excludes"
-                content.each do |exclude|
-                  excludes.push(exclude)
-                end
-              end
+        next unless name.match("tags")
+
+        includes = []
+        tags_path = "feed/by_tag/"
+        excludes = []
+        data&.each do |setting, content|
+          case setting
+          when "path"
+            tags_path = content
+          when "includes"
+            content.each do |include|
+              includes.push(include)
+            end
+          when "excludes"
+            content.each do |exclude|
+              excludes.push(exclude)
             end
           end
-          unless includes.empty?
-            includes.each do |include|
-              unless excludes.include? include
-                Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{include}"
-                path = "#{tags_path}#{include}.xml"
-                next if file_exists?(path)
+        end
+        if includes.empty?
+          @site.tags.each do |tag, _meta|
+            next if excludes.include? tag
 
-                @site.pages << make_page(path, :collection => "posts", :tag => include)
-              end
-            end
-          else
-            @site.tags.each do |tag, _meta|
-              unless excludes.include? tag
-                Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
-                path = "#{tags_path}#{tag}.xml"
-                next if file_exists?(path)
+            Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
+            path = "#{tags_path}#{tag}.xml"
+            next if file_exists?(path)
 
-                @site.pages << make_page(path, :collection => "posts", :tag => tag)
-              end
-            end
+            @site.pages << make_page(path, :collection => "posts", :tag => tag)
+          end
+        else
+          includes.each do |include|
+            next if excludes.include? include
+
+            Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{include}"
+            path = "#{tags_path}#{include}.xml"
+            next if file_exists?(path)
+
+            @site.pages << make_page(path, :collection => "posts", :tag => include)
           end
         end
       end
