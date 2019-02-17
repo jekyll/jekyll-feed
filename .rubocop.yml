@@ -22,12 +22,6 @@ AllCops:
     - script/**/*
     - vendor/**/*
 
-    - lib/jekyll-feed/generator.rb
-
 Naming/MemoizedInstanceVariableName:
   Exclude:
     - lib/jekyll-feed/page-without-a-file.rb
-
-Metrics/AbcSize:
-  Exclude:
-    - lib/jekyll-feed/generator.rb
