@@ -182,6 +182,45 @@ feed:
         - updates
 ```
 
+## Tags
+
+To automatically generate feeds for each tag you apply to your posts you can add a tags setting to your config:
+
+```yml
+feed:
+  tags:
+```
+
+If there are tags you don't want included in this auto generation you can exclude them
+
+```yml
+feed:
+  tags:
+    excludes:
+      - tag-to-exclude
+      - another-tag
+```
+
+If you wish to change the location of these auto generated feeds (`/feed/by_tag/<TAG>.xml` by default) you can provide an alternative folder for them to live in.
+
+```yml
+feed:
+  tags:
+    path: "alternative/path/for/tags/feeds/"
+```
+
+If you only want to generate feeds for a few tags you can also set this.
+
+```yml
+feed:
+  tags:
+    includes:
+      - tag-to-include
+      - another-tag
+```
+
+Note that if you include a tag that is excluded a feed will not be generated for it.
+
 ## Contributing
 
 1. Fork it (https://github.com/jekyll/jekyll-feed/fork)

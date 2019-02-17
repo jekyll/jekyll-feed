@@ -28,8 +28,8 @@ module JekyllFeed
           tags_path = "feed/by_tag/"
           excludes = []
           unless data.nil?
-            data.each do |name, content|
-              case name
+            data.each do |setting, content|
+              case setting
               when "path"
                 tags_path = content
               when "includes"
@@ -43,7 +43,7 @@ module JekyllFeed
               end
             end
           end
-	  unless includes.empty?
+          unless includes.empty?
             includes.each do |include|
               unless excludes.include? include
                 Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{include}"
