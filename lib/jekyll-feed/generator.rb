@@ -43,26 +43,24 @@ module JekyllFeed
               end
             end
           end
-          Jekyll.logger.info tags_path
 	  unless includes.empty?
             includes.each do |include|
               unless excludes.include? include
-                Jekyll.logger.info include
-                Jekyll.logger.info "Jekyll Feed:", "We should Generate a feed for #{include}"
+                Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{include}"
                 path = "#{tags_path}#{include}.xml"
                 next if file_exists?(path)
 
-                @site.pages << make_page(path, :collection => "posts", :category => include)
+                @site.pages << make_page(path, :collection => "posts", :tag => include)
               end
             end
           else
             @site.tags.each do |tag, _meta|
               unless excludes.include? tag
-                Jekyll.logger.info "Jekyll Feed:", "testing #{tag}"
+                Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
                 path = "#{tags_path}#{tag}.xml"
                 next if file_exists?(path)
 
-                @site.pages << make_page(path, :collection => "posts", :category => tag)
+                @site.pages << make_page(path, :collection => "posts", :tag => tag)
               end
             end
           end
@@ -136,7 +134,7 @@ module JekyllFeed
 
     # Generates contents for a file
 
-    def make_page(file_path, collection: "posts", category: nil)
+    def make_page(file_path, collection: "posts", category: nil, tag: nil)
       PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
         file.content = feed_template
         file.data.merge!(
@@ -144,7 +142,8 @@ module JekyllFeed
           "sitemap"    => false,
           "xsl"        => file_exists?("feed.xslt.xml"),
           "collection" => collection,
-          "category"   => category
+          "category"   => category,
+          "tag"        => tag
         )
         file.output
       end
