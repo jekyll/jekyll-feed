@@ -23,7 +23,7 @@ module JekyllFeed
     def tags
       @config = config
       @config.each do |name, data|
-        next unless name.match("tags")
+        next unless name == "tags"
 
         includes = []
         tags_path = "feed/by_tag/"
