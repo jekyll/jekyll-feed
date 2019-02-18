@@ -44,24 +44,22 @@ module JekyllFeed
         end
         if includes.empty?
           @site.tags.each do |tag, _meta|
-            next if excludes.include? tag
-
-            Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
-            path = "#{tags_path}#{tag}.xml"
-            next if file_exists?(path)
-
-            @site.pages << make_page(path, :collection => "posts", :tag => tag)
+            build_tags_feed(tags_path, tag, excludes)
           end
         else
           includes.each do |include|
-            next if excludes.include? include
-
-            Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{include}"
-            path = "#{tags_path}#{include}.xml"
-            next if file_exists?(path)
-
-            @site.pages << make_page(path, :collection => "posts", :tag => include)
+            build_tags_feed(tags_path, include, excludes)
           end
+        end
+      end
+    end
+
+    def build_tags_feed(tags_path, tag, excludes)
+      unless excludes.include? tag
+        Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
+        path = "#{tags_path}#{tag}.xml"
+        unless file_exists?(path)
+          @site.pages << make_page(path, :collection => "posts", :tag => tag)
         end
       end
     end
