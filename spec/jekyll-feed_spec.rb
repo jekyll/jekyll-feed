@@ -476,39 +476,50 @@ describe(JekyllFeed) do
     let(:tags_feed_fail) { File.read(dest_dir("feed/by_tag/fail.xml")) }
     let(:tags_feed_success) { File.read(dest_dir("feed/by_tag/success.xml")) }
 
-    let(:overrides) do
-      {
-        "feed" => {
-          "tags" => {}
-        },
-      }
+    context "do not set tags setting" do
+      it "should not write tags feeds" do
+        expect(Pathname.new(dest_dir("feed/by_tag/test.xml"))).to_not exist
+        expect(Pathname.new(dest_dir("feed/by_tag/fail.xml"))).to_not exist
+        expect(Pathname.new(dest_dir("feed/by_tag/success.xml"))).to_not exist
+      end
     end
 
-    it "should write tags feeds" do
-      expect(Pathname.new(dest_dir("feed/by_tag/test.xml"))).to exist
-      expect(Pathname.new(dest_dir("feed/by_tag/fail.xml"))).to exist
-      expect(Pathname.new(dest_dir("feed/by_tag/success.xml"))).to exist
-      expect(tags_feed_test).to match "/2013/12/12/dec-the-second.html"
-      expect(tags_feed_test).to match "/2014/03/02/march-the-second.html"
-      expect(tags_feed_test).to match "/2014/03/04/march-the-fourth.html"
-      expect(tags_feed_test).to match "/2015/01/18/jekyll-last-modified-at.html"
-      expect(tags_feed_test).to match "/2015/05/12/pre.html"
-      expect(tags_feed_test).to match "/2015/05/18/author-detail.html"
-      expect(tags_feed_test).to match "/2015/08/08/stuck-in-the-middle.html"
-      expect(tags_feed_fail).to_not match "/2013/12/12/dec-the-second.html"
-      expect(tags_feed_fail).to_not match "/2014/03/02/march-the-second.html"
-      expect(tags_feed_fail).to_not match "/2014/03/04/march-the-fourth.html"
-      expect(tags_feed_fail).to_not match "/2015/05/12/pre.html"
-      expect(tags_feed_fail).to_not match "/2015/05/18/author-detail.html"
-      expect(tags_feed_success).to_not match "/2013/12/12/dec-the-second.html"
-      expect(tags_feed_success).to_not match "/2014/03/02/march-the-second.html"
-      expect(tags_feed_success).to_not match "/2014/03/04/march-the-fourth.html"
-      expect(tags_feed_success).to_not match "/2015/01/18/jekyll-last-modified-at.html"
-      expect(tags_feed_success).to_not match "/2015/05/12/pre.html"
-      expect(tags_feed_success).to_not match "/2015/08/08/stuck-in-the-middle.html"
-      expect(tags_feed_fail).to match "/2015/01/18/jekyll-last-modified-at.html"
-      expect(tags_feed_fail).to match "/2015/08/08/stuck-in-the-middle.html"
-      expect(tags_feed_success).to match "2015/05/18/author-detail.html"
+
+    context "set tags setting" do
+      let(:overrides) do
+        {
+          "feed" => {
+            "tags" => {}
+          },
+        }
+      end
+
+      it "should write tags feeds" do
+        expect(Pathname.new(dest_dir("feed/by_tag/test.xml"))).to exist
+        expect(Pathname.new(dest_dir("feed/by_tag/fail.xml"))).to exist
+        expect(Pathname.new(dest_dir("feed/by_tag/success.xml"))).to exist
+        expect(tags_feed_test).to match "/2013/12/12/dec-the-second.html"
+        expect(tags_feed_test).to match "/2014/03/02/march-the-second.html"
+        expect(tags_feed_test).to match "/2014/03/04/march-the-fourth.html"
+        expect(tags_feed_test).to match "/2015/01/18/jekyll-last-modified-at.html"
+        expect(tags_feed_test).to match "/2015/05/12/pre.html"
+        expect(tags_feed_test).to match "/2015/05/18/author-detail.html"
+        expect(tags_feed_test).to match "/2015/08/08/stuck-in-the-middle.html"
+        expect(tags_feed_fail).to_not match "/2013/12/12/dec-the-second.html"
+        expect(tags_feed_fail).to_not match "/2014/03/02/march-the-second.html"
+        expect(tags_feed_fail).to_not match "/2014/03/04/march-the-fourth.html"
+        expect(tags_feed_fail).to_not match "/2015/05/12/pre.html"
+        expect(tags_feed_fail).to_not match "/2015/05/18/author-detail.html"
+        expect(tags_feed_success).to_not match "/2013/12/12/dec-the-second.html"
+        expect(tags_feed_success).to_not match "/2014/03/02/march-the-second.html"
+        expect(tags_feed_success).to_not match "/2014/03/04/march-the-fourth.html"
+        expect(tags_feed_success).to_not match "/2015/01/18/jekyll-last-modified-at.html"
+        expect(tags_feed_success).to_not match "/2015/05/12/pre.html"
+        expect(tags_feed_success).to_not match "/2015/08/08/stuck-in-the-middle.html"
+        expect(tags_feed_fail).to match "/2015/01/18/jekyll-last-modified-at.html"
+        expect(tags_feed_fail).to match "/2015/08/08/stuck-in-the-middle.html"
+        expect(tags_feed_success).to match "2015/05/18/author-detail.html"
+      end
     end
 
     context "set exclusions" do
