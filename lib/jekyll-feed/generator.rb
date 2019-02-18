@@ -26,18 +26,12 @@ module JekyllFeed
       tags_path = "feed/by_tag/"
       excludes = []
       if @config["tags"]
-        if @config["tags"]["path"]
-          tags_path = @config["tags"]["path"]
+        tags_path = @config["tags"]["path"] if @config["tags"]["path"]
+        @config["tags"]["excludes"]&.each do |exclude|
+          excludes.push(exclude)
         end
-        if @config["tags"]["excludes"]
-          @config["tags"]["excludes"].each do |exclude|
-            excludes.push(exclude)
-          end
-        end
-        if @config["tags"]["includes"]
-          @config["tags"]["includes"].each do |include|
-            includes.push(include)
-          end
+        @config["tags"]["includes"]&.each do |include|
+          includes.push(include)
         end
         if includes.empty?
           @site.tags.each do |tag, _meta|
@@ -50,12 +44,12 @@ module JekyllFeed
 
     def build_tags_feeds(tags_path, includes, excludes)
       includes.each do |tag|
-        unless excludes.include? tag
-          Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
-          path = "#{tags_path}#{tag}.xml"
-          unless file_exists?(path)
-            @site.pages << make_page(path, :collection => "posts", :tag => tag)
-          end
+        next if excludes.include? tag
+
+        Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
+        path = "#{tags_path}#{tag}.xml"
+        unless file_exists?(path)
+          @site.pages << make_page(path, :collection => "posts", :tag => tag)
         end
       end
     end
