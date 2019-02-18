@@ -22,12 +22,12 @@ module JekyllFeed
 
     def tags
       @config = config
+      includes = []
+      tags_path = "feed/by_tag/"
+      excludes = []
       @config.each do |name, data|
         next unless name == "tags"
 
-        includes = []
-        tags_path = "feed/by_tag/"
-        excludes = []
         data&.each do |setting, content|
           case setting
           when "path"
@@ -42,14 +42,14 @@ module JekyllFeed
             end
           end
         end
-        if includes.empty?
-          @site.tags.each do |tag, _meta|
-            build_tags_feed(tags_path, tag, excludes)
-          end
-        else
-          includes.each do |include|
-            build_tags_feed(tags_path, include, excludes)
-          end
+      end
+      if includes.empty?
+        @site.tags.each do |tag, _meta|
+          build_tags_feed(tags_path, tag, excludes)
+        end
+      else
+        includes.each do |include|
+          build_tags_feed(tags_path, include, excludes)
         end
       end
     end
