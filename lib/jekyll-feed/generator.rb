@@ -78,6 +78,10 @@ module JekyllFeed
       tags_pool = includes - excludes
       tags_path = tags_config["path"] || "/feed/by_tag/"
 
+      generate_tag_feed(tags_pool, tags_path)
+    end
+
+    def generate_tag_feed(tags_pool, tags_path)
       tags_pool.each do |tag|
         # allow only tags with alphanumeric non-ASCII characters
         next if tag =~ %r![^a-zA-Z0-9_]!
