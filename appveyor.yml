@@ -11,7 +11,7 @@ environment:
 install:
   # Download & extract libcurl
   # Code copied from the following:
-  #   https://github.com/ldc-developers/ldc/blob/v1.14.0/appveyor.yml#L35-L50
+  #   https://github.com/ldc-developers/ldc/blob/v1.14.0/appveyor.yml#L35-L51
   - appveyor DownloadFile "https://dl.dropboxusercontent.com/s/jxwohqax4e2avyt/libcurl-7.48.0-WinSSL-zlib-x86-x64.zip?dl=0" -FileName libcurl.zip
   - md libcurl
   - cd libcurl
@@ -27,7 +27,7 @@ install:
           cp libcurl\dmd2\windows\bin\libcurl.dll libcurl\ldc2
           cp libcurl\dmd2\windows\lib32mscoff\curl.lib libcurl\ldc2
         }
-  - SET PATH=C:\Ruby%RUBY_FOLDER_VER%-x64\bin;%PATH%
+  - SET PATH=%CD%\libcurl\ldc2;C:\Ruby%RUBY_FOLDER_VER%-x64\bin;%PATH%
   - bundle install --retry 5 --jobs=%NUMBER_OF_PROCESSORS% --clean --path vendor\bundle
 
 test_script:
