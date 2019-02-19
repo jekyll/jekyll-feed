@@ -83,7 +83,8 @@ module JekyllFeed
 
     def generate_tag_feed(tags_pool, tags_path)
       tags_pool.each do |tag|
-        # allow only tags with alphanumeric non-ASCII characters
+        # allow only tags with basic alphanumeric characters and underscore to keep
+        # feed path simple.
         next if tag =~ %r![^a-zA-Z0-9_]!
 
         Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
