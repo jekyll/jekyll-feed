@@ -1,8 +1,6 @@
 version: "{build}"
 clone_depth: 5
 build: off
-init:
-  - git config --global core.autocrlf input
 
 environment:
   NOKOGIRI_USE_SYSTEM_LIBRARIES: true
@@ -18,7 +16,7 @@ test_script:
   - ruby --version
   - gem --version
   - bundler --version
-  - bash ./script/cibuild
+  - bash ./script/test
 
 cache:
   # If one of the files after the right arrow changes, cache will be invalidated
