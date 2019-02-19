@@ -17,41 +17,7 @@ module JekyllFeed
           @site.pages << make_page(path, :collection => name, :category => category)
         end
       end
-      tags
-    end
-
-    def tags
-      @config = config
-      includes = []
-      tags_path = "feed/by_tag/"
-      excludes = []
-      if @config["tags"]
-        tags_path = @config["tags"]["path"] if @config["tags"]["path"]
-        @config["tags"]["excludes"]&.each do |exclude|
-          excludes.push(exclude)
-        end
-        @config["tags"]["includes"]&.each do |include|
-          includes.push(include)
-        end
-        if includes.empty?
-          @site.tags.each do |tag, _meta|
-            includes.push(tag)
-          end
-        end
-        build_tags_feeds(tags_path, includes, excludes)
-      end
-    end
-
-    def build_tags_feeds(tags_path, includes, excludes)
-      includes.each do |tag|
-        next if excludes.include? tag
-
-        Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
-        path = "#{tags_path}#{tag}.xml"
-        unless file_exists?(path)
-          @site.pages << make_page(path, :collection => "posts", :tag => tag)
-        end
-      end
+      generate_feed_by_tag if config["tags"] && !@site.tags.empty?
     end
 
     private
@@ -102,6 +68,26 @@ module JekyllFeed
       end
 
       @collections
+    end
+
+    def generate_feed_by_tag
+      tags_config = config["tags"]
+
+      excludes  = tags_config["excludes"] || []
+      includes  = tags_config["includes"] || @site.tags.keys
+      tags_pool = includes - excludes
+      tags_path = tags_config["path"] || "/feed/by_tag/"
+
+      tags_pool.each do |tag|
+        # allow only tags with alphanumeric non-ASCII characters
+        next if tag =~ %r![^a-zA-Z0-9_]!
+
+        Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
+        path = "#{tags_path}#{tag}.xml"
+        next if file_exists?(path)
+
+        @site.pages << make_page(path, :tag => tag)
+      end
     end
 
     # Path to feed.xml template file
