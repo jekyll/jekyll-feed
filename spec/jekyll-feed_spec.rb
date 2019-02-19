@@ -489,7 +489,7 @@ describe(JekyllFeed) do
       let(:overrides) do
         {
           "feed" => {
-            "tags" => {}
+            "tags" => true
           },
         }
       end

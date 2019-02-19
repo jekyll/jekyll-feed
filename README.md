@@ -188,7 +188,7 @@ To automatically generate feeds for each tag you apply to your posts you can add
 
 ```yml
 feed:
-  tags:
+  tags: true
 ```
 
 If there are tags you don't want included in this auto generation you can exclude them
