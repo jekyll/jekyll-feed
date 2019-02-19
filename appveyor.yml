@@ -1,6 +1,8 @@
 version: "{build}"
 clone_depth: 5
 build: off
+init:
+  - git config --global core.autocrlf input
 
 environment:
   NOKOGIRI_USE_SYSTEM_LIBRARIES: true
