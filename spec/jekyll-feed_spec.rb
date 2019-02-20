@@ -484,7 +484,6 @@ describe(JekyllFeed) do
       end
     end
 
-
     context "set tags setting" do
       let(:overrides) do
         {
