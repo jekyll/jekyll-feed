@@ -6,6 +6,7 @@
 
   * style: fix offenses in specs (#248)
   * dev: update CI and style settings (#258)
+  * Enable testing for Windows platform (#265)
 
 ## 0.11.0 / 2018-09-09
 
