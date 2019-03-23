@@ -4,9 +4,15 @@ build: off
 
 environment:
   NOKOGIRI_USE_SYSTEM_LIBRARIES: true
+  JEKYLL_VERSION: "~> 3.8"
   matrix:
     - RUBY_FOLDER_VER: "26"
+      JEKYLL_VERSION : "~> 3.7.4"
+    - RUBY_FOLDER_VER: "26"
+      JEKYLL_VERSION : ">= 4.0.0.pre.alpha1"
+    - RUBY_FOLDER_VER: "26"
     - RUBY_FOLDER_VER: "24"
+    - RUBY_FOLDER_VER: "23"
 
 install:
   - SET PATH=C:\Ruby%RUBY_FOLDER_VER%-x64\bin;%PATH%
