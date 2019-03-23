@@ -2,6 +2,10 @@
 
   * Release: v0.12.0 (#271)
 
+### Bug Fixes
+
+  * Re-introduce Ruby 2.3 support and test Jekyll 3.7+ (#272)
+
 ## 0.12.0 / 2019-03-21
 
   * Allow Jekyll v4 (still alpha)
