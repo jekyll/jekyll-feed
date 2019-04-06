@@ -205,6 +205,7 @@ describe(JekyllFeed) do
 
   context "validation" do
     it "validates" do
+      skip "Typhoeus couldn't find the 'libcurl' module on Windows" if Gem.win_platform?
       # See https://validator.w3.org/docs/api.html
       url = "https://validator.w3.org/feed/check.cgi?output=soap12"
       response = Typhoeus.post(url, :body => { :rawdata => contents }, :accept_encoding => "gzip")
