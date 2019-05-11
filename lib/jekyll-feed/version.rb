@@ -2,6 +2,6 @@
 
 module Jekyll
   module Feed
-    VERSION = "0.11.0"
+    VERSION = "0.12.1"
   end
 end

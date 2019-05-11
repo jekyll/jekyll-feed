@@ -1,10 +1,20 @@
-## HEAD
+## 0.12.1 / 2019-03-23
 
-  * Release 💎 0.11 (#241)
+  * Release: v0.12.0 (#271)
+
+### Bug Fixes
+
+  * Re-introduce Ruby 2.3 support and test Jekyll 3.7+ (#272)
+
+## 0.12.0 / 2019-03-21
+
+  * Allow Jekyll v4 (still alpha)
 
 ### Development Fixes
 
   * style: fix offenses in specs (#248)
+  * dev: update CI and style settings (#258)
+  * Enable testing for Windows platform (#265)
 
 ## 0.11.0 / 2018-09-09
 
