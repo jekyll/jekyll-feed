@@ -2,19 +2,65 @@
 
 module JekyllFeed
   class Generator < Jekyll::Generator
+    include Jekyll::Filters
     safe true
     priority :lowest
 
     # Main plugin action, called by Jekyll-core
+    # def generate(site)
+    #   @site = site
+    #   collections.each do |name, meta|
+    #     Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
+    #     (meta["categories"] + [nil]).each do |category|
+    #       path = feed_path(:collection => name, :category => category)
+    #       next if file_exists?(path)
+
+    #       @site.pages << make_page(path, :collection => name, :category => category)
+    #     end
+    #   end
+    # end
     def generate(site)
+      puts "jekyll-feed: local modified version"
       @site = site
       collections.each do |name, meta|
-        Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
+        #Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
         (meta["categories"] + [nil]).each do |category|
-          path = feed_path(:collection => name, :category => category)
-          next if file_exists?(path)
+          #Jekyll.logger.info "categories: ", "#{category}"
+          if category == "feedsforall"
+            @site.categories.each do |cat|
+              kitty = slugify(cat[0], "pretty")
+              path = feed_path(:collection => name, :category => "category/#{kitty}")
+              next if file_exists?(path)
+              
+              #Jekyll.logger.info "feed cat:", "should generate feed for #{kitty}"
+              @site.pages << make_page(path, :collection => name, :category => cat[0])
+            end
+          else
+            #Jekyll.logger.info "feed cat:", "else generate feed for #{category}"
+            path = category ? feed_path(:collection => name, :category => "category/#{category}") : feed_path(:collection => name, :category => category)
+            next if file_exists?(path)
 
-          @site.pages << make_page(path, :collection => name, :category => category)
+            @site.pages << make_page(path, :collection => name, :category => category)
+          end
+        end
+        (meta["tags"] + [nil]).each do |tag|
+          #Jekyll.logger.info "tag: ", "#{tag}"
+          if tag == "feedsforall"
+            @site.tags.each do |stag|
+              fawn = slugify(stag[0], "pretty")
+              path = feed_path(:collection => name, :category => "tag/#{fawn}")
+              next if file_exists?(path)
+              
+              #Jekyll.logger.info "feed tag:", "should generate feed for #{fawn}"
+              @site.pages << make_tag_page(path, :collection => name, :tag => stag)
+            end
+          elsif tag
+            #Jekyll.logger.info "feed tag:", "else generate feed for #{tag}"
+            path = feed_path(:collection => name, :category => "tag/#{tag}")
+            next if file_exists?(path)
+
+            @site.pages << make_tag_page(path, :collection => name, :tag => tag) if tag
+          end
         end
       end
     end
@@ -64,6 +110,7 @@ module JekyllFeed
       @collections = normalize_posts_meta(@collections)
       @collections.each_value do |meta|
         meta["categories"] = (meta["categories"] || []).to_set
+        meta["tags"] = (meta["tags"] || []).to_set
       end
 
       @collections
@@ -99,12 +146,28 @@ module JekyllFeed
       end
     end
 
+    def make_tag_page(file_path, collection: "posts", tag: nil)
+      PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
+        file.content = feed_template
+        file.data.merge!(
+          "layout"     => nil,
+          "sitemap"    => false,
+          "xsl"        => file_exists?("feed.xslt.xml"),
+          "collection" => collection,
+          "tag"        => tag[0]
+        )
+        #Jekyll.logger.info "feed tag:", "Generating feed for #{tag[0]}"
+        file.output
+      end
+    end
+
     # Special case the "posts" collection, which, for ease of use and backwards
     # compatability, can be configured via top-level keys or directly as a collection
     def normalize_posts_meta(hash)
       hash["posts"] ||= {}
       hash["posts"]["path"] ||= config["path"]
       hash["posts"]["categories"] ||= config["categories"]
+      hash["posts"]["tags"] ||= config["tags"]
       config["path"] ||= hash["posts"]["path"]
       hash
     end
