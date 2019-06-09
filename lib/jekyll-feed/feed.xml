@@ -43,8 +43,11 @@
   {% endif %}
 
   {% assign posts = site[page.collection] | where_exp: "post", "post.draft != true" | sort: "date" | reverse %}
+
   {% if page.category %}
-    {% assign posts = posts | where_exp: "post","post.categories contains page.category" %}
+    {%- assign catlist = posts | where_exp: "post","post.categories contains page.category" -%}
+    {%- assign catsingular = posts | where: "category",page.category -%}
+    {%- assign posts = catlist | push: catsingular -%}
   {% elsif page.tag %}
     {% assign posts = posts | where_exp: "post","post.tags contains page.tag" %}
   {% endif %}
