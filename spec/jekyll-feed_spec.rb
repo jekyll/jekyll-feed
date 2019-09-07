@@ -315,6 +315,7 @@ describe(JekyllFeed) do
       expect(post.categories[1].term).to eql('second')
       expect(post.categories[2].term).to eql('third')
       expect(post.categories.count).to eql(3)
+    end
   end
 
   context "changing the file path via collection meta" do
@@ -337,6 +338,7 @@ describe(JekyllFeed) do
     it "renders the feed meta with custom feed path" do
       expected = 'href="http://example.org/atom.xml"'
       expect(feed_meta).to include(expected)
+    end
   end
 
   context "feed stylesheet" do
