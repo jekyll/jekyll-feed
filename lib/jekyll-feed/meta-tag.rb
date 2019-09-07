@@ -14,7 +14,7 @@ module JekyllFeed
     private
 
     def config
-      @context.registers[:site].config
+      @config ||= @context.registers[:site].config
     end
 
     def attributes
@@ -27,11 +27,7 @@ module JekyllFeed
     end
 
     def path
-      if config["feed"] && config["feed"]["path"]
-        config["feed"]["path"]
-      else
-        "feed.xml"
-      end
+      config.dig("feed", "path") || "feed.xml"
     end
 
     def title

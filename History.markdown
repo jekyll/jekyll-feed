@@ -1,4 +1,34 @@
-## HEAD
+## 0.12.1 / 2019-03-23
+
+  * Release: v0.12.0 (#271)
+
+### Bug Fixes
+
+  * Re-introduce Ruby 2.3 support and test Jekyll 3.7+ (#272)
+
+## 0.12.0 / 2019-03-21
+
+  * Allow Jekyll v4 (still alpha)
+
+### Development Fixes
+
+  * style: fix offenses in specs (#248)
+  * dev: update CI and style settings (#258)
+  * Enable testing for Windows platform (#265)
+
+## 0.11.0 / 2018-09-09
+
+### Development Fixes
+
+  * Require Ruby 2.3 (#222)
+  * Refactor to remove redundant calls and variables (#240)
+
+### Minor Enhancements
+
+  * Categories and collections (#228)
+  * Remove check for older version of Jekyll (#234)
+
+## 0.10.0 / 2018-06-04
 
 ### Bug Fixes
 
@@ -7,6 +37,11 @@
 ### Development Fixes
 
   * Rubocop 0.55 (#223)
+  * Bump Rubocop (#230)
+
+### Minor Enhancements
+
+  * Support Typhoeus 1.0 (#232)
 
 ## 0.9.3 / 2018-02-04
 
