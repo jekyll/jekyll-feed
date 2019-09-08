@@ -43,7 +43,6 @@ describe(JekyllFeed) do
   end
 
   it "puts all the posts in the feed.xml file" do
-
     expect(contents).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
     expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
     expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
