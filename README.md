@@ -31,7 +31,7 @@ The plugin will automatically use any of the following configuration variables, 
 
 * `title` or `name` - The title of the site, e.g., "My awesome site"
 * `description` - A longer description of what your site is about, e.g., "Where I blog about Jekyll and other awesome things"
-* `url` - The URL to your site, e.g., `http://example.com`. If none is provided, the plugin will try to use `site.github.url`.
+* `url` - The URL to your site, e.g., `https://example.com`. If none is provided, the plugin will try to use `site.github.url`.
 * `author` - Global author information (see below)
 
 ### Already have a feed path?

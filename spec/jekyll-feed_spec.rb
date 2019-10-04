@@ -43,7 +43,7 @@ describe(JekyllFeed) do
   end
 
   it "puts all the posts in the feed.xml file" do
-    expect(contents).to match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+    expect(contents).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
     expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
     expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
     expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
@@ -205,6 +205,7 @@ describe(JekyllFeed) do
 
   context "validation" do
     it "validates" do
+      skip "Typhoeus couldn't find the 'libcurl' module on Windows" if Gem.win_platform?
       # See https://validator.w3.org/docs/api.html
       url = "https://validator.w3.org/feed/check.cgi?output=soap12"
       response = Typhoeus.post(url, :body => { :rawdata => contents }, :accept_encoding => "gzip")
@@ -239,7 +240,7 @@ describe(JekyllFeed) do
     end
 
     it "correctly adds the baseurl to the posts" do
-      expect(contents).to match "http://example.org/bass/updates/2014/03/04/march-the-fourth.html"
+      expect(contents).to match "http://example.org/bass/updates/jekyll/2014/03/04/march-the-fourth.html"
       expect(contents).to match "http://example.org/bass/news/2014/03/02/march-the-second.html"
       expect(contents).to match "http://example.org/bass/news/2013/12/12/dec-the-second.html"
     end
@@ -404,7 +405,7 @@ describe(JekyllFeed) do
       let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
 
       it "outputs the primary feed" do
-        expect(contents).to match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+        expect(contents).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
         expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
         expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
         expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
@@ -415,7 +416,7 @@ describe(JekyllFeed) do
         expect(news_feed).to match '<title type="html">My awesome site | News</title>'
         expect(news_feed).to match "http://example.org/news/2014/03/02/march-the-second.html"
         expect(news_feed).to match "http://example.org/news/2013/12/12/dec-the-second.html"
-        expect(news_feed).to_not match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+        expect(news_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
         expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
       end
     end
@@ -435,7 +436,7 @@ describe(JekyllFeed) do
       let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
 
       it "outputs the primary feed" do
-        expect(contents).to match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+        expect(contents).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
         expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
         expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
         expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
@@ -446,7 +447,7 @@ describe(JekyllFeed) do
         expect(news_feed).to match '<title type="html">My awesome site | News</title>'
         expect(news_feed).to match "http://example.org/news/2014/03/02/march-the-second.html"
         expect(news_feed).to match "http://example.org/news/2013/12/12/dec-the-second.html"
-        expect(news_feed).to_not match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+        expect(news_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
         expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
       end
     end
@@ -471,7 +472,7 @@ describe(JekyllFeed) do
         expect(collection_feed).to match '<title type="html">My awesome site | Collection</title>'
         expect(collection_feed).to match "http://example.org/collection/2018-01-01-collection-doc.html"
         expect(collection_feed).to match "http://example.org/collection/2018-01-02-collection-category-doc.html"
-        expect(collection_feed).to_not match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+        expect(collection_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
         expect(collection_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
       end
     end
@@ -499,7 +500,7 @@ describe(JekyllFeed) do
         expect(news_feed).to match '<title type="html">My awesome site | Collection | News</title>'
         expect(news_feed).to match "http://example.org/collection/2018-01-02-collection-category-doc.html"
         expect(news_feed).to_not match "http://example.org/collection/2018-01-01-collection-doc.html"
-        expect(news_feed).to_not match "http://example.org/updates/2014/03/04/march-the-fourth.html"
+        expect(news_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
         expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
       end
     end
