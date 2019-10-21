@@ -291,30 +291,16 @@ describe(JekyllFeed) do
     end
   end
 
-  context "with categories" do
-    let(:overrides) do
-      {
-        "source" => source_dir2
-      }
-    end
+  context "with 'categories' or 'category' or 'tags' key in the front matter" do
     let(:feed) { RSS::Parser.parse(contents) }
+    let(:entry_with_single_category) { feed.items.find { |i| i.title.content == "March The Second" } }
+    let(:entry_with_multiple_categories) { feed.items.find { |i| i.title.content == "Liquid" } }
+    let(:entry_with_multiple_categories_and_tags) { feed.items.find { |i| i.title.content == "March The Fourth" } }
 
-    it "includes the items" do
-      expect(feed.items.count).to eql(2)
-    end
-
-    it "outputs categories for posts with one `category`" do
-      post = feed.items.last
-      expect(post.categories[0].term).to eql('single')
-      expect(post.categories.count).to eql(1)
-    end
-
-    it "outputs categories for posts with one `category`" do
-      post = feed.items.first
-      expect(post.categories[0].term).to eql('first')
-      expect(post.categories[1].term).to eql('second')
-      expect(post.categories[2].term).to eql('third')
-      expect(post.categories.count).to eql(3)
+    it "generates the feed correctly" do
+      expect(entry_with_single_category.categories.map(&:term)).to eql(%w(news))
+      expect(entry_with_multiple_categories.categories.map(&:term)).to eql(%w(first second third))
+      expect(entry_with_multiple_categories_and_tags.categories.map(&:term)).to eql(["updates", "jekyll", "\"/><VADER>"])
     end
   end
 
