@@ -50,7 +50,7 @@
       <published>{{ post.date | date_to_xmlschema }}</published>
       <updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated>
       <id>{{ post.id | absolute_url | xml_escape }}</id>
-      {% assign excerpt_only = post.feed.excerpt_only | default: site.feed.excerpt_only | default: false %}
+      {% assign excerpt_only = post.feed.excerpt_only | default: site.feed.excerpt_only %}
       {% unless excerpt_only %}
         {% assign post_content = post.content %}
       {% endunless %}
