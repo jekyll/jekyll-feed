@@ -471,4 +471,42 @@ describe(JekyllFeed) do
       end
     end
   end
+
+  context "excerpt_only flag" do
+    context "backward compatibility for no excerpt_only flag" do
+      it "should be in contents" do
+        expect(contents).to match '<content '
+      end
+    end
+
+    context "when site.excerpt_only flag is true" do
+      let(:overrides) do
+        { "feed" => { "excerpt_only" => true } }
+      end
+
+      it "should not set any contents" do
+        expect(contents).to_not match '<content '
+      end
+    end
+
+    context "when site.excerpt_only flag is false" do
+      let(:overrides) do
+        { "feed" => { "excerpt_only" => false } }
+      end
+
+      it "should be in contents" do
+        expect(contents).to match '<content '
+      end
+    end
+
+    context "when post.excerpt_only flag is true" do
+      let(:overrides) do
+        { "feed" => { "excerpt_only" => false } }
+      end
+
+      it "should not be in contents" do
+        expect(contents).to_not match "This content should not be in feed.</content>"
+      end
+    end
+  end
 end
