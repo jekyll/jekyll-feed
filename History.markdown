@@ -4,6 +4,10 @@
 
   * test: use categories in post (#249)
 
+### Minor Enhancements
+
+  * Excerpt only flag (#287)
+
 ## 0.12.1 / 2019-03-23
 
   * Release: v0.12.0 (#271)
