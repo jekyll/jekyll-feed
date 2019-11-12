@@ -7,6 +7,7 @@
 ### Minor Enhancements
 
   * Excerpt only flag (#287)
+  * Add media:content tag (#290)
 
 ## 0.12.1 / 2019-03-23
 
