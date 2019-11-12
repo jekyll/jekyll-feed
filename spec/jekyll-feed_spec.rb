@@ -92,10 +92,22 @@ describe(JekyllFeed) do
     expect(contents).not_to match "Liquid is not rendered."
   end
 
-  it "includes the item image" do
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/image.png" />')
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://cdn.example.org/absolute.png?h=188&amp;w=250" />')
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/object-image.png" />')
+  context "images" do
+    let(:image1) { 'http://example.org/image.png' }
+    let(:image2) { 'https://cdn.example.org/absolute.png?h=188&amp;w=250' }
+    let(:image3) { 'http://example.org/object-image.png' }
+
+    it "includes the item image" do
+      expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{image1}" />))
+      expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{image2}" />))
+      expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{image3}" />))
+    end
+
+    it "included media content for mail templates (Mailchimp)" do
+      expect(contents).to include(%(<media:content medium="image" url="#{image1}" xmlns:media="http://search.yahoo.com/mrss/" />))
+      expect(contents).to include(%(<media:content medium="image" url="#{image2}" xmlns:media="http://search.yahoo.com/mrss/" />))
+      expect(contents).to include(%(<media:content medium="image" url="#{image3}" xmlns:media="http://search.yahoo.com/mrss/" />))
+    end
   end
 
   context "parsing" do
