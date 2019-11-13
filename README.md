@@ -186,6 +186,21 @@ feed:
         - updates
 ```
 
+## Excerpt Only flag
+
+Optional flag `excerpt_only` allows you to exclude post content from the Atom feed. Default value is `false` for backward compatibility.
+
+When in `config.yml` is `true` than all posts in feed will be without `<content>` tags.
+
+```yml
+feed:
+  excerpt_only: true
+```
+
+The same flag can be used directly in post file. It will be disable `<content>` tag for selected post.
+Settings in post file has higher priority than in config file.
+
+
 ## Contributing
 
 1. Fork it (https://github.com/jekyll/jekyll-feed/fork)
