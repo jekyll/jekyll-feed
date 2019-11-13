@@ -92,10 +92,22 @@ describe(JekyllFeed) do
     expect(contents).not_to match "Liquid is not rendered."
   end
 
-  it "includes the item image" do
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/image.png" />')
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://cdn.example.org/absolute.png?h=188&amp;w=250" />')
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/object-image.png" />')
+  context "images" do
+    let(:image1) { 'http://example.org/image.png' }
+    let(:image2) { 'https://cdn.example.org/absolute.png?h=188&amp;w=250' }
+    let(:image3) { 'http://example.org/object-image.png' }
+
+    it "includes the item image" do
+      expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{image1}" />))
+      expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{image2}" />))
+      expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{image3}" />))
+    end
+
+    it "included media content for mail templates (Mailchimp)" do
+      expect(contents).to include(%(<media:content medium="image" url="#{image1}" xmlns:media="http://search.yahoo.com/mrss/" />))
+      expect(contents).to include(%(<media:content medium="image" url="#{image2}" xmlns:media="http://search.yahoo.com/mrss/" />))
+      expect(contents).to include(%(<media:content medium="image" url="#{image3}" xmlns:media="http://search.yahoo.com/mrss/" />))
+    end
   end
 
   context "parsing" do
@@ -481,6 +493,44 @@ describe(JekyllFeed) do
         expect(Pathname.new(dest_dir("custom.xml"))).to exist
         expect(Pathname.new(dest_dir("feed/collection.xml"))).to_not exist
         expect(Pathname.new(dest_dir("feed/collection/news.xml"))).to exist
+      end
+    end
+  end
+
+  context "excerpt_only flag" do
+    context "backward compatibility for no excerpt_only flag" do
+      it "should be in contents" do
+        expect(contents).to match '<content '
+      end
+    end
+
+    context "when site.excerpt_only flag is true" do
+      let(:overrides) do
+        { "feed" => { "excerpt_only" => true } }
+      end
+
+      it "should not set any contents" do
+        expect(contents).to_not match '<content '
+      end
+    end
+
+    context "when site.excerpt_only flag is false" do
+      let(:overrides) do
+        { "feed" => { "excerpt_only" => false } }
+      end
+
+      it "should be in contents" do
+        expect(contents).to match '<content '
+      end
+    end
+
+    context "when post.excerpt_only flag is true" do
+      let(:overrides) do
+        { "feed" => { "excerpt_only" => false } }
+      end
+
+      it "should not be in contents" do
+        expect(contents).to_not match "This content should not be in feed.</content>"
       end
     end
   end
