@@ -31,7 +31,7 @@ The plugin will automatically use any of the following configuration variables, 
 
 * `title` or `name` - The title of the site, e.g., "My awesome site"
 * `description` - A longer description of what your site is about, e.g., "Where I blog about Jekyll and other awesome things"
-* `url` - The URL to your site, e.g., `http://example.com`. If none is provided, the plugin will try to use `site.github.url`.
+* `url` - The URL to your site, e.g., `https://example.com`. If none is provided, the plugin will try to use `site.github.url`.
 * `author` - Global author information (see below)
 
 ### Already have a feed path?
@@ -181,6 +181,20 @@ feed:
         - news
         - updates
 ```
+
+## Excerpt Only flag
+
+Optional flag `excerpt_only` allows you to exclude post content from the Atom feed. Default value is `false` for backward compatibility.
+
+When in `config.yml` is `true` than all posts in feed will be without `<content>` tags.
+
+```yml
+feed:
+  excerpt_only: true
+```
+
+The same flag can be used directly in post file. It will be disable `<content>` tag for selected post.
+Settings in post file has higher priority than in config file.
 
 ## Tags
 

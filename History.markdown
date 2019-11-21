@@ -1,6 +1,15 @@
-## 0.12.1 / 2019-03-23
+## 0.13.0 / 2019-11-13
 
-  * Release: v0.12.0 (#271)
+### Minor Enhancements
+
+  * Excerpt only flag (#287)
+  * Add media:content tag (#290)
+
+### Development Fixes
+
+  * test: use categories in post (#249)
+
+## 0.12.1 / 2019-03-23
 
 ### Bug Fixes
 
