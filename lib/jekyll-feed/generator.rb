@@ -8,6 +8,8 @@ module JekyllFeed
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
+      @feed_templates = {}
+
       collections.each do |name, meta|
         Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
         (meta["categories"] + [nil]).each do |category|
@@ -69,13 +71,22 @@ module JekyllFeed
       @collections
     end
 
-    # Path to feed.xml template file
-    def feed_source_path
-      @feed_source_path ||= File.expand_path "feed.xml", __dir__
-    end
 
-    def feed_template
-      @feed_template ||= File.read(feed_source_path).gsub(MINIFY_REGEX, "")
+    def feed_template(collection, category)
+      feed_source_path = File.expand_path "feed.xml", __dir__
+
+      (config["templates"] || []).each do |entry|
+        if (! entry.key? "collection" or collection == entry["collection"]) and
+           (! entry.key? "category" or category == entry["category"])
+
+          feed_source_path = entry["path"]
+          break
+        end
+      end
+
+      @feed_templates.fetch(feed_source_path) {
+        File.read(feed_source_path).gsub(MINIFY_REGEX, "")
+      }
     end
 
     # Checks if a file already exists in the site source
@@ -87,7 +98,7 @@ module JekyllFeed
 
     def make_page(file_path, collection: "posts", category: nil)
       PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
-        file.content = feed_template
+        file.content = feed_template(collection, category)
         file.data.merge!(
           "layout"     => nil,
           "sitemap"    => false,
