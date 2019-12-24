@@ -326,6 +326,66 @@ describe(JekyllFeed) do
     end
   end
 
+  context "selecting a particular collection" do
+    let(:overrides) do
+      {
+        "collections" => {
+          "collection" => {
+            "output" => true,
+          },
+        },
+        "feed"        => {
+          "collections" => {
+            "collection" => {
+              "categories" => ["news"],
+            },
+          },
+        },
+      }
+    end
+    let(:default_feed) { Liquid::Template.parse("{% feed_meta posts %}").render!(context, {}) }
+    let(:collection_feed) { Liquid::Template.parse("{% feed_meta collection %}").render!(context, {}) }
+    let(:category_feed) { Liquid::Template.parse("{% feed_meta collection news %}").render!(context, {}) }
+
+    it "renders the feed meta for the selected collection" do
+      default_feed_link    = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" title="My awesome site" />'
+      collection_feed_link = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection.xml" title="My awesome site | Collection" />'
+      category_feed_link   = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection/news.xml" title="My awesome site | Collection | News" />'
+      expect(default_feed).to eql(default_feed_link)
+      expect(collection_feed).to eql(collection_feed_link)
+      expect(category_feed).to eql(category_feed_link)
+    end
+  end
+
+  context "requesting all feed links" do
+    let(:overrides) do
+      {
+        "collections" => {
+          "collection" => {
+            "output" => true,
+          },
+        },
+        "feed"        => {
+          "collections" => {
+            "collection" => {
+              "categories" => ["news"],
+            },
+          },
+        },
+      }
+    end
+    let(:full_feed_meta) { Liquid::Template.parse("{% feed_meta include: all %}").render!(context, {}) }
+
+    it "renders the feed meta for all collections and categories" do
+      default_feed_link    = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" title="My awesome site" />'
+      collection_feed_link = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection.xml" title="My awesome site | Collection" />'
+      category_feed_link   = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection/news.xml" title="My awesome site | Collection | News" />'
+      expect(full_feed_meta).to include(default_feed_link)
+      expect(full_feed_meta).to include(collection_feed_link)
+      expect(full_feed_meta).to include(category_feed_link)
+    end
+  end
+
   context "feed stylesheet" do
     it "includes the stylesheet" do
       expect(contents).to include('<?xml-stylesheet type="text/xml" href="http://example.org/feed.xslt.xml"?>')
@@ -426,6 +486,31 @@ describe(JekyllFeed) do
         expect(collection_feed).to match "http://example.org/collection/2018-01-02-collection-category-doc.html"
         expect(collection_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
         expect(collection_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      end
+    end
+
+    context "with collection title" do
+      let(:collection_with_title_feed) { File.read(dest_dir("feed/collection_with_title.xml")) }
+      let(:overrides) do
+        {
+          "collections" => {
+            "collection_with_title" => {
+              "output" => true,
+              "path"   => 'collection_with_title'
+            },
+          },
+          "feed"        => {
+            "collections" => {
+              "collection_with_title" => {
+                "title" => "My collection title",
+              },
+            },
+          },
+        }
+      end
+
+      it "outputs the collection feed with custom title" do
+        expect(collection_with_title_feed).to match '<title type="html">My Awesome Site | My collection title</title>'
       end
     end
 
