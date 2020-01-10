@@ -39,8 +39,8 @@
     </author>
   {% endif %}
 
-  {% if page.tag %}
-    {% assign entries = site.tags[page.tag] %}
+  {% if page.tags %}
+    {% assign entries = site.tags[page.tags] %}
   {% else %}
     {% assign entries = site[page.collection] %}
   {% endif %}

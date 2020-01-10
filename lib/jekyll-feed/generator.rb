@@ -91,7 +91,7 @@ module JekyllFeed
         path = "#{tags_path}#{tag}.xml"
         next if file_exists?(path)
 
-        @site.pages << make_page(path, :tag => tag)
+        @site.pages << make_page(path, :tags => tag)
       end
     end
 
@@ -111,7 +111,7 @@ module JekyllFeed
 
     # Generates contents for a file
 
-    def make_page(file_path, collection: "posts", category: nil, tag: nil)
+    def make_page(file_path, collection: "posts", category: nil, tags: nil)
       PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
         file.content = feed_template
         file.data.merge!(
@@ -120,7 +120,7 @@ module JekyllFeed
           "xsl"        => file_exists?("feed.xslt.xml"),
           "collection" => collection,
           "category"   => category,
-          "tag"        => tag
+          "tags"       => tags
         )
         file.output
       end
