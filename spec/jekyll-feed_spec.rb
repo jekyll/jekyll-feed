@@ -488,6 +488,8 @@ describe(JekyllFeed) do
     let(:tags_feed_test) { File.read(dest_dir("feed/by_tag/test.xml")) }
     let(:tags_feed_fail) { File.read(dest_dir("feed/by_tag/fail.xml")) }
     let(:tags_feed_success) { File.read(dest_dir("feed/by_tag/success.xml")) }
+    let(:tags_feed_nonarray) { File.read(dest_dir("feed/by_tag/nonarray.xml")) }
+
 
     context "do not set tags setting" do
       it "should not write tags feeds" do
@@ -589,6 +591,24 @@ describe(JekyllFeed) do
         expect(Pathname.new(dest_dir("alternate/path/fail.xml"))).to exist
         expect(Pathname.new(dest_dir("alternate/path/success.xml"))).to exist
       end
+    end
+
+    context "test nonarray tag value" do
+      let(:overrides) do
+        {
+          "feed" => {
+            "tags" => {
+              "includes" => [ "nonarray" ]
+            },
+          },
+        }
+      end
+
+      it "should write nonarray feed" do
+        expect(Pathname.new(dest_dir("feed/by_tag/nonarray.xml"))).to exist
+        expect(tags_feed_nonarray).to match "/2015/05/12/liquid.html"
+      end
+ 
     end
   end
 
