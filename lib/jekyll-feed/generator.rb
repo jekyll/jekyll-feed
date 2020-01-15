@@ -71,7 +71,8 @@ module JekyllFeed
     end
 
     def generate_feed_by_tag
-      tags_config = config["tags"].is_a?(Hash) ? config["tags"] : {}
+      tags_config = config["tags"]
+      tags_config = {} unless tags_config.is_a?(Hash)
 
       excludes  = tags_config["excludes"] || []
       includes  = tags_config["includes"] || @site.tags.keys
