@@ -544,7 +544,7 @@ describe(JekyllFeed) do
         {
           "feed" => {
             "tags" => {
-              "excludes" => ["fail"]
+              "except" => ["fail"]
             },
           },
         }
@@ -562,7 +562,7 @@ describe(JekyllFeed) do
         {
           "feed" => {
             "tags" => {
-              "includes" => ["success"]
+              "only" => ["success"]
             },
           },
         }
@@ -624,7 +624,7 @@ describe(JekyllFeed) do
         {
           "feed" => {
             "tags" => {
-              "includes" => ["nonarray"]
+              "only" => ["nonarray"]
             },
           },
         }

@@ -210,7 +210,7 @@ If there are tags you don't want included in this auto generation you can exclud
 ```yml
 feed:
   tags:
-    excludes:
+    except:
       - tag-to-exclude
       - another-tag
 ```
@@ -228,7 +228,7 @@ If you only want to generate feeds for a few tags you can also set this.
 ```yml
 feed:
   tags:
-    includes:
+    only:
       - tag-to-include
       - another-tag
 ```
