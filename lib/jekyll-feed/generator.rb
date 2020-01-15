@@ -74,8 +74,8 @@ module JekyllFeed
       tags_config = config["tags"]
       tags_config = {} unless tags_config.is_a?(Hash)
 
-      except = tags_config["except"] || []
-      only = tags_config["only"] || @site.tags.keys
+      except    = tags_config["except"] || []
+      only      = tags_config["only"] || @site.tags.keys
       tags_pool = only - except
       tags_path = tags_config["path"] || "/feed/by_tag/"
 
