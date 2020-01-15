@@ -512,6 +512,7 @@ describe(JekyllFeed) do
         expect(Pathname.new(dest_dir("feed/by_tag/test.xml"))).to exist
         expect(Pathname.new(dest_dir("feed/by_tag/fail.xml"))).to exist
         expect(Pathname.new(dest_dir("feed/by_tag/success.xml"))).to exist
+
         expect(tags_feed_test).to match "/2013/12/12/dec-the-second.html"
         expect(tags_feed_test).to match "/2014/03/02/march-the-second.html"
         expect(tags_feed_test).to match "/2014/03/04/march-the-fourth.html"
@@ -519,20 +520,22 @@ describe(JekyllFeed) do
         expect(tags_feed_test).to match "/2015/05/12/pre.html"
         expect(tags_feed_test).to match "/2015/05/18/author-detail.html"
         expect(tags_feed_test).to match "/2015/08/08/stuck-in-the-middle.html"
+
+        expect(tags_feed_fail).to match "/2015/01/18/jekyll-last-modified-at.html"
+        expect(tags_feed_fail).to match "/2015/08/08/stuck-in-the-middle.html"
         expect(tags_feed_fail).to_not match "/2013/12/12/dec-the-second.html"
         expect(tags_feed_fail).to_not match "/2014/03/02/march-the-second.html"
         expect(tags_feed_fail).to_not match "/2014/03/04/march-the-fourth.html"
         expect(tags_feed_fail).to_not match "/2015/05/12/pre.html"
         expect(tags_feed_fail).to_not match "/2015/05/18/author-detail.html"
+
+        expect(tags_feed_success).to match "2015/05/18/author-detail.html"
         expect(tags_feed_success).to_not match "/2013/12/12/dec-the-second.html"
         expect(tags_feed_success).to_not match "/2014/03/02/march-the-second.html"
         expect(tags_feed_success).to_not match "/2014/03/04/march-the-fourth.html"
         expect(tags_feed_success).to_not match "/2015/01/18/jekyll-last-modified-at.html"
         expect(tags_feed_success).to_not match "/2015/05/12/pre.html"
         expect(tags_feed_success).to_not match "/2015/08/08/stuck-in-the-middle.html"
-        expect(tags_feed_fail).to match "/2015/01/18/jekyll-last-modified-at.html"
-        expect(tags_feed_fail).to match "/2015/08/08/stuck-in-the-middle.html"
-        expect(tags_feed_success).to match "2015/05/18/author-detail.html"
       end
     end
 
@@ -541,7 +544,7 @@ describe(JekyllFeed) do
         {
           "feed" => {
             "tags" => {
-              "excludes" => [ "fail" ]
+              "excludes" => ["fail"]
             },
           },
         }
@@ -559,7 +562,7 @@ describe(JekyllFeed) do
         {
           "feed" => {
             "tags" => {
-              "includes" => [ "success" ]
+              "includes" => ["success"]
             },
           },
         }
@@ -583,13 +586,36 @@ describe(JekyllFeed) do
         }
       end
 
-      it "should not write fail feed" do
+      it "should write feeds to new path" do
         expect(Pathname.new(dest_dir("feed/by_tag/test.xml"))).to_not exist
         expect(Pathname.new(dest_dir("feed/by_tag/fail.xml"))).to_not exist
         expect(Pathname.new(dest_dir("feed/by_tag/success.xml"))).to_not exist
+
         expect(Pathname.new(dest_dir("alternate/path/test.xml"))).to exist
         expect(Pathname.new(dest_dir("alternate/path/fail.xml"))).to exist
         expect(Pathname.new(dest_dir("alternate/path/success.xml"))).to exist
+      end
+
+      context "set to questionable path" do
+        let(:overrides) do
+          {
+            "feed" => {
+              "tags" => {
+                "path" => "../../../../../../../questionable/path/"
+              },
+            },
+          }
+        end
+
+        it "should write feeds to sane paths" do
+          expect(Pathname.new(dest_dir("feed/by_tag/test.xml"))).to_not exist
+          expect(Pathname.new(dest_dir("feed/by_tag/fail.xml"))).to_not exist
+          expect(Pathname.new(dest_dir("feed/by_tag/success.xml"))).to_not exist
+
+          expect(Pathname.new(dest_dir("questionable/path/test.xml"))).to exist
+          expect(Pathname.new(dest_dir("questionable/path/fail.xml"))).to exist
+          expect(Pathname.new(dest_dir("questionable/path/success.xml"))).to exist
+        end
       end
     end
 
@@ -598,7 +624,7 @@ describe(JekyllFeed) do
         {
           "feed" => {
             "tags" => {
-              "includes" => [ "nonarray" ]
+              "includes" => ["nonarray"]
             },
           },
         }
