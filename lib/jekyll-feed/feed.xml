@@ -56,16 +56,18 @@
       {% endunless %}
 
       {% assign post_author = post.author | default: post.authors[0] | default: site.author %}
-      {% assign post_author_name = nil %}
-      {% unless post_author.first %}
+      {% if post_author.first %}
+        {% assign post_author_name = nil %}
+      {% else %}
         {% assign post_author_name = post_author %}
-      {% endunless %}
+      {% endif %}
       {% assign post_author = site.data.authors[post_author] | default: post_author %}
       {% assign post_author_email = post_author.email | default: nil %}
       {% assign post_author_uri = post_author.uri | default: nil %}
-      {% assign post_author_twitter = post_author.twitter | default: nil %}
-      {% if post_author_twitter %}
+      {% if post_author.twitter %}
         {% assign post_author_twitter = post_author.twitter | prepend: "@" %}
+      {% else %}
+        {% assign post_author_twitter = nil %}
       {% endif %}
       {% assign post_author_name = post_author.name | default: post_author_twitter | default: post_author_name | default: post_author %}
 
