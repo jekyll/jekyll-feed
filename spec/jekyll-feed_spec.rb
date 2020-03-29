@@ -326,6 +326,66 @@ describe(JekyllFeed) do
     end
   end
 
+  context "selecting a particular collection" do
+    let(:overrides) do
+      {
+        "collections" => {
+          "collection" => {
+            "output" => true,
+          },
+        },
+        "feed"        => {
+          "collections" => {
+            "collection" => {
+              "categories" => ["news"],
+            },
+          },
+        },
+      }
+    end
+    let(:default_feed) { Liquid::Template.parse("{% feed_meta posts %}").render!(context, {}) }
+    let(:collection_feed) { Liquid::Template.parse("{% feed_meta collection %}").render!(context, {}) }
+    let(:category_feed) { Liquid::Template.parse("{% feed_meta collection news %}").render!(context, {}) }
+
+    it "renders the feed meta for the selected collection" do
+      default_feed_link    = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" title="My awesome site" />'
+      collection_feed_link = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection.xml" title="My awesome site" />'
+      category_feed_link   = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection/news.xml" title="My awesome site" />'
+      expect(default_feed).to eql(default_feed_link)
+      expect(collection_feed).to eql(collection_feed_link)
+      expect(category_feed).to eql(category_feed_link)
+    end
+  end
+
+  context "requesting all feed links" do
+    let(:overrides) do
+      {
+        "collections" => {
+          "collection" => {
+            "output" => true,
+          },
+        },
+        "feed"        => {
+          "collections" => {
+            "collection" => {
+              "categories" => ["news"],
+            },
+          },
+        },
+      }
+    end
+    let(:full_feed_meta) { Liquid::Template.parse("{% feed_meta include: all %}").render!(context, {}) }
+
+    it "renders the feed meta for all collections and categories" do
+      default_feed_link    = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed.xml" title="My awesome site" />'
+      collection_feed_link = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection.xml" title="My awesome site" />'
+      category_feed_link   = '<link type="application/atom+xml" rel="alternate" href="http://example.org/feed/collection/news.xml" title="My awesome site" />'
+      expect(full_feed_meta).to include(default_feed_link)
+      expect(full_feed_meta).to include(collection_feed_link)
+      expect(full_feed_meta).to include(category_feed_link)
+    end
+  end
+
   context "feed stylesheet" do
     it "includes the stylesheet" do
       expect(contents).to include('<?xml-stylesheet type="text/xml" href="http://example.org/feed.xslt.xml"?>')

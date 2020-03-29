@@ -120,6 +120,10 @@ There are several ways to convey author-specific information. Author information
 
 The plugin exposes a helper tag to expose the appropriate meta tags to support automated discovery of your feed. Simply place `{% feed_meta %}` someplace in your template's `<head>` section, to output the necessary metadata.
 
+The helper can also generate the link for a given collection: `{% feed_meta my_collection %}` or a given category: `{% feed_meta my_collection my_category %}`.
+
+To generate links for every collections and categories, call the helper using this syntax: `{% feed_meta include: all %}`.
+
 ### SmartyPants
 
 The plugin uses [Jekyll's `smartify` filter](https://jekyllrb.com/docs/templates/) for processing the site title and post titles. This will translate plain ASCII punctuation into "smart" typographic punctuation. This will not render or strip any Markdown you may be using in a title.
