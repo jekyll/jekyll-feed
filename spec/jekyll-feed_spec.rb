@@ -87,6 +87,10 @@ describe(JekyllFeed) do
     expect(contents).to match '<title type="html">The plugin will properly strip newlines.</title>'
   end
 
+  it "strips HTML from link titles" do
+    expect(contents).to match %r!<link .* title="Sparkling Title" />!
+  end
+
   it "renders Liquid inside posts" do
     expect(contents).to match "Liquid is rendered."
     expect(contents).not_to match "Liquid is not rendered."
