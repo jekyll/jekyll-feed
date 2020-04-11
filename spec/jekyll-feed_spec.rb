@@ -207,6 +207,15 @@ describe(JekyllFeed) do
         expect(feed.title.content).to eql(site_title)
       end
     end
+
+    context "with site.title has special characters" do
+      let(:site_title) { "My Site Title <&>" }
+      let(:overrides) { { "title" => site_title } }
+
+      it "uses encoded site.title for the title" do
+        expect(feed.title.content).to eql(site_title.encode(xml: :text))
+      end
+    end
   end
 
   context "smartify" do
