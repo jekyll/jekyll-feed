@@ -7,7 +7,7 @@ module JekyllFeed
 
     def render(context)
       @context = context
-      attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(" ")
+      attrs    = attributes.map { |k, v| %(#{k}=#{v.encode(:xml => :attr)}) }.join(" ")
       "<link #{attrs} />"
     end
 
@@ -22,7 +22,7 @@ module JekyllFeed
         :type  => "application/atom+xml",
         :rel   => "alternate",
         :href  => absolute_url(path),
-        :title => title&.encode(:xml => :text),
+        :title => title,
       }.keep_if { |_, v| v }
     end
 
