@@ -4,6 +4,10 @@
 
   * Fix feed link when post title contains HTML (#305)
 
+### Minor Enhancements
+
+  * XML escape the title field of feed_meta (#306)
+
 ## 0.13.0 / 2019-11-13
 
 ### Minor Enhancements
