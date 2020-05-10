@@ -87,6 +87,10 @@ describe(JekyllFeed) do
     expect(contents).to match '<title type="html">The plugin will properly strip newlines.</title>'
   end
 
+  it "strips HTML from link titles" do
+    expect(contents).to match %r!<link .* title="Sparkling Title" />!
+  end
+
   it "renders Liquid inside posts" do
     expect(contents).to match "Liquid is rendered."
     expect(contents).not_to match "Liquid is not rendered."
@@ -201,6 +205,15 @@ describe(JekyllFeed) do
 
       it "uses site.title for the title, dropping site.name" do
         expect(feed.title.content).to eql(site_title)
+      end
+    end
+
+    context "with site.title has special characters" do
+      let(:site_title) { "My Site Title <&>" }
+      let(:overrides) { { "title" => site_title } }
+
+      it "uses encoded site.title for the title" do
+        expect(feed.title.content).to eql(site_title.encode(xml: :text))
       end
     end
   end

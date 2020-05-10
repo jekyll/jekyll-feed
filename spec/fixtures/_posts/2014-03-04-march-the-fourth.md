@@ -1,4 +1,5 @@
 ---
+title: <span class="highlight">Sparkling</span> Title
 tags:
  - '"/><VADER>'
  - test
