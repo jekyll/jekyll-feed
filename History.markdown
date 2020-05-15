@@ -8,6 +8,10 @@
 
   * XML escape the title field of feed_meta (#306)
 
+### Development Fixes
+
+  * chore: use Dir to list source files (#309)
+
 ## 0.13.0 / 2019-11-13
 
 ### Minor Enhancements
