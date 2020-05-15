@@ -442,6 +442,31 @@ describe(JekyllFeed) do
       end
     end
 
+    context "with collection title" do
+      let(:collection_with_title_feed) { File.read(dest_dir("feed/collection_with_title.xml")) }
+      let(:overrides) do
+        {
+          "collections" => {
+            "collection_with_title" => {
+              "output" => true,
+              "path"   => 'collection_with_title'
+            },
+          },
+          "feed"        => {
+            "collections" => {
+              "collection_with_title" => {
+                "title" => "My collection title",
+              },
+            },
+          },
+        }
+      end
+
+      it "outputs the collection feed with custom title" do
+        expect(collection_with_title_feed).to match '<title type="html">My Awesome Site | My collection title</title>'
+      end
+    end
+
     context "with categories" do
       let(:overrides) do
         {
