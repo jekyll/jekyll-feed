@@ -7,7 +7,7 @@ module JekyllFeed
 
     def render(context)
       @context = context
-      attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(" ")
+      attrs    = attributes.map { |k, v| %(#{k}=#{v.encode(:xml => :attr)}) }.join(" ")
       "<link #{attrs} />"
     end
 

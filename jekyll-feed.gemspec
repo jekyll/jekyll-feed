@@ -3,17 +3,18 @@
 require_relative "lib/jekyll-feed/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "jekyll-feed"
-  spec.version       = Jekyll::Feed::VERSION
-  spec.authors       = ["Ben Balter"]
-  spec.email         = ["ben.balter@github.com"]
-  spec.summary       = "A Jekyll plugin to generate an Atom feed of your Jekyll posts"
-  spec.homepage      = "https://github.com/jekyll/jekyll-feed"
-  spec.license       = "MIT"
+  spec.name             = "jekyll-feed"
+  spec.version          = Jekyll::Feed::VERSION
+  spec.authors          = ["Ben Balter"]
+  spec.email            = ["ben.balter@github.com"]
+  spec.summary          = "A Jekyll plugin to generate an Atom feed of your Jekyll posts"
+  spec.homepage         = "https://github.com/jekyll/jekyll-feed"
+  spec.license          = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.test_files    = spec.files.grep(%r!^spec/!)
-  spec.require_paths = ["lib"]
+  spec.files            = Dir["lib/**/*"]
+  spec.extra_rdoc_files = Dir["README.md", "History.markdown", "LICENSE.txt"]
+  spec.test_files       = spec.files.grep(%r!^spec/!)
+  spec.require_paths    = ["lib"]
 
   spec.required_ruby_version = ">= 2.4.0"
 
