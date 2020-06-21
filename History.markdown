@@ -7,6 +7,7 @@
 ### Minor Enhancements
 
   * XML escape the title field of feed_meta (#306)
+  * Make posts limit configurable (#314)
 
 ### Development Fixes
 
