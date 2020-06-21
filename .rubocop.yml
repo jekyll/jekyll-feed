@@ -1,5 +1,7 @@
+require: rubocop-jekyll
+
 inherit_gem:
-  jekyll: .rubocop.yml
+  rubocop-jekyll: .rubocop.yml
 
 AllCops:
   TargetRubyVersion: 2.3
@@ -17,10 +19,7 @@ AllCops:
     - LICENSE.txt
     - README.md
 
-    - features/**/*
     - script/**/*
-    - spec/**/*
-    - test/**/*
     - vendor/**/*
 
 Naming/MemoizedInstanceVariableName:

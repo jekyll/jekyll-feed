@@ -43,59 +43,75 @@ describe(JekyllFeed) do
   end
 
   it "puts all the posts in the feed.xml file" do
-    expect(contents).to match /http:\/\/example\.org\/2014\/03\/04\/march-the-fourth\.html/
-    expect(contents).to match /http:\/\/example\.org\/2014\/03\/02\/march-the-second\.html/
-    expect(contents).to match /http:\/\/example\.org\/2013\/12\/12\/dec-the-second\.html/
+    expect(contents).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+    expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
+    expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
     expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
-    expect(contents).to_not match /http:\/\/example\.org\/2016\/02\/09\/a-draft\.html/
+    expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
   end
 
   it "does not include assets or any static files that aren't .html" do
-    expect(contents).not_to match /http:\/\/example\.org\/images\/hubot\.png/
-    expect(contents).not_to match /http:\/\/example\.org\/feeds\/atom\.xml/
+    expect(contents).not_to match "http://example.org/images/hubot.png"
+    expect(contents).not_to match "http://example.org/feeds/atom.xml"
   end
 
   it "preserves linebreaks in preformatted text in posts" do
-    expect(contents).to match %r!Line 1\nLine 2\nLine 3!
+    expect(contents).to match "Line 1\nLine 2\nLine 3"
   end
 
   it "supports post author name as an object" do
-    expect(contents).to match /<author>\s*<name>Ben<\/name>\s*<email>ben@example.com<\/email>\s*<uri>http:\/\/ben.balter.com<\/uri>\s*<\/author>/
+    expect(contents).to match %r!<author>\s*<name>Ben</name>\s*<email>ben@example\.com</email>\s*<uri>http://ben\.balter\.com</uri>\s*</author>!
   end
 
   it "supports post author name as a string" do
-    expect(contents).to match /<author>\s*<name>Pat<\/name>\s*<\/author>/
+    expect(contents).to match %r!<author>\s*<name>Pat</name>\s*</author>!
   end
 
   it "does not output author tag no author is provided" do
-    expect(contents).not_to match /<author>\s*<name><\/name>\s*<\/author>/
+    expect(contents).not_to match %r!<author>\s*<name></name>\s*</author>!
   end
 
   it "does use author reference with data from _data/authors.yml" do
-    expect(contents).to match /<author>\s*<name>Garth<\/name>\s*<email>example@mail.com<\/email>\s*<uri>http:\/\/garthdb.com<\/uri>\s*<\/author>/
+    expect(contents).to match %r!<author>\s*<name>Garth</name>\s*<email>example@mail\.com</email>\s*<uri>http://garthdb\.com</uri>\s*</author>!
   end
 
   it "converts markdown posts to HTML" do
-    expect(contents).to match /&lt;p&gt;March the second!&lt;\/p&gt;/
+    expect(contents).to match %r!&lt;p&gt;March the second\!&lt;/p&gt;!
   end
 
   it "uses last_modified_at where available" do
-    expect(contents).to match /<updated>2015-05-12T13:27:59\+00:00<\/updated>/
+    expect(contents).to match %r!<updated>2015-05-12T13:27:59\+00:00</updated>!
   end
 
   it "replaces newlines in posts to spaces" do
-    expect(contents).to match %r!<title type="html">The plugin will properly strip newlines.</title>!
+    expect(contents).to match '<title type="html">The plugin will properly strip newlines.</title>'
+  end
+
+  it "strips HTML from link titles" do
+    expect(contents).to match %r!<link .* title="Sparkling Title" />!
   end
 
   it "renders Liquid inside posts" do
-    expect(contents).to match %r!Liquid is rendered\.!
-    expect(contents).not_to match %r!Liquid is not rendered\.!
+    expect(contents).to match "Liquid is rendered."
+    expect(contents).not_to match "Liquid is not rendered."
   end
 
-  it "includes the item image" do
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/image.png" />')
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://cdn.example.org/absolute.png?h=188&amp;w=250" />')
-    expect(contents).to include('<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://example.org/object-image.png" />')
+  context "images" do
+    let(:image1) { 'http://example.org/image.png' }
+    let(:image2) { 'https://cdn.example.org/absolute.png?h=188&amp;w=250' }
+    let(:image3) { 'http://example.org/object-image.png' }
+
+    it "includes the item image" do
+      expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{image1}" />))
+      expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{image2}" />))
+      expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{image3}" />))
+    end
+
+    it "included media content for mail templates (Mailchimp)" do
+      expect(contents).to include(%(<media:content medium="image" url="#{image1}" xmlns:media="http://search.yahoo.com/mrss/" />))
+      expect(contents).to include(%(<media:content medium="image" url="#{image2}" xmlns:media="http://search.yahoo.com/mrss/" />))
+      expect(contents).to include(%(<media:content medium="image" url="#{image3}" xmlns:media="http://search.yahoo.com/mrss/" />))
+    end
   end
 
   context "parsing" do
@@ -125,7 +141,7 @@ describe(JekyllFeed) do
     it "includes item contents" do
       post = feed.items.last
       expect(post.title.content).to eql("Dec The Second")
-      expect(post.link.href).to eql("http://example.org/2013/12/12/dec-the-second.html")
+      expect(post.link.href).to eql("http://example.org/news/2013/12/12/dec-the-second.html")
       expect(post.published.content).to eql(Time.parse("2013-12-12"))
     end
 
@@ -191,6 +207,15 @@ describe(JekyllFeed) do
         expect(feed.title.content).to eql(site_title)
       end
     end
+
+    context "with site.title has special characters" do
+      let(:site_title) { "My Site Title <&>" }
+      let(:overrides) { { "title" => site_title } }
+
+      it "uses encoded site.title for the title" do
+        expect(feed.title.content).to eql(site_title.encode(xml: :text))
+      end
+    end
   end
 
   context "smartify" do
@@ -205,6 +230,7 @@ describe(JekyllFeed) do
 
   context "validation" do
     it "validates" do
+      skip "Typhoeus couldn't find the 'libcurl' module on Windows" if Gem.win_platform?
       # See https://validator.w3.org/docs/api.html
       url = "https://validator.w3.org/feed/check.cgi?output=soap12"
       response = Typhoeus.post(url, :body => { :rawdata => contents }, :accept_encoding => "gzip")
@@ -239,9 +265,9 @@ describe(JekyllFeed) do
     end
 
     it "correctly adds the baseurl to the posts" do
-      expect(contents).to match /http:\/\/example\.org\/bass\/2014\/03\/04\/march-the-fourth\.html/
-      expect(contents).to match /http:\/\/example\.org\/bass\/2014\/03\/02\/march-the-second\.html/
-      expect(contents).to match /http:\/\/example\.org\/bass\/2013\/12\/12\/dec-the-second\.html/
+      expect(contents).to match "http://example.org/bass/updates/jekyll/2014/03/04/march-the-fourth.html"
+      expect(contents).to match "http://example.org/bass/news/2014/03/02/march-the-second.html"
+      expect(contents).to match "http://example.org/bass/news/2013/12/12/dec-the-second.html"
     end
 
     it "renders the feed meta" do
@@ -258,11 +284,11 @@ describe(JekyllFeed) do
 
     context "with a blank site name" do
       let(:config) do
-        Jekyll.configuration({
+        Jekyll.configuration(
           "source"      => source_dir,
           "destination" => dest_dir,
-          "url"         => "http://example.org",
-        })
+          "url"         => "http://example.org"
+        )
       end
 
       it "does not output blank title" do
@@ -290,6 +316,29 @@ describe(JekyllFeed) do
     end
   end
 
+  context "changing the file path via collection meta" do
+    let(:overrides) do
+      {
+        "feed" => {
+          "collections" => {
+            "posts" => {
+              "path" => "atom.xml",
+            },
+          },
+        },
+      }
+    end
+
+    it "should write to atom.xml" do
+      expect(Pathname.new(dest_dir("atom.xml"))).to exist
+    end
+
+    it "renders the feed meta with custom feed path" do
+      expected = 'href="http://example.org/atom.xml"'
+      expect(feed_meta).to include(expected)
+    end
+  end
+
   context "feed stylesheet" do
     it "includes the stylesheet" do
       expect(contents).to include('<?xml-stylesheet type="text/xml" href="http://example.org/feed.xslt.xml"?>')
@@ -300,14 +349,209 @@ describe(JekyllFeed) do
     let(:overrides) { { "lang" => "en-US" } }
 
     it "should set the language" do
-      expect(contents).to match %r!type="text/html" hreflang="en-US" />!
+      expect(contents).to match 'type="text/html" hreflang="en-US" />'
     end
   end
 
   context "with post.lang set" do
     it "should set the language for that entry" do
-      expect(contents).to match %r!<entry xml:lang="en">!
-      expect(contents).to match %r!<entry>!
+      expect(contents).to match '<entry xml:lang="en">'
+      expect(contents).to match '<entry>'
+    end
+  end
+
+  context "categories" do
+    context "with top-level post categories" do
+      let(:overrides) do
+        {
+          "feed" => { "categories" => ["news"] },
+        }
+      end
+      let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
+
+      it "outputs the primary feed" do
+        expect(contents).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+        expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
+        expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
+        expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+        expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
+      end
+
+      it "outputs the category feed" do
+        expect(news_feed).to match '<title type="html">My awesome site | News</title>'
+        expect(news_feed).to match "http://example.org/news/2014/03/02/march-the-second.html"
+        expect(news_feed).to match "http://example.org/news/2013/12/12/dec-the-second.html"
+        expect(news_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+        expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      end
+    end
+
+    context "with collection-level post categories" do
+      let(:overrides) do
+        {
+          "feed" => {
+            "collections" => {
+              "posts" => {
+                "categories" => ["news"],
+              },
+            },
+          },
+        }
+      end
+      let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
+
+      it "outputs the primary feed" do
+        expect(contents).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+        expect(contents).to match "http://example.org/news/2014/03/02/march-the-second.html"
+        expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
+        expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+        expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
+      end
+
+      it "outputs the category feed" do
+        expect(news_feed).to match '<title type="html">My awesome site | News</title>'
+        expect(news_feed).to match "http://example.org/news/2014/03/02/march-the-second.html"
+        expect(news_feed).to match "http://example.org/news/2013/12/12/dec-the-second.html"
+        expect(news_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+        expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      end
+    end
+  end
+
+  context "collections" do
+    let(:collection_feed) { File.read(dest_dir("feed/collection.xml")) }
+
+    context "when initialized as an array" do
+      let(:overrides) do
+        {
+          "collections" => {
+            "collection" => {
+              "output" => true,
+            },
+          },
+          "feed"        => { "collections" => ["collection"] },
+        }
+      end
+
+      it "outputs the collection feed" do
+        expect(collection_feed).to match '<title type="html">My awesome site | Collection</title>'
+        expect(collection_feed).to match "http://example.org/collection/2018-01-01-collection-doc.html"
+        expect(collection_feed).to match "http://example.org/collection/2018-01-02-collection-category-doc.html"
+        expect(collection_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+        expect(collection_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      end
+    end
+
+    context "with categories" do
+      let(:overrides) do
+        {
+          "collections" => {
+            "collection" => {
+              "output" => true,
+            },
+          },
+          "feed"        => {
+            "collections" => {
+              "collection" => {
+                "categories" => ["news"],
+              },
+            },
+          },
+        }
+      end
+      let(:news_feed) { File.read(dest_dir("feed/collection/news.xml")) }
+
+      it "outputs the collection category feed" do
+        expect(news_feed).to match '<title type="html">My awesome site | Collection | News</title>'
+        expect(news_feed).to match "http://example.org/collection/2018-01-02-collection-category-doc.html"
+        expect(news_feed).to_not match "http://example.org/collection/2018-01-01-collection-doc.html"
+        expect(news_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+        expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      end
+    end
+
+    context "with a custom path" do
+      let(:overrides) do
+        {
+          "collections" => {
+            "collection" => {
+              "output" => true,
+            },
+          },
+          "feed"        => {
+            "collections" => {
+              "collection" => {
+                "categories" => ["news"],
+                "path"       => "custom.xml",
+              },
+            },
+          },
+        }
+      end
+
+      it "should write to the custom path" do
+        expect(Pathname.new(dest_dir("custom.xml"))).to exist
+        expect(Pathname.new(dest_dir("feed/collection.xml"))).to_not exist
+        expect(Pathname.new(dest_dir("feed/collection/news.xml"))).to exist
+      end
+    end
+  end
+
+  context "excerpt_only flag" do
+    context "backward compatibility for no excerpt_only flag" do
+      it "should be in contents" do
+        expect(contents).to match '<content '
+      end
+    end
+
+    context "when site.excerpt_only flag is true" do
+      let(:overrides) do
+        { "feed" => { "excerpt_only" => true } }
+      end
+
+      it "should not set any contents" do
+        expect(contents).to_not match '<content '
+      end
+    end
+
+    context "when site.excerpt_only flag is false" do
+      let(:overrides) do
+        { "feed" => { "excerpt_only" => false } }
+      end
+
+      it "should be in contents" do
+        expect(contents).to match '<content '
+      end
+    end
+
+    context "when post.excerpt_only flag is true" do
+      let(:overrides) do
+        { "feed" => { "excerpt_only" => false } }
+      end
+
+      it "should not be in contents" do
+        expect(contents).to_not match "This content should not be in feed.</content>"
+      end
+    end
+  end
+
+  context "with feed.posts_limit set to 2" do
+    let(:overrides) do
+      { "feed" => { "posts_limit" => 2 } }
+    end
+
+    it "puts the latest 2 the posts in the feed.xml file" do
+      expect(contents).to_not match "http://example.org/news/2013/12/12/dec-the-second.html"
+      expect(contents).to_not match "http://example.org/news/2014/03/02/march-the-second.html"
+      expect(contents).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+      expect(contents).to_not match "http://example.org/2015/01/18/jekyll-last-modified-at.html"
+      expect(contents).to_not match "http://example.org/2015/02/12/strip-newlines.html"
+      expect(contents).to_not match "http://example.org/2015/05/12/liquid.html"
+      expect(contents).to_not match "http://example.org/2015/05/12/pre.html"
+      expect(contents).to_not match "http://example.org/2015/05/18/author-detail.html"
+
+      expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      expect(contents).to match "http://example.org/2016/04/25/author-reference.html"
     end
   end
 end

@@ -7,14 +7,14 @@ module JekyllFeed
 
     def render(context)
       @context = context
-      attrs    = attributes.map { |k, v| %(#{k}="#{v}") }.join(" ")
+      attrs    = attributes.map { |k, v| %(#{k}=#{v.encode(:xml => :attr)}) }.join(" ")
       "<link #{attrs} />"
     end
 
     private
 
     def config
-      @context.registers[:site].config
+      @config ||= @context.registers[:site].config
     end
 
     def attributes
@@ -27,11 +27,7 @@ module JekyllFeed
     end
 
     def path
-      if config["feed"] && config["feed"]["path"]
-        config["feed"]["path"]
-      else
-        "feed.xml"
-      end
+      config.dig("feed", "path") || "feed.xml"
     end
 
     def title

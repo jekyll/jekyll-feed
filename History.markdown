@@ -1,8 +1,56 @@
 ## HEAD
 
+### Bug Fixes
+
+  * Fix feed link when post title contains HTML (#305)
+
+### Minor Enhancements
+
+  * XML escape the title field of feed_meta (#306)
+  * Make posts limit configurable (#314)
+
+### Development Fixes
+
+  * chore: use Dir to list source files (#309)
+
+## 0.13.0 / 2019-11-13
+
+### Minor Enhancements
+
+  * Excerpt only flag (#287)
+  * Add media:content tag (#290)
+
+### Development Fixes
+
+  * test: use categories in post (#249)
+
+## 0.12.1 / 2019-03-23
+
+### Bug Fixes
+
+  * Re-introduce Ruby 2.3 support and test Jekyll 3.7+ (#272)
+
+## 0.12.0 / 2019-03-21
+
+  * Allow Jekyll v4 (still alpha)
+
+### Development Fixes
+
+  * style: fix offenses in specs (#248)
+  * dev: update CI and style settings (#258)
+  * Enable testing for Windows platform (#265)
+
+## 0.11.0 / 2018-09-09
+
 ### Development Fixes
 
   * Require Ruby 2.3 (#222)
+  * Refactor to remove redundant calls and variables (#240)
+
+### Minor Enhancements
+
+  * Categories and collections (#228)
+  * Remove check for older version of Jekyll (#234)
 
 ## 0.10.0 / 2018-06-04
 
