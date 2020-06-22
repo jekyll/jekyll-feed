@@ -87,6 +87,10 @@ describe(JekyllFeed) do
     expect(contents).to match '<title type="html">The plugin will properly strip newlines.</title>'
   end
 
+  it "strips HTML from link titles" do
+    expect(contents).to match %r!<link .* title="Sparkling Title" />!
+  end
+
   it "renders Liquid inside posts" do
     expect(contents).to match "Liquid is rendered."
     expect(contents).not_to match "Liquid is not rendered."
@@ -201,6 +205,15 @@ describe(JekyllFeed) do
 
       it "uses site.title for the title, dropping site.name" do
         expect(feed.title.content).to eql(site_title)
+      end
+    end
+
+    context "with site.title has special characters" do
+      let(:site_title) { "My Site Title <&>" }
+      let(:overrides) { { "title" => site_title } }
+
+      it "uses encoded site.title for the title" do
+        expect(feed.title.content).to eql(site_title.encode(xml: :text))
       end
     end
   end
@@ -532,6 +545,26 @@ describe(JekyllFeed) do
       it "should not be in contents" do
         expect(contents).to_not match "This content should not be in feed.</content>"
       end
+    end
+  end
+
+  context "with feed.posts_limit set to 2" do
+    let(:overrides) do
+      { "feed" => { "posts_limit" => 2 } }
+    end
+
+    it "puts the latest 2 the posts in the feed.xml file" do
+      expect(contents).to_not match "http://example.org/news/2013/12/12/dec-the-second.html"
+      expect(contents).to_not match "http://example.org/news/2014/03/02/march-the-second.html"
+      expect(contents).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+      expect(contents).to_not match "http://example.org/2015/01/18/jekyll-last-modified-at.html"
+      expect(contents).to_not match "http://example.org/2015/02/12/strip-newlines.html"
+      expect(contents).to_not match "http://example.org/2015/05/12/liquid.html"
+      expect(contents).to_not match "http://example.org/2015/05/12/pre.html"
+      expect(contents).to_not match "http://example.org/2015/05/18/author-detail.html"
+
+      expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      expect(contents).to match "http://example.org/2016/04/25/author-reference.html"
     end
   end
 end

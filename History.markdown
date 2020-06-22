@@ -1,3 +1,20 @@
+## HEAD
+
+### Bug Fixes
+
+  * Fix feed link when post title contains HTML (#305)
+
+### Minor Enhancements
+
+  * XML escape the title field of feed_meta (#306)
+  * Make posts limit configurable (#314)
+  * Dont forget about categories (#233)
+  * chore(deps): require Ruby &gt;=2.4.0 (#307)
+
+### Development Fixes
+
+  * chore: use Dir to list source files (#309)
+
 ## 0.13.0 / 2019-11-13
 
 ### Minor Enhancements
