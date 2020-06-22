@@ -9,6 +9,7 @@
   * XML escape the title field of feed_meta (#306)
   * Make posts limit configurable (#314)
   * Dont forget about categories (#233)
+  * chore(deps): require Ruby &gt;=2.4.0 (#307)
 
 ### Development Fixes
 
