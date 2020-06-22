@@ -325,7 +325,7 @@ describe(JekyllFeed) do
     it "generates the feed correctly" do
       expect(entry_with_single_category.categories.map(&:term)).to eql(%w(news))
       expect(entry_with_multiple_categories.categories.map(&:term)).to eql(%w(first second third))
-      expect(entry_with_multiple_categories_and_tags.categories.map(&:term)).to eql(["updates", "jekyll", "\"/><VADER>"])
+      expect(entry_with_multiple_categories_and_tags.categories.map(&:term)).to eql(["updates", "jekyll", "\"/><VADER>", "test"])
     end
   end
 
@@ -539,7 +539,6 @@ describe(JekyllFeed) do
         expect(Pathname.new(dest_dir("feed/by_tag/success.xml"))).to exist
 
         expect(tags_feed_test).to match "/2013/12/12/dec-the-second.html"
-        expect(tags_feed_test).to match "/2014/03/02/march-the-second.html"
         expect(tags_feed_test).to match "/2014/03/04/march-the-fourth.html"
         expect(tags_feed_test).to match "/2015/01/18/jekyll-last-modified-at.html"
         expect(tags_feed_test).to match "/2015/05/12/pre.html"
