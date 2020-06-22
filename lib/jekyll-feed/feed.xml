@@ -43,14 +43,20 @@
   {% if page.category %}
     {% assign posts = posts | where: "category",page.category %}
   {% endif %}
-  {% for post in posts limit: 10 %}
+  {% assign posts_limit = site.feed.posts_limit | default: 10 %}
+  {% for post in posts limit: posts_limit %}
     <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
-      <title type="html">{{ post.title | smartify | strip_html | normalize_whitespace | xml_escape }}</title>
-      <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
+      {% assign post_title = post.title | smartify | strip_html | normalize_whitespace | xml_escape %}
+
+      <title type="html">{{ post_title }}</title>
+      <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post_title }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
       <updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated>
       <id>{{ post.id | absolute_url | xml_escape }}</id>
-      <content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}">{{ post.content | strip | xml_escape }}</content>
+      {% assign excerpt_only = post.feed.excerpt_only | default: site.feed.excerpt_only %}
+      {% unless excerpt_only %}
+        <content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}">{{ post.content | strip | xml_escape }}</content>
+      {% endunless %}
 
       {% assign post_author = post.author | default: post.authors[0] | default: site.author %}
       {% assign post_author = site.data.authors[post_author] | default: post_author %}
@@ -90,6 +96,7 @@
           {% assign post_image = post_image | absolute_url %}
         {% endunless %}
         <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post_image | xml_escape }}" />
+        <media:content medium="image" url="{{ post_image | xml_escape }}" xmlns:media="http://search.yahoo.com/mrss/" />
       {% endif %}
     </entry>
   {% endfor %}
