@@ -205,6 +205,44 @@ feed:
 The same flag can be used directly in post file. It will be disable `<content>` tag for selected post.
 Settings in post file has higher priority than in config file.
 
+## Tags
+
+To automatically generate feeds for each tag you apply to your posts you can add a tags setting to your config:
+
+```yml
+feed:
+  tags: true
+```
+
+If there are tags you don't want included in this auto generation you can exclude them
+
+```yml
+feed:
+  tags:
+    except:
+      - tag-to-exclude
+      - another-tag
+```
+
+If you wish to change the location of these auto generated feeds (`/feed/by_tag/<TAG>.xml` by default) you can provide an alternative folder for them to live in.
+
+```yml
+feed:
+  tags:
+    path: "alternative/path/for/tags/feeds/"
+```
+
+If you only want to generate feeds for a few tags you can also set this.
+
+```yml
+feed:
+  tags:
+    only:
+      - tag-to-include
+      - another-tag
+```
+
+Note that if you include a tag that is excluded a feed will not be generated for it.
 
 ## Contributing
 

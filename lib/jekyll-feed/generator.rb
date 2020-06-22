@@ -17,6 +17,7 @@ module JekyllFeed
           @site.pages << make_page(path, :collection => name, :category => category)
         end
       end
+      generate_feed_by_tag if config["tags"] && !@site.tags.empty?
     end
 
     private
@@ -69,6 +70,32 @@ module JekyllFeed
       @collections
     end
 
+    def generate_feed_by_tag
+      tags_config = config["tags"]
+      tags_config = {} unless tags_config.is_a?(Hash)
+
+      except    = tags_config["except"] || []
+      only      = tags_config["only"] || @site.tags.keys
+      tags_pool = only - except
+      tags_path = tags_config["path"] || "/feed/by_tag/"
+
+      generate_tag_feed(tags_pool, tags_path)
+    end
+
+    def generate_tag_feed(tags_pool, tags_path)
+      tags_pool.each do |tag|
+        # allow only tags with basic alphanumeric characters and underscore to keep
+        # feed path simple.
+        next if tag =~ %r![^a-zA-Z0-9_]!
+
+        Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
+        path = "#{tags_path}#{tag}.xml"
+        next if file_exists?(path)
+
+        @site.pages << make_page(path, :tags => tag)
+      end
+    end
+
     # Path to feed.xml template file
     def feed_source_path
       @feed_source_path ||= File.expand_path "feed.xml", __dir__
@@ -85,7 +112,7 @@ module JekyllFeed
 
     # Generates contents for a file
 
-    def make_page(file_path, collection: "posts", category: nil)
+    def make_page(file_path, collection: "posts", category: nil, tags: nil)
       PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
         file.content = feed_template
         file.data.merge!(
@@ -93,7 +120,8 @@ module JekyllFeed
           "sitemap"    => false,
           "xsl"        => file_exists?("feed.xslt.xml"),
           "collection" => collection,
-          "category"   => category
+          "category"   => category,
+          "tags"       => tags
         )
         file.output
       end
