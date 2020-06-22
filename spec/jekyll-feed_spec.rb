@@ -320,7 +320,7 @@ describe(JekyllFeed) do
     let(:feed) { RSS::Parser.parse(contents) }
     let(:entry_with_single_category) { feed.items.find { |i| i.title.content == "March The Second" } }
     let(:entry_with_multiple_categories) { feed.items.find { |i| i.title.content == "Liquid" } }
-    let(:entry_with_multiple_categories_and_tags) { feed.items.find { |i| i.title.content == "March The Fourth" } }
+    let(:entry_with_multiple_categories_and_tags) { feed.items.find { |i| i.title.content == "Sparkling Title" } }
 
     it "generates the feed correctly" do
       expect(entry_with_single_category.categories.map(&:term)).to eql(%w(news))

@@ -74,7 +74,6 @@
         {% endif %}
       </author>
 
-
       {% if post.category %}
         <category term="{{ post.category | xml_escape }}" />
       {% elsif post.categories %}
