@@ -151,6 +151,15 @@ feed:
     - updates
 ```
 
+## Posts limit
+
+By default the plugin limits the number of posts in the feed to 10. Simply define a new limit in your config:
+
+```yml
+feed:
+  posts_limit: 20
+```
+
 ## Collections
 
 Jekyll Feed can generate feeds for collections other than the Posts collection. This works best for chronological collections (e.g., collections with dates in the filenames). Simply define which collections you'd like feeds for in your config:

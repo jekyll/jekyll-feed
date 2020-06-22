@@ -12,7 +12,6 @@ environment:
       JEKYLL_VERSION : ">= 4.0.0.pre.alpha1"
     - RUBY_FOLDER_VER: "26"
     - RUBY_FOLDER_VER: "24"
-    - RUBY_FOLDER_VER: "23"
 
 install:
   - SET PATH=C:\Ruby%RUBY_FOLDER_VER%-x64\bin;%PATH%

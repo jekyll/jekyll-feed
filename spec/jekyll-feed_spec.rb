@@ -688,4 +688,24 @@ describe(JekyllFeed) do
       end
     end
   end
+
+  context "with feed.posts_limit set to 2" do
+    let(:overrides) do
+      { "feed" => { "posts_limit" => 2 } }
+    end
+
+    it "puts the latest 2 the posts in the feed.xml file" do
+      expect(contents).to_not match "http://example.org/news/2013/12/12/dec-the-second.html"
+      expect(contents).to_not match "http://example.org/news/2014/03/02/march-the-second.html"
+      expect(contents).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+      expect(contents).to_not match "http://example.org/2015/01/18/jekyll-last-modified-at.html"
+      expect(contents).to_not match "http://example.org/2015/02/12/strip-newlines.html"
+      expect(contents).to_not match "http://example.org/2015/05/12/liquid.html"
+      expect(contents).to_not match "http://example.org/2015/05/12/pre.html"
+      expect(contents).to_not match "http://example.org/2015/05/18/author-detail.html"
+
+      expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      expect(contents).to match "http://example.org/2016/04/25/author-reference.html"
+    end
+  end
 end
