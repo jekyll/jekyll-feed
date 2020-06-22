@@ -76,6 +76,10 @@
 
       {% if post.category %}
         <category term="{{ post.category | xml_escape }}" />
+      {% elsif post.categories %}
+        {% for category in post.categories %}
+          <category term="{{ category | xml_escape }}" />
+        {% endfor %}
       {% endif %}
 
       {% for tag in post.tags %}
