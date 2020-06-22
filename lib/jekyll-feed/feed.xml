@@ -39,7 +39,12 @@
     </author>
   {% endif %}
 
-  {% assign posts = site[page.collection] | where_exp: "post", "post.draft != true" | sort: "date" | reverse %}
+  {% if page.tags %}
+    {% assign entries = site.tags[page.tags] %}
+  {% else %}
+    {% assign entries = site[page.collection] %}
+  {% endif %}
+  {% assign posts = entries | where_exp: "post", "post.draft != true" | sort: "date" | reverse %}
   {% if page.category %}
     {% assign posts = posts | where: "category",page.category %}
   {% endif %}
