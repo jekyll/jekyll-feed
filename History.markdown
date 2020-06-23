@@ -11,6 +11,7 @@
   * Dont forget about categories (#233)
   * chore(deps): require Ruby &gt;=2.4.0 (#307)
   * Feed by tag (#264)
+  * add support for categories frontmatter (#153)
 
 ### Development Fixes
 
