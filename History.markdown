@@ -1,3 +1,9 @@
+## HEAD
+
+### Minor Enhancements
+
+  * Add support for drafts (#316)
+
 ## 0.14.0 / 2020-06-24
 
 ### Minor Enhancements
