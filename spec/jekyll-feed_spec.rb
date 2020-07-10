@@ -9,7 +9,7 @@ describe(JekyllFeed) do
       "full_rebuild" => true,
       "source"       => source_dir,
       "destination"  => dest_dir,
-      "show_drafts"  => true,
+      "show_drafts"  => false,
       "url"          => "http://example.org",
       "name"         => "My awesome site",
       "author"       => {
@@ -699,6 +699,28 @@ describe(JekyllFeed) do
 
       expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
       expect(contents).to match "http://example.org/2016/04/25/author-reference.html"
+    end
+  end
+
+  context "support drafts" do
+    context "with disable show_drafts option" do
+      let(:overrides) do
+        { "show_drafts" => false }
+      end
+
+      it "should not be draft post" do
+        expect(contents).to_not match "a-draft.html"
+      end
+    end
+
+    context "with enable show_drafts option" do
+      let(:overrides) do
+        { "show_drafts" => true }
+      end
+
+      it "should be draft post" do
+        expect(contents).to match "a-draft.html"
+      end
     end
   end
 end
