@@ -57,7 +57,7 @@
       {% assign post_title = post.title | smartify | strip_html | normalize_whitespace | xml_escape %}
 
       <title type="html">{{ post_title }}</title>
-      <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post_title }}" />
+      <link href="{{ post.url | absolute_url | xml_escape }}" rel="alternate" type="text/html" title="{{ post_title }}" />
       <published>{{ post.date | date_to_xmlschema }}</published>
       <updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated>
       <id>{{ post.id | absolute_url | xml_escape }}</id>
