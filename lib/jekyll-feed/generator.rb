@@ -38,7 +38,7 @@ module JekyllFeed
       @site.collections[name].metadata
     end
 
-    def description(collection = nil)
+    def description(collection)
       data_for_collection(collection)["description"] || nil
     end
 
@@ -150,7 +150,7 @@ module JekyllFeed
 
     # Returns the configured title for the collection if defined. Otherwise, it
     # returns a fallback value of "Site Name | Collection"
-    def title(collection = nil)
+    def title(collection)
       title = data_for_collection(collection)["title"]
       title || "#{@site.config["name"]} | #{collection.capitalize}" unless title == "posts"
     end
