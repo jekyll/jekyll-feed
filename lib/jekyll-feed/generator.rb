@@ -35,7 +35,7 @@ module JekyllFeed
 
     # Returns the metadata for the collection in the argument
     def data_for_collection(name)
-      @site.config["collections"][name]
+      @site.collections[name].metadata
     end
 
     def description(collection = nil)
