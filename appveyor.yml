@@ -4,10 +4,10 @@ build: off
 
 environment:
   NOKOGIRI_USE_SYSTEM_LIBRARIES: true
-  JEKYLL_VERSION: "~> 3.8"
+  JEKYLL_VERSION: "~> 3.9"
   matrix:
     - RUBY_FOLDER_VER: "26"
-      JEKYLL_VERSION : "~> 3.7.4"
+      JEKYLL_VERSION : "~> 3.8.6"
     - RUBY_FOLDER_VER: "26"
       JEKYLL_VERSION : ">= 4.0.0.pre.alpha1"
     - RUBY_FOLDER_VER: "26"
