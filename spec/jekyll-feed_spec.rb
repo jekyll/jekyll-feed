@@ -252,6 +252,28 @@ describe(JekyllFeed) do
       end
     end
 
+    context "with collections.collection.title not set" do
+      let(:site_name) { "My Site Title" }
+      let(:collection_name) { "collection" }
+      let(:overrides) do
+        {
+          "title" => site_name,
+          "collections" => {
+            collection_name => {
+              "output" => true,
+            },
+          },
+          "feed" => { "collections" => ["collection"] },
+        }
+      end
+      let(:collection_feed) { File.read(dest_dir("feed/collection.xml")) }
+
+      it "uses default title for the feed title" do
+        default_title = [site_name, collection_name.capitalize ].join(" | ")
+        expect(collection_feed).to match "<title type=\"html\">#{default_title}</title>"
+      end
+    end
+
     context "with 'posts' collection" do
       let(:site_name) { "My Site Title" }
       let(:overrides) do
@@ -289,7 +311,6 @@ describe(JekyllFeed) do
         expect(collection_feed).to match "<subtitle>#{page_description}</subtitle>"
       end
     end
-
   end
 
   context "smartify" do
