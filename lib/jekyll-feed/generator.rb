@@ -38,16 +38,22 @@ module JekyllFeed
       @site.collections[name].metadata
     end
 
-    # Returns the configured title for the collection if defined. Otherwise, it
-    # returns a fallback value of "Site Name | Collection"
-    def title(collection)
-      title = data_for_collection(collection)["title"]
-      title || "#{@site.config["name"]} | #{collection.capitalize}" unless title == "posts"
+    # Returns the configured title for the collection if defined.  # Otherwise, it
+    # returns a fallback value of "Site Name | Collection_name"
+    def title(collection_name)
+      return if collection_name == "posts"
+
+      data_for_collection(collection_name)["title"] || default_title(collection_name)
+    end
+
+    # Returns a default title of "Site Name | Collection_name"
+    def default_title(collection_name)
+      [@site.config["name"], collection_name.capitalize].join(" | ")
     end
 
     # Returns the description YAML for a collection if defined.
-    def description(collection)
-      data_for_collection(collection)["description"]
+    def description(collection_name)
+      data_for_collection(collection_name)["description"]
     end
 
     # Determines the destination path of a given feed
