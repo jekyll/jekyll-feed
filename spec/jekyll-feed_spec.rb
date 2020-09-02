@@ -252,6 +252,24 @@ describe(JekyllFeed) do
       end
     end
 
+    context "with 'posts' collection" do
+      let(:site_name) { "My Site Title" }
+      let(:overrides) do
+        {
+          "title" => site_name,
+          "collections" => {
+            "posts" => {
+              "output" => true
+            }
+          }
+        }
+      end
+
+      it "uses the site name as the feed title" do
+        expect(contents).to match '<title type="html">My Site Title</title>'
+      end
+    end
+
     context "with collection.collection.description set" do
       let(:page_description) { "A custom description of the collection feed." }
       let(:overrides) do
