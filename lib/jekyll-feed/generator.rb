@@ -89,12 +89,9 @@ module JekyllFeed
 
     def generate_tag_feed(tags_pool, tags_path)
       tags_pool.each do |tag|
-        # allow only tags with basic alphanumeric characters and underscore to keep
-        # feed path simple.
-        next if %r![^a-zA-Z0-9_]!.match?(tag)
-
+        tag_slug = Jekyll::Utils.slugify(tag)
         Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
-        path = "#{tags_path}#{tag}.xml"
+        path = "#{tags_path}#{tag_slug}.xml"
         next if file_exists?(path)
 
         @site.pages << make_page(path, :tags => tag)
