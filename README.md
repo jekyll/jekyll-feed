@@ -134,7 +134,7 @@ Jekyll's `smartify` filter uses [kramdown](https://kramdown.gettalong.org/option
 
 ### Custom styling
 
-Want to style what your feed looks like in the browser? When a XSLT Styleheet file named `feed.xslt.xml`exisrs at the root of your repository, a link to this stylesheet is added to the generated feed.
+Want to style what your feed looks like in the browser? When a XSLT Styleheet file named `feed.xslt.xml` exists at the root of your repository, a link to this stylesheet is added to the generated feed.
 
 ## Why Atom, and not RSS?
 
