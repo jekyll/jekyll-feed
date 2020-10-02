@@ -189,6 +189,21 @@ describe(JekyllFeed) do
       end
     end
 
+    context "with site.title set as a non-string value" do
+      class MySiteTitle
+        def to_s
+          "My Dynamic Site Title <&>"
+        end
+        alias_method :to_liquid, :to_s
+      end
+      let(:site_title) { MySiteTitle.new }
+      let(:overrides) { { "title" => site_title } }
+
+      it "ensures the site.title is the string representation of the object" do
+        expect(feed.title.content).to eql(site_title.to_s.encode(xml: :text))
+      end
+    end
+
     context "with site.name set" do
       let(:site_name) { "My Site Name" }
       let(:overrides) { { "name" => site_name } }
