@@ -1,3 +1,9 @@
+## HEAD
+
+### Development Fixes
+
+  * MetaTag: when encoding for XML special characters, handle non-string objects (#326)
+
 ## 0.15.0 / 2020-07-10
 
 ### Minor Enhancements
