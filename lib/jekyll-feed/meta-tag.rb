@@ -6,15 +6,18 @@ module JekyllFeed
     include Jekyll::Filters::URLFilters
 
     def render(context)
-      @context = context
-      attrs    = attributes.map do |k, v|
-        v = v.to_s unless v.respond_to?(:encode)
-        %(#{k}=#{v.encode(:xml => :attr)})
-      end
-      "<link #{attrs.join(" ")} />"
+      @context ||= context
+      memoized_result
     end
 
     private
+
+    def memoized_result
+      @memoized_result ||= begin
+        attrs = attributes.map { |k, v| "#{k}=#{v.to_s.encode(:xml => :attr)}" }
+        "<link #{attrs.join(" ")} />"
+      end
+    end
 
     def config
       @config ||= @context.registers[:site].config
