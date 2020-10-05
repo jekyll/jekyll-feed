@@ -6,38 +6,32 @@ module JekyllFeed
     include Jekyll::Filters::URLFilters
 
     def render(context)
-      @context ||= context
-      memoized_result
+      # Jekyll::Filters::URLFilters requires `@context` to be set in the environment.
+      @context = context
+      xml_encoded_link_tag
     end
 
     private
-
-    def memoized_result
-      @memoized_result ||= begin
-        attrs = attributes.map { |k, v| "#{k}=#{v.to_s.encode(:xml => :attr)}" }
-        "<link #{attrs.join(" ")} />"
-      end
-    end
 
     def config
       @config ||= @context.registers[:site].config
     end
 
-    def attributes
-      {
-        :type  => "application/atom+xml",
-        :rel   => "alternate",
-        :href  => absolute_url(path),
-        :title => title,
-      }.keep_if { |_, v| v }
-    end
+    def xml_encoded_link_tag
+      @xml_encoded_link_tag ||= begin
+        path  = config.dig("feed", "path") || "feed.xml"
+        title = config["title"] || config["name"]
 
-    def path
-      config.dig("feed", "path") || "feed.xml"
-    end
+        attributes = {
+          :type => "application/atom+xml",
+          :rel  => "alternate",
+          :href => absolute_url(path),
+        }
+        attributes[:title] = title if title
 
-    def title
-      config["title"] || config["name"]
+        attrs = attributes.map { |k, v| "#{k}=#{v.to_s.encode(:xml => :attr)}" }.join(" ")
+        "<link #{attrs} />"
+      end
     end
   end
 end
