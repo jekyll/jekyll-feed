@@ -38,7 +38,7 @@ module JekyllFeed
       @site.collections[name].metadata
     end
 
-    # Returns the configured title for the collection if defined.  # Otherwise, it
+    # Returns the configured title for the collection if defined. Otherwise, it
     # returns a fallback value of "Site Name | Collection_name"
     def title(collection_name)
       return if collection_name == "posts"
@@ -48,7 +48,8 @@ module JekyllFeed
 
     # Returns a default title of "Site Name | Collection_name"
     def default_title(collection_name)
-      [@site.config["name"], collection_name.capitalize].join(" | ")
+      site_title = @site.config["title"] || @site.config["name"]
+      [site_title, collection_name.capitalize].join(" | ")
     end
 
     # Returns the description YAML for a collection if defined.

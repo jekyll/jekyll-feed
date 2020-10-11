@@ -9,18 +9,18 @@
   <updated>{{ site.time | date_to_xmlschema }}</updated>
   <id>{{ page.url | absolute_url | xml_escape }}</id>
 
-  {% assign title = site.title | default: site.name %}
-  {% if page.collection != "posts" %}
+  {% if page.collection == "posts" %}
+    {% assign title = site.title | default: site.name %}
+  {% else %}
     {% assign title = page.title | default: site.name %}
   {% endif %}
+
   {% if page.category %}
     {% assign category = page.category | capitalize %}
-    {% assign title = page.title | append: " | " | append: category %}
+    {% assign title = title | append: " | " | append: category %}
   {% endif %}
 
-  {% if title %}
-    <title type="html">{{ title | smartify | xml_escape }}</title>
-  {% endif %}
+  <title type="html">{{ title | smartify | xml_escape }}</title>
 
   {% assign description = page.description | default: site.description %}
   {% if description %}
