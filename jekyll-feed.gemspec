@@ -24,7 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "nokogiri", "~> 1.6"
   spec.add_development_dependency "rake", "~> 12.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rss" if RUBY_VERSION >= '3.0.0'
   spec.add_development_dependency "rubocop-jekyll", "~> 0.5"
   spec.add_development_dependency "typhoeus", ">= 0.7", "< 2.0"
 end
