@@ -1,5 +1,9 @@
 ## HEAD
 
+### Development Fixes
+
+  * Add Ruby 3.0 to CI (#337)
+
 ## 0.15.1 / 2020-10-04
 
 ### Bug Fixes
