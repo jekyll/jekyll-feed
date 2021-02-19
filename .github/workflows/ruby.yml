@@ -29,13 +29,5 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
-    - name: 'Update Rubygems and Bundler'
-      run: |
-        gem update --system --no-document
-        gem update bundler --no-document
-    - name: Set up bundle
-      run: |
-        bundle config path vendor/bundle
-        bundle install --jobs 4 --retry 3
     - name: Run tests
       run: bash script/cibuild
