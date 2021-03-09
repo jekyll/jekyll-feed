@@ -34,6 +34,18 @@ The plugin will automatically use any of the following configuration variables, 
 * `url` - The URL to your site, e.g., `https://example.com`. If none is provided, the plugin will try to use `site.github.url`.
 * `author` - Global author information (see below)
 
+If you want to enrich your feed for Feedly, create the following object with any of these optional values:
+
+```yml
+webfeeds:
+  icon: # path to a 96x96 favicon
+  logo: # path to a 30px height svg
+  cover: # path to a large 16:9 banner image
+  accentColor: # hex colour without the hash
+  related: # true = show other stories from your feed under yours
+  analytics: # Google Analytics UA-x tracking ID
+```
+
 ### Already have a feed path?
 
 Do you already have an existing feed someplace other than `/feed.xml`, but are on a host like GitHub Pages that doesn't support machine-friendly redirects? If you simply swap out `jekyll-feed` for your existing template, your existing subscribers won't continue to get updates. Instead, you can specify a non-default path via your site's config.

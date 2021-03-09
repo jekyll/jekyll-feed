@@ -45,6 +45,7 @@
     {% if site.webfeeds.cover %}<webfeeds:cover>{{ site.webfeeds.cover }}</webfeeds:cover>{% endif %}
     {% if site.webfeeds.accentColor %}<webfeeds:accentColor>{{ site.webfeeds.accentColor }}</webfeeds:accentColor>{% endif %}
     {% if site.webfeeds.related %}<webfeeds:related layout="card" target="browser"/>{% endif %}
+    {% if site.webfeeds.analytics %}<webfeeds:analytics id="{{ site.webfeeds.analytics }}" engine="GoogleAnalytics" />{% endif %}
   {% endif %}
 
   {% if page.tags %}
