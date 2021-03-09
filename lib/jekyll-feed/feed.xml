@@ -2,7 +2,7 @@
 {% if page.xsl %}
   <?xml-stylesheet type="text/xml" href="{{ '/feed.xslt.xml' | absolute_url }}"?>
 {% endif %}
-<feed xmlns="http://www.w3.org/2005/Atom" {% if site.lang %}xml:lang="{{ site.lang }}"{% endif %}>
+<feed xmlns="http://www.w3.org/2005/Atom"{% if site.webfeeds %} xmlns:webfeeds="http://webfeeds.org/rss/1.0"{% endif %} {% if site.lang %}xml:lang="{{ site.lang }}"{% endif %}>
   <generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator>
   <link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
   <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
@@ -37,6 +37,14 @@
         <uri>{{ site.author.uri | xml_escape }}</uri>
       {% endif %}
     </author>
+  {% endif %}
+
+  {% if site.webfeeds %}
+    {% if site.webfeeds.icon %}<webfeeds:icon>{{ site.webfeeds.icon }}</webfeeds:icon>{% endif %}
+    {% if site.webfeeds.logo %}<webfeeds:logo>{{ site.webfeeds.logo }}</webfeeds:logo>{% endif %}
+    {% if site.webfeeds.cover %}<webfeeds:cover>{{ site.webfeeds.cover }}</webfeeds:cover>{% endif %}
+    {% if site.webfeeds.accentColor %}<webfeeds:accentColor>{{ site.webfeeds.accentColor }}</webfeeds:accentColor>{% endif %}
+    {% if site.webfeeds.related %}<webfeeds:related layout="card" target="browser"/>{% endif %}
   {% endif %}
 
   {% if page.tags %}
