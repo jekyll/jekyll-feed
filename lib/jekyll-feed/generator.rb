@@ -67,7 +67,10 @@ module JekyllFeed
                        {}
                      end
 
-      @collections = normalize_posts_meta(@collections)
+      if config["posts"] != false
+        @collections = normalize_posts_meta(@collections)
+      end
+
       @collections.each_value do |meta|
         meta["categories"] = (meta["categories"] || []).to_set
       end
