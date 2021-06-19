@@ -244,6 +244,15 @@ feed:
 
 Note that if you include a tag that is excluded a feed will not be generated for it.
 
+## Skip development
+
+Use `skip_development: true` if you want to turn off feed generation when `jekyll.environment == "development"`, but don't want to remove the plugin (so you don't accidentally commit the removal). Default value is `false`.
+
+```yml
+feed:
+  skip_development: true
+```
+
 ## Contributing
 
 1. Fork it (https://github.com/jekyll/jekyll-feed/fork)

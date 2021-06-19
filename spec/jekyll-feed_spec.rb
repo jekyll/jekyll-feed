@@ -25,7 +25,9 @@ describe(JekyllFeed) do
   let(:contents) { File.read(dest_dir("feed.xml")) }
   let(:context)  { make_context(:site => site) }
   let(:feed_meta) { Liquid::Template.parse("{% feed_meta %}").render!(context, {}) }
+  let(:jekyll_env) { "development" }
   before(:each) do
+    allow(Jekyll).to receive(:env).and_return(jekyll_env)
     site.process
   end
 
@@ -735,6 +737,32 @@ describe(JekyllFeed) do
 
       it "should be draft post" do
         expect(contents).to match "a-draft.html"
+      end
+    end
+  end
+
+  context "with skip_development" do
+    let(:overrides) do
+      {
+        "feed" => {
+          "skip_development" => true
+        },
+      }
+    end
+
+    context "in production environment" do
+      let(:jekyll_env) { "production" }
+
+      it "generates a feed as normal" do
+        expect(Pathname.new(dest_dir("feed.xml"))).to exist
+      end
+    end
+
+    context "in development environment" do
+      let(:jekyll_env) { "development" }
+
+      it "does not generate a feed" do
+        expect(Pathname.new(dest_dir("feed.xml"))).not_to exist
       end
     end
   end
