@@ -1,27 +1,38 @@
+inherit_from: .rubocop_todo.yml
+
 require: rubocop-jekyll
 
 inherit_gem:
   rubocop-jekyll: .rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 2.4
-  Include:
-    - lib/**/*.rb
-
+  TargetRubyVersion: 2.5
+  SuggestExtensions: false
   Exclude:
-    - .gitignore
-    - .rspec
-    - .rubocop.yml
-    - .travis.yml
-
-    - Gemfile.lock
-    - History.markdown
-    - LICENSE.txt
-    - README.md
-
-    - script/**/*
     - vendor/**/*
 
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: true
+
+Lint/EmptyInPattern:
+  Enabled: false
+
+Naming/InclusiveLanguage:
+  Enabled: false
 Naming/MemoizedInstanceVariableName:
   Exclude:
     - lib/jekyll-feed/page-without-a-file.rb
+
+Performance/MapCompact:
+  Enabled: true
+Performance/RedundantEqualityComparisonBlock:
+  Enabled: true
+Performance/RedundantSplitRegexpArgument:
+  Enabled: true
+
+Style/InPatternThen:
+  Enabled: false
+Style/MultilineInPatternThen:
+  Enabled: false
+Style/QuotedSymbols:
+  Enabled: true
