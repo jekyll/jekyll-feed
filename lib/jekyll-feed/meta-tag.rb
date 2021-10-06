@@ -24,7 +24,7 @@ module JekyllFeed
       {
         :type  => "application/atom+xml",
         :rel   => "alternate",
-        :href  => absolute_url(path),
+        :href  => relative_url(path),
         :title => title,
       }.keep_if { |_, v| v }
     end
