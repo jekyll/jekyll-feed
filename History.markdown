@@ -5,6 +5,10 @@
   * Add Ruby 3.0 to CI (#337)
   * Lock RuboCop to v1.18.x (#348)
 
+### Bug Fixes
+
+  * Fold private methods into the `:render` method as local variables (#327)
+
 ## 0.15.1 / 2020-10-04
 
 ### Bug Fixes
