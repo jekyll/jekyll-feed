@@ -6,35 +6,22 @@ module JekyllFeed
     include Jekyll::Filters::URLFilters
 
     def render(context)
+      # Jekyll::Filters::URLFilters requires `@context` to be set in the environment.
       @context = context
-      attrs    = attributes.map do |k, v|
-        v = v.to_s unless v.respond_to?(:encode)
-        %(#{k}=#{v.encode(:xml => :attr)})
-      end
-      "<link #{attrs.join(" ")} />"
-    end
 
-    private
+      config = context.registers[:site].config
+      path   = config.dig("feed", "path") || "feed.xml"
+      title  = config["title"] || config["name"]
 
-    def config
-      @config ||= @context.registers[:site].config
-    end
+      attributes = {
+        :type => "application/atom+xml",
+        :rel  => "alternate",
+        :href => absolute_url(path),
+      }
+      attributes[:title] = title if title
 
-    def attributes
-      {
-        :type  => "application/atom+xml",
-        :rel   => "alternate",
-        :href  => absolute_url(path),
-        :title => title,
-      }.keep_if { |_, v| v }
-    end
-
-    def path
-      config.dig("feed", "path") || "feed.xml"
-    end
-
-    def title
-      config["title"] || config["name"]
+      attrs = attributes.map { |k, v| "#{k}=#{v.to_s.encode(:xml => :attr)}" }.join(" ")
+      "<link #{attrs} />"
     end
   end
 end
