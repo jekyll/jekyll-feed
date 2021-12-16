@@ -150,6 +150,11 @@ describe(JekyllFeed) do
       expect(post.summary.content).to eql("Foo")
     end
 
+    it "includes the item's description" do
+      post = feed.items[-2]
+      expect(post.summary.content).to eql("cool post")
+    end
+
     it "doesn't include the item's excerpt if blank" do
       post = feed.items.first
       expect(post.summary).to be_nil

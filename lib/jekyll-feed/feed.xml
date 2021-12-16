@@ -94,8 +94,9 @@
         <category term="{{ tag | xml_escape }}" />
       {% endfor %}
 
-      {% if post.excerpt and post.excerpt != empty %}
-        <summary type="html">{{ post.excerpt | strip_html | normalize_whitespace | xml_escape }}</summary>
+      {% assign post_summary = post.description | default: post.excerpt %}
+      {% if post_summary and post_summary != empty %}
+        <summary type="html">{{ post_summary | strip_html | normalize_whitespace | xml_escape }}</summary>
       {% endif %}
 
       {% assign post_image = post.image.path | default: post.image %}

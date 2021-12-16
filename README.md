@@ -62,6 +62,8 @@ Additionally, the plugin will use the following values, if present in a post's Y
 
 * `author` - The author of the post, e.g., "Dr. Jekyll". If none is given, feed readers will look to the feed author as defined in `_config.yml`. Like the feed author, this can also be an object or a reference to an author in `_data/authors.yml` (see below).
 
+* `description` - A short description of the post.
+
 ### Author information
 
 *TL;DR: In most cases, put `author: [your name]` in the document's front matter, for sites with multiple authors. If you need something more complicated, read on.*
