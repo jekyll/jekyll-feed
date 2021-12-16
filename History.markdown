@@ -9,6 +9,10 @@
 
   * Fold private methods into the `:render` method as local variables (#327)
 
+### Minor Enhancements
+
+  * Add support for page.description in front matter to become entry `&lt;summary&gt;` (#297)
+
 ## 0.15.1 / 2020-10-04
 
 ### Bug Fixes
