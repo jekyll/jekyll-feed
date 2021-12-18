@@ -4,6 +4,7 @@
 
   * Add Ruby 3.0 to CI (#337)
   * Lock RuboCop to v1.18.x (#348)
+  * Add workflow to release gem via GH Action (#355)
 
 ### Bug Fixes
 
