@@ -9,6 +9,7 @@
 ### Bug Fixes
 
   * Fold private methods into the `:render` method as local variables (#327)
+  * Check `post.categories` instead of `post.category` (#357)
 
 ### Minor Enhancements
 
