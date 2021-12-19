@@ -397,10 +397,10 @@ describe(JekyllFeed) do
     context "with top-level post categories" do
       let(:overrides) do
         {
-          "feed" => { "categories" => ["news"] },
+          "feed" => { "categories" => ["jekyll"] },
         }
       end
-      let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
+      let(:category_feed) { File.read(dest_dir("feed/jekyll.xml")) }
 
       it "outputs the primary feed" do
         expect(contents).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
@@ -411,11 +411,9 @@ describe(JekyllFeed) do
       end
 
       it "outputs the category feed" do
-        expect(news_feed).to match '<title type="html">My awesome site | News</title>'
-        expect(news_feed).to match "http://example.org/news/2014/03/02/march-the-second.html"
-        expect(news_feed).to match "http://example.org/news/2013/12/12/dec-the-second.html"
-        expect(news_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
-        expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+        expect(category_feed).to match '<title type="html">My awesome site | News</title>'
+        expect(category_feed).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+        expect(category_feed).to match "March the fourth!"
       end
     end
 
