@@ -397,10 +397,11 @@ describe(JekyllFeed) do
     context "with top-level post categories" do
       let(:overrides) do
         {
-          "feed" => { "categories" => ["news"] },
+          "feed" => { "categories" => %w(news jekyll) },
         }
       end
-      let(:news_feed) { File.read(dest_dir("feed/news.xml")) }
+      let(:singular_category_feed) { File.read(dest_dir("feed/news.xml")) }
+      let(:plural_categories_feed) { File.read(dest_dir("feed/jekyll.xml")) }
 
       it "outputs the primary feed" do
         expect(contents).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
@@ -410,12 +411,13 @@ describe(JekyllFeed) do
         expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
       end
 
-      it "outputs the category feed" do
-        expect(news_feed).to match '<title type="html">My awesome site | News</title>'
-        expect(news_feed).to match "http://example.org/news/2014/03/02/march-the-second.html"
-        expect(news_feed).to match "http://example.org/news/2013/12/12/dec-the-second.html"
-        expect(news_feed).to_not match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
-        expect(news_feed).to_not match "http://example.org/2015/08/08/stuck-in-the-middle.html"
+      it "outputs the category feeds" do
+        expect(singular_category_feed).to match '<title type="html">My awesome site | News</title>'
+        expect(singular_category_feed).to match "http://example.org/news/2014/03/02/march-the-second.html"
+        expect(singular_category_feed).to match "March the second!"
+        expect(plural_categories_feed).to match '<title type="html">My awesome site | News</title>'
+        expect(plural_categories_feed).to match "http://example.org/updates/jekyll/2014/03/04/march-the-fourth.html"
+        expect(plural_categories_feed).to match "March the fourth!"
       end
     end
 
