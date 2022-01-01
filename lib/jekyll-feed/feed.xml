@@ -63,7 +63,7 @@
       <id>{{ post.id | absolute_url | xml_escape }}</id>
       {% assign excerpt_only = post.feed.excerpt_only | default: site.feed.excerpt_only %}
       {% unless excerpt_only %}
-        <content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}">{{ post.content | strip | xml_escape }}</content>
+        <content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}"><![CDATA[{{ post.content | strip }}]]></content>
       {% endunless %}
 
       {% assign post_author = post.author | default: post.authors[0] | default: site.author %}
@@ -96,7 +96,7 @@
 
       {% assign post_summary = post.description | default: post.excerpt %}
       {% if post_summary and post_summary != empty %}
-        <summary type="html">{{ post_summary | strip_html | normalize_whitespace | xml_escape }}</summary>
+        <summary type="html"><![CDATA[{{ post_summary | strip_html | normalize_whitespace }}]]></summary>
       {% endif %}
 
       {% assign post_image = post.image.path | default: post.image %}

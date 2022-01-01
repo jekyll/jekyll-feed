@@ -76,7 +76,7 @@ describe(JekyllFeed) do
   end
 
   it "converts markdown posts to HTML" do
-    expect(contents).to match %r!&lt;p&gt;March the second\!&lt;/p&gt;!
+    expect(contents).to match %r!<\!\[CDATA\[<p>March the second\!</p>\]\]!
   end
 
   it "uses last_modified_at where available" do
