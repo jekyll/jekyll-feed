@@ -54,9 +54,10 @@ module JekyllFeed
     def collections
       return @collections if defined?(@collections)
 
-      @collections = if config["collections"].is_a?(Array)
+      @collections = case config["collections"]
+                     when Array
                        config["collections"].map { |c| [c, {}] }.to_h
-                     elsif config["collections"].is_a?(Hash)
+                     when Hash
                        config["collections"]
                      else
                        {}
