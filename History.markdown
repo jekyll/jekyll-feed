@@ -10,6 +10,7 @@
 
   * Fold private methods into the `:render` method as local variables (#327)
   * Check `post.categories` instead of `post.category` (#357)
+  * Switched xml_escape for &lt;![CDATA[]]&gt; for post content (#332)
 
 ### Minor Enhancements
 
