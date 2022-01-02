@@ -40,7 +40,7 @@ Do you already have an existing feed someplace other than `/feed.xml`, but are o
 
 ```yml
 feed:
-  path: atom.xml
+  path: /blog/feed.atom
 ```
 
 To note, you shouldn't have to do this unless you already have a feed you're using, and you can't or wish not to redirect existing subscribers.
@@ -178,7 +178,7 @@ By default, collection feeds will be outputted to `/feed/<COLLECTION>.xml`. If y
 feed:
   collections:
     changes:
-      path: "/changes.xml"
+      path: "/changes.atom"
 ```
 
 Finally, collections can also have category feeds which are outputted as `/feed/<COLLECTION>/<CATEGORY>.xml`. Specify categories like so:
@@ -187,7 +187,7 @@ Finally, collections can also have category feeds which are outputted as `/feed/
 feed:
   collections:
     changes:
-      path: "/changes.xml"
+      path: "/changes.atom"
       categories:
         - news
         - updates
