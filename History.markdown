@@ -16,6 +16,10 @@
 
   * Add support for page.description in front matter to become entry `&lt;summary&gt;` (#297)
 
+### Documentation
+
+  * Use .atom extension in docs examples since we write an Atom feed (#359)
+
 ## 0.15.1 / 2020-10-04
 
 ### Bug Fixes
