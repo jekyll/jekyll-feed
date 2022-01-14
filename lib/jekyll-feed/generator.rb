@@ -99,6 +99,7 @@ module JekyllFeed
 
     # Path to feed.xml template file
     def feed_source_path
+      @feed_source_path = config['template'] if config['template']
       @feed_source_path ||= File.expand_path "feed.xml", __dir__
     end
 
