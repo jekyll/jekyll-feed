@@ -1,3 +1,9 @@
+## HEAD
+
+### Documentation
+
+  * Update CI status badge (#363)
+
 ## 0.16.0 / 2022-01-03
 
 ### Minor Enhancements
