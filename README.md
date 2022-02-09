@@ -2,7 +2,7 @@
 
 A Jekyll plugin to generate an Atom (RSS-like) feed of your Jekyll posts
 
-[![Build Status](https://travis-ci.org/jekyll/jekyll-feed.svg)](https://travis-ci.org/jekyll/jekyll-feed) [![Gem Version](https://badge.fury.io/rb/jekyll-feed.svg)](https://badge.fury.io/rb/jekyll-feed)
+[![Continuous Integration](https://github.com/jekyll/jekyll-feed/actions/workflows/ruby.yml/badge.svg)](https://github.com/jekyll/jekyll-feed/actions/workflows/ruby.yml) [![Gem Version](https://badge.fury.io/rb/jekyll-feed.svg)](https://badge.fury.io/rb/jekyll-feed)
 
 ## Installation
 
