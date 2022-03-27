@@ -118,6 +118,7 @@ describe(JekyllFeed) do
 
   context "parsing" do
     let(:feed) { RSS::Parser.parse(contents) }
+    let(:overrides) { { "time" => Time.parse("2018-12-31") } }
 
     it "outputs an RSS feed" do
       expect(feed.feed_type).to eql("atom")
@@ -134,6 +135,24 @@ describe(JekyllFeed) do
     it "outputs the generator" do
       expect(feed.generator.content).to eql("Jekyll")
       expect(feed.generator.version).to eql(Jekyll::VERSION)
+    end
+
+    context "with site.feed.updated = latest_post" do
+      let(:overrides) do
+        {
+          "feed" => {
+            "updated" => "latest_post",
+          },
+        }
+      end
+
+      it "outputs the last post time" do
+        expect(feed.updated.content).to eql(Time.parse("2016-04-25"))
+      end
+    end
+
+    it "outputs the current time" do
+      expect(feed.updated.content).to eql(Time.parse("2018-12-31"))
     end
 
     it "includes the items" do
