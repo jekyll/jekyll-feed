@@ -8,6 +8,10 @@ module JekyllFeed
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
+      if config["disable_in_development"] == true && Jekyll.env == "development"
+        Jekyll.logger.info "Jekyll Feed:", "Skipping feed generation in development"
+        return
+      end
       collections.each do |name, meta|
         Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
         (meta["categories"] + [nil]).each do |category|
