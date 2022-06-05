@@ -16,6 +16,10 @@ Layout/LineEndStringConcatenationIndentation:
 
 Lint/EmptyInPattern:
   Enabled: false
+  
+Metrics/AbcSize:
+  IgnoredMethods:
+  - generate # in generator.rb
 
 Naming/InclusiveLanguage:
   Enabled: false
