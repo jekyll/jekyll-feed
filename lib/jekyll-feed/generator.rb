@@ -141,7 +141,7 @@ module JekyllFeed
       config["path"] ||= hash["posts"]["path"]
       hash
     end
-    
+
     def disabled_in_development?
       config && config["disable_in_development"] && Jekyll.env == "development"
     end
