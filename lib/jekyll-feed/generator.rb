@@ -8,7 +8,7 @@ module JekyllFeed
     # Main plugin action, called by Jekyll-core
     def generate(site)
       @site = site
-      if config["disable_in_development"] == true && Jekyll.env == "development"
+      if disabled_in_development?
         Jekyll.logger.info "Jekyll Feed:", "Skipping feed generation in development"
         return
       end
@@ -140,6 +140,10 @@ module JekyllFeed
       hash["posts"]["categories"] ||= config["categories"]
       config["path"] ||= hash["posts"]["path"]
       hash
+    end
+    
+    def disabled_in_development?
+      config && config["disable_in_development"] && Jekyll.env == "development"
     end
   end
 end
