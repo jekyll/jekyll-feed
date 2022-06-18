@@ -162,6 +162,15 @@ feed:
   posts_limit: 20
 ```
 
+### Posts sort
+
+By default, posts will be sorted by `date` in the feed. Simply define a new sorting method in your config: 
+
+```yml
+feed:
+  posts_sort: last_modified_at
+```
+
 ## Collections
 
 Jekyll Feed can generate feeds for collections other than the Posts collection. This works best for chronological collections (e.g., collections with dates in the filenames). Simply define which collections you'd like feeds for in your config:

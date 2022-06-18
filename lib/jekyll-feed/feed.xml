@@ -50,7 +50,8 @@
   {% unless site.show_drafts %}
     {% assign posts = posts | where_exp: "post", "post.draft != true" %}
   {% endunless %}
-  {% assign posts = posts | sort: "date" | reverse %}
+  {% assign posts_sort = site.feed.posts_sort | default: "date" %}
+  {% assign posts = posts | sort: posts_sort | reverse %}
   {% assign posts_limit = site.feed.posts_limit | default: 10 %}
   {% for post in posts limit: posts_limit %}
     <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
