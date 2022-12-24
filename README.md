@@ -153,6 +153,13 @@ feed:
     - updates
 ```
 
+Or, to generate a feed for all categories:
+
+```yml
+feed:
+  categories: true
+```
+
 ## Posts limit
 
 By default the plugin limits the number of posts in the feed to 10. Simply define a new limit in your config:
@@ -191,6 +198,16 @@ feed:
       categories:
         - news
         - updates
+```
+
+Or pass `categories: true` to generate a feed for all categories:
+
+```yml
+feed:
+  collections:
+    changes:
+      path: "/changes.atom"
+      categories: true
 ```
 
 ## Excerpt Only flag

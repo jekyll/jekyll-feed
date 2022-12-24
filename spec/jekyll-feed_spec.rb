@@ -423,6 +423,20 @@ describe(JekyllFeed) do
       end
     end
 
+    context "with top-level post categories (using true to mean all)" do
+      let(:overrides) do
+        {
+          "feed" => { "categories" => true }
+        }
+      end
+
+      it "outputs feeds for all categories" do
+        site.categories.each_key do |category|
+          expect(Pathname.new(dest_dir("feed/#{category}.xml"))).to exist
+        end
+      end
+    end
+
     context "with collection-level post categories" do
       let(:overrides) do
         {

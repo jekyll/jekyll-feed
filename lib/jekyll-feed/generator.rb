@@ -69,7 +69,16 @@ module JekyllFeed
 
       @collections = normalize_posts_meta(@collections)
       @collections.each_value do |meta|
-        meta["categories"] = (meta["categories"] || []).to_set
+        meta_categories = meta["categories"]
+        for_collection = case meta_categories
+                         when Array
+                           meta_categories
+                         when true
+                           @site.categories.keys
+                         else
+                           []
+                         end
+        meta["categories"] = for_collection.to_set
       end
 
       @collections
