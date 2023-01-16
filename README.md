@@ -70,7 +70,7 @@ Additionally, the plugin will use the following values, if present in a post's Y
 
 There are several ways to convey author-specific information. Author information is found in the following order of priority:
 
-1. An `author` object, in the documents's front matter, e.g.:
+1. An `author` object, in the document's front matter, e.g.:
 
   ```yml
   author:
@@ -181,7 +181,7 @@ feed:
       path: "/changes.atom"
 ```
 
-Finally, collections can also have category feeds which are outputted as `/feed/<COLLECTION>/<CATEGORY>.xml`. Specify categories like so:
+Finally, collections can also have category feeds that are outputted as `/feed/<COLLECTION>/<CATEGORY>.xml`. Specify categories like so:
 
 ```yml
 feed:
@@ -197,15 +197,15 @@ feed:
 
 Optional flag `excerpt_only` allows you to exclude post content from the Atom feed. Default value is `false` for backward compatibility.
 
-When in `config.yml` is `true` than all posts in feed will be without `<content>` tags.
+When in `config.yml` is `true` then all posts in feed will be without `<content>` tags.
 
 ```yml
 feed:
   excerpt_only: true
 ```
 
-The same flag can be used directly in post file. It will be disable `<content>` tag for selected post.
-Settings in post file has higher priority than in config file.
+The same flag can be used directly in post file. It will disable `<content>` tag for selected post.
+Settings in post file have higher priority than in config file.
 
 ## Tags
 
