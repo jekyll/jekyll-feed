@@ -128,7 +128,7 @@
 
   * Support Typhoeus 1.0 (#232)
 
-## 0.9.3 / 2017-03-28
+## 0.9.3 / 2018-02-04
 
   * Define path with __dir (#187)
   * Bump Ruby for Travis (#188)
