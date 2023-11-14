@@ -216,7 +216,7 @@ feed:
   html_excerpts: true
 ```
 
-This is useful in feeds where the summaries have more complex content or formatting, such as when the post's `description` and `excerpt` front matter options are not set, causing Jekyll to [use the entire first paragraph of the post as the excerpt](https://jekyllrb.com/docs/posts/#post-excerpts).
+This is useful in feeds where the excerpts have more complex content or formatting, such as when the post's `description` and `excerpt` front matter options are not set, causing Jekyll to [use the entire first paragraph of the post as the excerpt](https://jekyllrb.com/docs/posts/#post-excerpts).
 
 ## Tags
 
