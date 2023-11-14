@@ -207,6 +207,17 @@ feed:
 The same flag can be used directly in post file. It will disable `<content>` tag for selected post.
 Settings in post file have higher priority than in config file.
 
+## HTML Summaries flag
+
+By default, the `<summary>` portion of the feed—containing the post's excerpt or description—will be stripped of all HTML, and will have all its whitespace normalized. The optional flag `html_summaries` turns that behaviour off, allowing your excerpts to contain full HTML content.
+
+```yml
+feed:
+  html_summaries: true
+```
+
+This is useful in feeds where the summaries have more complex content or formatting, such as when the post's `description` and `excerpt` front matter options are not set, causing Jekyll to fall back to [using the first paragraph of the post as the excerpt](https://jekyllrb.com/docs/posts/#post-excerpts).
+
 ## Tags
 
 To automatically generate feeds for each tag you apply to your posts you can add a tags setting to your config:
