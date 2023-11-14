@@ -163,12 +163,12 @@ describe(JekyllFeed) do
     end
 
     it "strips HTML in summaries by default" do
-      post = feed.items[3] # The "pre" file
+      post = feed.items[-7] # The "pre" file
       expect(post.summary.content).to_not match "<pre>"
     end
 
     it "normalizes whitespace in summaries by default" do
-      post = feed.items[3] # The "pre" file
+      post = feed.items[-7] # The "pre" file
       expect(post.summary.content).to_not match "\n"
     end
 
@@ -176,12 +176,12 @@ describe(JekyllFeed) do
       let(:overrides) { { "feed" => { "html_excerpts" => true } } }
 
       it "doesn't strip HTML in summaries" do
-        post = feed.items[3] # The "pre" file
+        post = feed.items[-7] # The "pre" file
         expect(post.summary.content).to match "<pre>"
       end
 
       it "doesn't normalize whitespace in summaries" do
-        post = feed.items[3] # The "pre" file
+        post = feed.items[-7] # The "pre" file
         expect(post.summary.content).to match "\n"
       end
     end
