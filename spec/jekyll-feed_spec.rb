@@ -172,8 +172,8 @@ describe(JekyllFeed) do
       expect(post.summary.content).to_not match "\n"
     end
 
-    context "with feed.html_summaries set" do
-      let(:overrides) { { "feed" => { "html_summaries" => true } } }
+    context "with feed.html_excerpts set" do
+      let(:overrides) { { "feed" => { "html_excerpts" => true } } }
 
       it "doesn't strip HTML in summaries" do
         post = feed.items[3] # The "pre" file
