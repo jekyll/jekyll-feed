@@ -162,6 +162,11 @@ describe(JekyllFeed) do
       expect(post.summary).to be_nil
     end
 
+    it "strips HTML in summaries by default" do
+      post = feed.items[3] # The "pre" file
+      expect(post.summary.content).to_not match "<pre>"
+    end
+
     context "with site.lang set" do
       lang = "en_US"
       let(:overrides) { { "lang" => lang } }
