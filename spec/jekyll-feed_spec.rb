@@ -167,6 +167,11 @@ describe(JekyllFeed) do
       expect(post.summary.content).to_not match "<pre>"
     end
 
+    it "normalizes whitespace in summaries by default" do
+      post = feed.items[3] # The "pre" file
+      expect(post.summary.content).to_not match "\n"
+    end
+
     context "with site.lang set" do
       lang = "en_US"
       let(:overrides) { { "lang" => lang } }
