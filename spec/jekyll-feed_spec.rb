@@ -172,6 +172,20 @@ describe(JekyllFeed) do
       expect(post.summary.content).to_not match "\n"
     end
 
+    context "with feed.html_summaries set" do
+      let(:overrides) { { "feed" => { "html_summaries" => true } } }
+
+      it "doesn't strip HTML in summaries" do
+        post = feed.items[3] # The "pre" file
+        expect(post.summary.content).to match "<pre>"
+      end
+
+      it "doesn't normalize whitespace in summaries" do
+        post = feed.items[3] # The "pre" file
+        expect(post.summary.content).to match "\n"
+      end
+    end
+
     context "with site.lang set" do
       lang = "en_US"
       let(:overrides) { { "lang" => lang } }
