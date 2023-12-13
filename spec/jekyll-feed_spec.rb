@@ -86,7 +86,7 @@ describe(JekyllFeed) do
   end
 
   it "replaces newlines in posts to spaces" do
-    expect(contents).to match '<title type="html">The plugin will properly strip newlines.</title>'
+    expect(contents).to match '<title type="html">The plugin will properly strip newlines.: The plugin will concat subtitles.</title>'
   end
 
   it "strips HTML from link titles" do

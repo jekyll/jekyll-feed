@@ -54,7 +54,11 @@
   {% assign posts_limit = site.feed.posts_limit | default: 10 %}
   {% for post in posts limit: posts_limit %}
     <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
-      {% assign post_title = post.title | smartify | strip_html | normalize_whitespace | xml_escape %}
+      {% assign post_title = post.title %}
+      {% if post.subtitle %}
+        {% assign post_title = post_title | append: ": " | append: post.subtitle %}
+      {% endif %}
+      {% assign post_title = post_title | smartify | strip_html | normalize_whitespace | xml_escape %}
 
       <title type="html">{{ post_title }}</title>
       <link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post_title }}" />
