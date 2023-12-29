@@ -27,6 +27,14 @@
     <subtitle>{{ site.description | xml_escape }}</subtitle>
   {% endif %}
 
+  {% if site.blog_icon %}
+    {% assign blog_icon = site.blog_icon %}
+    {% unless blog_icon contains "://" %}
+      {% assign blog_icon = blog_icon | absolute_url %}
+    {% endunless %}
+    <icon>{{ blog_icon | xml_escape }}</icon>
+  {% endif %}
+
   {% if site.author %}
     <author>
         <name>{{ site.author.name | default: site.author | xml_escape }}</name>
