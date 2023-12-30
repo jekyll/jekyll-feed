@@ -33,6 +33,15 @@ The plugin will automatically use any of the following configuration variables, 
 * `description` - A longer description of what your site is about, e.g., "Where I blog about Jekyll and other awesome things"
 * `url` - The URL to your site, e.g., `https://example.com`. If none is provided, the plugin will try to use `site.github.url`.
 * `author` - Global author information (see below)
+* `blog.icon` - Icon with 1:1 proportions for readers to use for the blog (not supported by all readers; often overridden by a favicon or site icon)
+* `blog.logo` - Logo with 2:1 proportions for readers to use for the blog (not supported by all readers). 
+  For example, both of the preceding can be expressed:
+  ```yml
+  blog:
+    icon: /images/icon.png
+    logo: /images/logo.png
+  ```
+
 
 ### Already have a feed path?
 
