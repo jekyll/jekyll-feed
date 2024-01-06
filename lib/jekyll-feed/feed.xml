@@ -27,20 +27,20 @@
     <subtitle>{{ site.description | xml_escape }}</subtitle>
   {% endif %}
 
-  {% if site.blog.icon %}
-    {% assign blog_icon = site.blog.icon %}
-    {% unless blog_icon contains "://" %}
-      {% assign blog_icon = blog_icon | absolute_url %}
+  {% if site.feed.icon %}
+    {% assign feed_icon = site.feed.icon %}
+    {% unless feed_icon contains "://" %}
+      {% assign feed_icon = feed_icon | absolute_url %}
     {% endunless %}
-    <icon>{{ blog_icon | xml_escape }}</icon>
+    <icon>{{ feed_icon | xml_escape }}</icon>
   {% endif %}
 
-  {% if site.blog.logo %}
-    {% assign blog_logo = site.blog.logo %}
-    {% unless blog_logo contains "://" %}
-      {% assign blog_logo = blog_logo | absolute_url %}
+  {% if site.feed.logo %}
+    {% assign feed_logo = site.feed.logo %}
+    {% unless feed_logo contains "://" %}
+      {% assign feed_logo = feed_logo | absolute_url %}
     {% endunless %}
-    <logo>{{ blog_logo | xml_escape }}</logo>
+    <logo>{{ feed_logo | xml_escape }}</logo>
   {% endif %}
 
   {% if site.author %}
