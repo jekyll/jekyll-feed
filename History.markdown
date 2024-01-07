@@ -3,6 +3,7 @@
 ### Development Fixes
 
   * Upgrade to Rake 13 to fix master (#381)
+  * feat(CI): Add Ruby 3.2/3.3 to the test matrix (#402)
 
 ### Documentation
 
