@@ -11,7 +11,7 @@
 
   {% assign title = site.title | default: site.name %}
   {% if page.collection != "posts" %}
-    {% assign collection = page.collection | capitalize %}
+    {% assign collection = page.title | default: page.collection | capitalize %}
     {% assign title = title | append: " | " | append: collection %}
   {% endif %}
   {% if page.category %}

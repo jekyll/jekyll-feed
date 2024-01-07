@@ -18,7 +18,7 @@ module JekyllFeed
           path = feed_path(:collection => name, :category => category)
           next if file_exists?(path)
 
-          @site.pages << make_page(path, :collection => name, :category => category)
+          @site.pages << make_page(path, :title => meta["title"], :collection => name, :category => category)
         end
       end
       generate_feed_by_tag if config["tags"] && !@site.tags.empty?
@@ -67,7 +67,10 @@ module JekyllFeed
                        {}
                      end
 
-      @collections = normalize_posts_meta(@collections)
+      if config["posts"] != false
+        @collections = normalize_posts_meta(@collections)
+      end
+
       @collections.each_value do |meta|
         meta["categories"] = (meta["categories"] || []).to_set
       end
@@ -117,13 +120,14 @@ module JekyllFeed
 
     # Generates contents for a file
 
-    def make_page(file_path, collection: "posts", category: nil, tags: nil)
+    def make_page(file_path, title: nil, collection: "posts", category: nil, tags: nil)
       PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
         file.content = feed_template
         file.data.merge!(
           "layout"     => nil,
           "sitemap"    => false,
           "xsl"        => file_exists?("feed.xslt.xml"),
+          "title"      => title,
           "collection" => collection,
           "category"   => category,
           "tags"       => tags
