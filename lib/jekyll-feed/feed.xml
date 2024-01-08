@@ -27,6 +27,22 @@
     <subtitle>{{ site.description | xml_escape }}</subtitle>
   {% endif %}
 
+  {% if site.feed.icon %}
+    {% assign feed_icon = site.feed.icon %}
+    {% unless feed_icon contains "://" %}
+      {% assign feed_icon = feed_icon | absolute_url %}
+    {% endunless %}
+    <icon>{{ feed_icon | xml_escape }}</icon>
+  {% endif %}
+
+  {% if site.feed.logo %}
+    {% assign feed_logo = site.feed.logo %}
+    {% unless feed_logo contains "://" %}
+      {% assign feed_logo = feed_logo | absolute_url %}
+    {% endunless %}
+    <logo>{{ feed_logo | xml_escape }}</logo>
+  {% endif %}
+
   {% if site.author %}
     <author>
         <name>{{ site.author.name | default: site.author | xml_escape }}</name>
