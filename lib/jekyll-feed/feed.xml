@@ -91,7 +91,9 @@
       {% endif %}
 
       {% for tag in post.tags %}
-        <category term="{{ tag | xml_escape }}" />
+        {% unless post.categories contains tag %}      
+          <category term="{{ tag | xml_escape }}" />
+        {% endunless %}
       {% endfor %}
 
       {% assign post_summary = post.description | default: post.excerpt %}
