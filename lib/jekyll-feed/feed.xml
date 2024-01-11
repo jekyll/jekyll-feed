@@ -6,7 +6,6 @@
   <generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator>
   <link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" />
   <link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/>
-  <updated>{{ site.time | date_to_xmlschema }}</updated>
   <id>{{ page.url | absolute_url | xml_escape }}</id>
 
   {% assign title = site.title | default: site.name %}
@@ -51,7 +50,20 @@
     {% assign posts = posts | where_exp: "post", "post.draft != true" %}
   {% endunless %}
   {% assign posts = posts | sort: "date" | reverse %}
+
   {% assign posts_limit = site.feed.posts_limit | default: 10 %}
+
+  {% assign last_updated = nil %}
+  {% if site.feed.updated == "latest_post" %}
+    {% for post in posts limit: posts_limit %}
+      {% assign post_updated = post.last_modified_at | default: post.date %}
+      {% if last_updated == nil or post_updated > last_updated %}
+        {% assign last_updated = post_updated %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  <updated>{{ last_updated | default: site.time | date_to_xmlschema }}</updated>
+
   {% for post in posts limit: posts_limit %}
     <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
       {% assign post_title = post.title | smartify | strip_html | normalize_whitespace | xml_escape %}
