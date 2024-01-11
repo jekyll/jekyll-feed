@@ -138,6 +138,15 @@ Jekyll's `smartify` filter uses [kramdown](https://kramdown.gettalong.org/option
 
 Want to style what your feed looks like in the browser? When a XSLT Styleheet file named `feed.xslt.xml` exists at the root of your repository, a link to this stylesheet is added to the generated feed.
 
+### Custom source template
+
+You can specify your own source `feed.xml` if you like to modify the content of the generated feed. Simply define a template path to your xml source file:
+
+```yaml
+feed:
+  template: _layouts/feed.xml
+```
+
 ## Why Atom, and not RSS?
 
 Great question. In short, Atom is a better format. Think of it like RSS 3.0. For more information, see [this discussion on why we chose Atom over RSS 2.0](https://github.com/jekyll/jekyll-rss-feed/issues/2).
