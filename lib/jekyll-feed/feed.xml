@@ -52,6 +52,8 @@
   {% endunless %}
   {% assign posts = posts | sort: "date" | reverse %}
   {% assign posts_limit = site.feed.posts_limit | default: 10 %}
+  {% assign cdata_end_token = "]]>" %}
+  {% assign cdata_end_token_escaped = "]]]]><![CDATA[>" %}
   {% for post in posts limit: posts_limit %}
     <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
       {% assign post_title = post.title | smartify | strip_html | normalize_whitespace | xml_escape %}
@@ -63,7 +65,7 @@
       <id>{{ post.id | absolute_url | xml_escape }}</id>
       {% assign excerpt_only = post.feed.excerpt_only | default: site.feed.excerpt_only %}
       {% unless excerpt_only %}
-        <content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}"><![CDATA[{{ post.content | strip }}]]></content>
+        <content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}"><![CDATA[{{ post.content | strip | replace: cdata_end_token, cdata_end_token_escaped }}]]></content>
       {% endunless %}
 
       {% assign post_author = post.author | default: post.authors[0] | default: site.author %}
@@ -96,7 +98,7 @@
 
       {% assign post_summary = post.description | default: post.excerpt %}
       {% if post_summary and post_summary != empty %}
-        <summary type="html"><![CDATA[{{ post_summary | strip_html | normalize_whitespace }}]]></summary>
+        <summary type="html"><![CDATA[{{ post_summary | strip_html | normalize_whitespace | replace: cdata_end_token, cdata_end_token_escaped }}]]></summary>
       {% endif %}
 
       {% assign post_image = post.image.path | default: post.image %}
