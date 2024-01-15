@@ -747,6 +747,16 @@ describe(JekyllFeed) do
       end
     end
   end
+  context "with hub option" do
+    let(:overrides) do
+      { "feed" => { "hub" => "https://hub.com" } }
+    end
+
+    it "inserts the hub url in the feed.xml file" do
+      expect(contents).to match "https://hub.com"
+    end
+  end
+
 
   context "with skip_development" do
     let(:overrides) do
