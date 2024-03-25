@@ -27,14 +27,19 @@
     <subtitle>{{ site.description | xml_escape }}</subtitle>
   {% endif %}
 
-  {% if site.author %}
+  {% assign feed_author = site.author | default: site.authors[0] %}
+  {% if site.data.authors %}
+    {% assign feed_author = site.data.authors[author] | default: site.author %}
+  {% endif %}
+
+  {% if feed_author %}
     <author>
-        <name>{{ site.author.name | default: site.author | xml_escape }}</name>
-      {% if site.author.email %}
-        <email>{{ site.author.email | xml_escape }}</email>
+        <name>{{ feed_author.name | default: feed_author | xml_escape }}</name>
+      {% if feed_author.email %}
+        <email>{{ feed_author.email | xml_escape }}</email>
       {% endif %}
-      {% if site.author.uri %}
-        <uri>{{ site.author.uri | xml_escape }}</uri>
+      {% if feed_author.uri %}
+        <uri>{{ feed_author.uri | xml_escape }}</uri>
       {% endif %}
     </author>
   {% endif %}
