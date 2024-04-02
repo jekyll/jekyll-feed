@@ -63,7 +63,7 @@
         <updated>{{ post.last_modified_at | date_to_xmlschema }}</updated>
       {% elsif post.last_modified %}
         <updated>{{ post.last_modified | date_to_xmlschema }}</updated>
-      {%̣ elsif post.modified_date %}
+      {% elsif post.modified_date %}
         <updated>{{ post.modified_date | date_to_xmlschema }}</updated>
       {% elsif post.modified_at %}
         <updated>{{ post.modified_at | date_to_xmlschema }}</updated>
