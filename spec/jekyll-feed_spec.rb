@@ -125,6 +125,8 @@ describe(JekyllFeed) do
       expect(feed.encoding).to eql("UTF-8")
       expect(feed.lang).to be_nil
       expect(feed.valid?).to eql(true)
+      expect(feed.icon).to be_nil
+      expect(feed.logo).to be_nil
     end
 
     it "outputs the link" do
@@ -236,6 +238,24 @@ describe(JekyllFeed) do
 
       it "uses encoded site.title for the title" do
         expect(feed.title.content).to eql(site_title.encode(xml: :text))
+      end
+    end
+
+    context "with site.icon set" do
+      let(:site_icon) { "myicon.png" }
+      let(:overrides) { { "feed" => { "icon" => site_icon } } }
+
+      it "uses site.icon for the icon" do
+        expect(feed.icon.content).to eql("http://example.org/" + site_icon)
+      end
+    end
+
+    context "with site.logo set" do
+      let(:site_logo) { "mylogo.png" }
+      let(:overrides) { { "feed" => { "logo" => site_logo } } }
+
+      it "uses site.logo for the logo" do
+        expect(feed.logo.content).to eql("http://example.org/" + site_logo)
       end
     end
   end
