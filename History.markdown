@@ -9,6 +9,10 @@
 
   * Fix typos in Readme (#384)
 
+### Minor Enhancements
+
+  * Icon and logo support with simple tests (#412)
+
 ## 0.17.0 / 2022-10-14
 
 ### Documentation
