@@ -246,7 +246,7 @@ describe(JekyllFeed) do
       let(:overrides) { { "feed" => { "icon" => site_icon } } }
 
       it "uses site.icon for the icon" do
-        expect(feed.icon.content).to eql("http://example.org/" + site_icon)
+        expect(feed.icon.content).to eql("http://example.org/#{site_icon}")
       end
     end
 
@@ -255,7 +255,7 @@ describe(JekyllFeed) do
       let(:overrides) { { "feed" => { "logo" => site_logo } } }
 
       it "uses site.logo for the logo" do
-        expect(feed.logo.content).to eql("http://example.org/" + site_logo)
+        expect(feed.logo.content).to eql("http://example.org/#{site_logo}")
       end
     end
   end
