@@ -50,6 +50,7 @@ describe(JekyllFeed) do
     expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
     expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
     expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
+    expect(contents).to_not match "http://example.org/2024/01/31/hidden-sample.html"
   end
 
   it "does not include assets or any static files that aren't .html" do
@@ -431,6 +432,7 @@ describe(JekyllFeed) do
         expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
         expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
         expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
+        expect(contents).to_not match "http://example.org/2024/01/31/hidden-sample.html"
       end
 
       it "outputs the category feeds" do
@@ -463,6 +465,7 @@ describe(JekyllFeed) do
         expect(contents).to match "http://example.org/news/2013/12/12/dec-the-second.html"
         expect(contents).to match "http://example.org/2015/08/08/stuck-in-the-middle.html"
         expect(contents).to_not match "http://example.org/2016/02/09/a-draft.html"
+        expect(contents).to_not match "http://example.org/2024/01/31/hidden-sample.html"
       end
 
       it "outputs the category feed" do
