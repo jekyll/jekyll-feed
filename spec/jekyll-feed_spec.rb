@@ -164,6 +164,34 @@ describe(JekyllFeed) do
       expect(post.summary).to be_nil
     end
 
+    it "strips HTML in summaries by default" do
+      post = feed.items.detect { |item| item.title.content == "Pre" }
+      expect(post).to_not be_nil
+      expect(post.summary.content).to_not match "<pre>"
+    end
+
+    it "normalizes whitespace in summaries by default" do
+      post = feed.items.detect { |item| item.title.content == "Pre" }
+      expect(post).to_not be_nil
+      expect(post.summary.content).to_not match "\n"
+    end
+
+    context "with feed.html_excerpts set" do
+      let(:overrides) { { "feed" => { "html_excerpts" => true } } }
+
+      it "doesn't strip HTML in summaries" do
+        post = feed.items.detect { |item| item.title.content == "Pre" }
+        expect(post).to_not be_nil
+        expect(post.summary.content).to match "<pre>"
+      end
+
+      it "doesn't normalize whitespace in summaries" do
+        post = feed.items.detect { |item| item.title.content == "Pre" }
+        expect(post).to_not be_nil
+        expect(post.summary.content).to match "\n"
+      end
+    end
+
     context "with site.lang set" do
       lang = "en_US"
       let(:overrides) { { "lang" => lang } }
