@@ -47,8 +47,10 @@ module JekyllFeed
     # WIll return `/feed/collection.xml` for other collections
     # Will return `/feed/collection/category.xml` for other collection categories
     def feed_path(collection: "posts", category: nil)
-      prefix = collection == "posts" ? "/feed" : "/feed/#{collection}"
-      return "#{prefix}/#{category}.xml" if category
+      collection_slug = Jekyll::Utils.slugify(collection)
+      prefix = collection == "posts" ? "/feed" : "/feed/#{collection_slug}"
+      category_slug = Jekyll::Utils.slugify(category)
+      return "#{prefix}/#{category_slug}.xml" if category
 
       collections.dig(collection, "path") || "#{prefix}.xml"
     end
@@ -89,15 +91,12 @@ module JekyllFeed
 
     def generate_tag_feed(tags_pool, tags_path)
       tags_pool.each do |tag|
-        # allow only tags with basic alphanumeric characters and underscore to keep
-        # feed path simple.
-        next if %r![^a-zA-Z0-9_]!.match?(tag)
-
+        tag_slug = Jekyll::Utils.slugify(tag)
         Jekyll.logger.info "Jekyll Feed:", "Generating feed for posts tagged #{tag}"
-        path = "#{tags_path}#{tag}.xml"
+        path = "#{tags_path}#{tag_slug}.xml"
         next if file_exists?(path)
 
-        @site.pages << make_page(path, :tags => tag)
+        @site.pages << make_page(path, :collection => "tag", :tags => tag)
       end
     end
 
