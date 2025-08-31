@@ -63,10 +63,16 @@
   {% if page.category %}
     {% assign posts = posts | where: "categories", page.category %}
   {% endif %}
+  <!-- combine weeklies to feed -->
+  {% if page.collection == "posts" %}
+    {% assign posts = site.posts | concat: site.weeklies %}
+  {% endif %}
+  
   {% unless site.show_drafts %}
     {% assign posts = posts | where_exp: "post", "post.draft != true" %}
   {% endunless %}
-  {% assign posts = posts | sort: "date" | reverse %}
+  {% assign posts_sort = site.feed.posts_sort | default: "date" %}
+  {% assign posts = posts | sort: posts_sort | reverse %}
   {% assign posts_limit = site.feed.posts_limit | default: 10 %}
   {% for post in posts limit: posts_limit %}
     <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
@@ -79,7 +85,7 @@
       <id>{{ post.id | absolute_url | xml_escape }}</id>
       {% assign excerpt_only = post.feed.excerpt_only | default: site.feed.excerpt_only %}
       {% unless excerpt_only %}
-        <content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}"><![CDATA[{{ post.content | strip }}]]></content>
+        <content type="html"><![CDATA[{{ post.content | strip }}]]></content>
       {% endunless %}
 
       {% assign post_author = post.author | default: post.authors[0] | default: site.author %}
