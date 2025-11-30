@@ -12,6 +12,7 @@ module JekyllFeed
         Jekyll.logger.info "Jekyll Feed:", "Skipping feed generation in development"
         return
       end
+      check_custom_image_key
       collections.each do |name, meta|
         Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
         (meta["categories"] + [nil]).each do |category|
@@ -51,6 +52,13 @@ module JekyllFeed
       return "#{prefix}/#{category}.xml" if category
 
       collections.dig(collection, "path") || "#{prefix}.xml"
+    end
+
+    def check_custom_image_key
+      image_path_key = @site.config.fetch("image_path_key", nil)
+      if image_path_key
+        Jekyll.logger.info "Jekyll Feed:", "Using custom image_path_key = #{image_path_key}"
+      end
     end
 
     # Returns a hash representing all collections to be processed and their metadata
@@ -116,7 +124,6 @@ module JekyllFeed
     end
 
     # Generates contents for a file
-
     def make_page(file_path, collection: "posts", category: nil, tags: nil)
       PageWithoutAFile.new(@site, __dir__, "", file_path).tap do |file|
         file.content = feed_template

@@ -98,6 +98,31 @@ describe(JekyllFeed) do
     expect(contents).not_to match "Liquid is not rendered."
   end
 
+  context "when image_path_key is custom" do
+    image_key_tests = [
+      { thumbs: 'header.image.path', expected: 'http://example.org/image.png' }, 
+      { thumbs: 'thumb.path', expected: 'https://cdn.example.org/absolute.png?h=188&amp;w=250' }, 
+      { thumbs: 'thumbnail', expected: 'http://example.org/object-image.png' },
+    ]
+
+    image_key_tests.each do |test_case|
+      it "correctly processes image: '#{test_case[:thumbs]}'" do
+        site.data["image_path_key"] = test_case[:thumbs]
+
+        # Mock image_key structure
+        context.registers[:post] = {
+          'header' => { 'image' => { 'path' => 'http://example.org/image.png' } },
+          'thumb' => { 'path'  => 'https://cdn.example.org/absolute.png?h=188&amp;w=250' },
+          'thumbnail' => 'http://example.org/object-image.png'
+        }
+
+        # Check image_key's value
+        expect(contents).to include(%(<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="#{test_case[:expected]}" />))
+      end
+    end
+  end
+
+
   context "images" do
     let(:image1) { 'http://example.org/image.png' }
     let(:image2) { 'https://cdn.example.org/absolute.png?h=188&amp;w=250' }
