@@ -68,7 +68,13 @@
   {% endunless %}
   {% assign posts = posts | sort: "date" | reverse %}
   {% assign posts_limit = site.feed.posts_limit | default: 10 %}
+  {% assign current_date = "now" | date: '%s' | integer %}
   {% for post in posts limit: posts_limit %}
+    {% assign post_date = post.date | date: '%s' | integer %}
+    {% if post_date > current_date %}
+      {% continue %}
+    {% endif %}
+
     <entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>
       {% assign post_title = post.title | smartify | strip_html | normalize_whitespace | xml_escape %}
 
