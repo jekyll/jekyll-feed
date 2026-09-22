@@ -6,7 +6,7 @@ inherit_gem:
   rubocop-jekyll: .rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.6
   SuggestExtensions: false
   Exclude:
     - vendor/**/*
@@ -18,7 +18,7 @@ Lint/EmptyInPattern:
   Enabled: false
   
 Metrics/AbcSize:
-  IgnoredMethods:
+  AllowedMethods:
   - generate # in generator.rb
 
 Naming/InclusiveLanguage:
