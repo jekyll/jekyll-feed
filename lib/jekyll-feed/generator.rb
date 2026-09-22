@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module JekyllFeed
+  # Jekyll::Generator that adds one or more Atom feed pages to the site
+  # during the build, based on the `feed` key in the site's config
+  # (collections, categories, tags, and their respective output paths).
   class Generator < Jekyll::Generator
     safe true
     priority :lowest
@@ -60,7 +63,7 @@ module JekyllFeed
 
       @collections = case config["collections"]
                      when Array
-                       config["collections"].map { |c| [c, {}] }.to_h
+                       config["collections"].to_h { |c| [c, {}] }
                      when Hash
                        config["collections"]
                      else
