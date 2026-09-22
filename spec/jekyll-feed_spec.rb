@@ -527,6 +527,23 @@ describe(JekyllFeed) do
       end
     end
 
+    context "when the feed file already exists in the source directory" do
+      let(:overrides) do
+        {
+          "collections" => {
+            "existing" => { "output" => true },
+          },
+          "feed"        => { "collections" => ["existing"] },
+        }
+      end
+
+      it "does not overwrite the existing file" do
+        expect(File.read(dest_dir("feed/existing.xml"))).to eql(
+          File.read(source_dir("feed/existing.xml"))
+        )
+      end
+    end
+
     context "with a custom path" do
       let(:overrides) do
         {
@@ -640,6 +657,18 @@ describe(JekyllFeed) do
         expect(Pathname.new(dest_dir("feed/by_tag/test.xml"))).to_not exist
         expect(Pathname.new(dest_dir("feed/by_tag/fail.xml"))).to_not exist
         expect(Pathname.new(dest_dir("feed/by_tag/success.xml"))).to exist
+      end
+    end
+
+    context "when the tag feed file already exists in the source directory" do
+      let(:overrides) do
+        { "feed" => { "tags" => { "only" => ["ghost_tag"] } } }
+      end
+
+      it "does not overwrite the existing file" do
+        expect(File.read(dest_dir("feed/by_tag/ghost_tag.xml"))).to eql(
+          File.read(source_dir("feed/by_tag/ghost_tag.xml"))
+        )
       end
     end
 

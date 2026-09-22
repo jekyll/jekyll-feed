@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+require "simplecov"
+SimpleCov.start do
+  enable_coverage :branch
+  add_filter "/spec/"
+end
+
 require "jekyll"
 require "typhoeus" unless Gem.win_platform?
 require "nokogiri"
