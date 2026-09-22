@@ -13,10 +13,9 @@ Gem::Specification.new do |spec|
 
   spec.files            = Dir["lib/**/*"]
   spec.extra_rdoc_files = Dir["README.md", "History.markdown", "LICENSE.txt"]
-  spec.test_files       = spec.files.grep(%r!^spec/!)
   spec.require_paths    = ["lib"]
 
-  spec.required_ruby_version = ">= 2.5.0"
+  spec.required_ruby_version = ">= 2.6.0"
 
   spec.add_dependency "jekyll", ">= 3.7", "< 5.0"
 
@@ -24,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "nokogiri", "~> 1.6"
   spec.add_development_dependency "rake", "~> 13.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop-jekyll", "~> 0.12.0"
+  spec.add_development_dependency "rubocop-jekyll", "~> 0.14"
+  spec.add_development_dependency "simplecov", "~> 0.22"
   spec.add_development_dependency "typhoeus", ">= 0.7", "< 2.0"
 end
