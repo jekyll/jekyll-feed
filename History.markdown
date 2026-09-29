@@ -1,4 +1,8 @@
-## HEAD
+## 0.18.0 / 2026-09-29
+
+### Security
+
+  * Escape `xml:lang` values and CDATA terminators in the feed (GHSA-3gx8-pqcm-38hw, #396)
 
 ### Development Fixes
 
