@@ -18,6 +18,10 @@
 
   * Icon and logo support with simple tests (#412)
 
+### Bug Fixes
+
+  * Include the tag name in the title of per-tag feeds, matching category feeds (#406)
+
 ## 0.17.0 / 2022-10-14
 
 ### Documentation

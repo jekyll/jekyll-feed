@@ -18,6 +18,10 @@
     {% assign category = page.category | capitalize %}
     {% assign title = title | append: " | " | append: category %}
   {% endif %}
+  {% if page.tags %}
+    {% assign tag = page.tags | capitalize %}
+    {% assign title = title | append: " | " | append: tag %}
+  {% endif %}
 
   {% if title %}
     <title type="html">{{ title | smartify | xml_escape }}</title>

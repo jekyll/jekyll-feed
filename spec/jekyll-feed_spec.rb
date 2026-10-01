@@ -582,6 +582,8 @@ describe(JekyllFeed) do
         expect(Pathname.new(dest_dir("feed/by_tag/fail.xml"))).to exist
         expect(Pathname.new(dest_dir("feed/by_tag/success.xml"))).to exist
 
+        expect(tags_feed_test).to match '<title type="html">My awesome site | Test</title>'
+
         expect(tags_feed_test).to match "/2013/12/12/dec-the-second.html"
         expect(tags_feed_test).to match "/2014/03/04/march-the-fourth.html"
         expect(tags_feed_test).to match "/2015/01/18/jekyll-last-modified-at.html"
